@@ -7,14 +7,14 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
-  $updateSQL = sprintf("UPDATE num_org SET org_Unidade=%s, org_desc_unid=%s, org_CodSecao=%s, org_desc=%s, org_cidade=%s, org_uf=%s, org_Bairro=%s, org_via=%s, org_num=%s, org_ref=%s, org_tel=%s, org_fax=%s, org_email=%s, org_tp=%s, org_obs=%s WHERE org_id=%s",
-                       GetSQLValueString($_POST['org_Unidade'], "int"),
+  $updateSQL = sprintf("UPDATE num_org SET org_unidade=%s, org_desc_unid=%s, org_cod_secao=%s, org_desc=%s, org_cidade=%s, org_uf=%s, org_bairro=%s, org_via=%s, org_num=%s, org_ref=%s, org_tel=%s, org_fax=%s, org_email=%s, org_tp=%s, org_obs=%s WHERE org_id=%s",
+                       GetSQLValueString($_POST['org_unidade'], "int"),
                        GetSQLValueString($_POST['org_desc_unid'], "text"),
-                       GetSQLValueString($_POST['org_CodSecao'], "text"),
+                       GetSQLValueString($_POST['org_cod_secao'], "text"),
                        GetSQLValueString($_POST['org_desc'], "text"),
                        GetSQLValueString($_POST['org_cidade'], "text"),
                        GetSQLValueString($_POST['org_uf'], "text"),
-                       GetSQLValueString($_POST['org_Bairro'], "text"),
+                       GetSQLValueString($_POST['org_bairro'], "text"),
                        GetSQLValueString($_POST['org_via'], "text"),
                        GetSQLValueString($_POST['org_num'], "text"),
                        GetSQLValueString($_POST['org_ref'], "text"),
@@ -64,13 +64,13 @@ $totalRows_secao = mysqli_num_rows($secao);
       <td colspan="4" align="right" nowrap><table width="655" align="center">
           <tr valign="baseline"> 
             <td width="124" align="right" nowrap>Cod da OPM:</td>
-            <td width="86"><input type="text" name="org_Unidade" value="<?php echo $row_secao['org_Unidade']; ?>" size="12"></td>
+            <td width="86"><input type="text" name="org_unidade" value="<?php echo $row_secao['org_unidade']; ?>" size="12"></td>
             <td width="129">Descri&ccedil;&atilde;o da OPM:</td>
             <td width="296"><input type="text" name="org_desc_unid" value="<?php echo $row_secao['org_desc_unid']; ?>" size="45"></td>
           </tr>
           <tr valign="baseline"> 
             <td nowrap align="right">Cod. doc da se&ccedil;&atilde;o:</td>
-            <td><input type="text" name="org_CodSecao" value="<?php echo $row_secao['org_CodSecao']; ?>" size="12"></td>
+            <td><input type="text" name="org_cod_secao" value="<?php echo $row_secao['org_cod_secao']; ?>" size="12"></td>
             <td>Descri&ccedil;&atilde;o da Se&ccedil;&atilde;o:</td>
             <td><input type="text" name="org_desc" value="<?php echo $row_secao['org_desc']; ?>" size="45"></td>
           </tr>
@@ -86,7 +86,7 @@ $totalRows_secao = mysqli_num_rows($secao);
             <td width="51" align="right" nowrap>Cidade:</td>
             <td width="188"><input type="text" name="org_cidade" value="<?php echo $row_secao['org_cidade']; ?>" size="30"></td>
             <td width="342">Bairro: 
-              <input type="text" name="org_Bairro" value="<?php echo $row_secao['org_Bairro']; ?>" size="45"></td>
+              <input type="text" name="org_bairro" value="<?php echo $row_secao['org_bairro']; ?>" size="45"></td>
             <td width="54">UF: 
               <input type="text" name="org_uf" value="<?php echo $row_secao['org_uf']; ?>" size="4"></td>
           </tr>

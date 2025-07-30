@@ -7,14 +7,14 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
-  $insertSQL = sprintf("INSERT INTO num_org (org_Unidade, org_desc_unid, org_CodSecao, org_desc, org_cidade, org_uf, org_Bairro, org_via, org_num, org_ref, org_tel, org_fax, org_email, org_tp, org_obs) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_POST['org_Unidade'], "int"),
+  $insertSQL = sprintf("INSERT INTO num_org (org_unidade, org_desc_unid, org_cod_secao, org_desc, org_cidade, org_uf, org_bairro, org_via, org_num, org_ref, org_tel, org_fax, org_email, org_tp, org_obs) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                       GetSQLValueString($_POST['org_unidade'], "int"),
                        GetSQLValueString($_POST['org_desc_unid'], "text"),
-                       GetSQLValueString($_POST['org_CodSecao'], "text"),
+                       GetSQLValueString($_POST['org_cod_secao'], "text"),
                        GetSQLValueString($_POST['org_desc'], "text"),
                        GetSQLValueString($_POST['org_cidade'], "text"),
                        GetSQLValueString($_POST['org_uf'], "text"),
-                       GetSQLValueString($_POST['org_Bairro'], "text"),
+                       GetSQLValueString($_POST['org_bairro'], "text"),
                        GetSQLValueString($_POST['org_via'], "text"),
                        GetSQLValueString($_POST['org_num'], "text"),
                        GetSQLValueString($_POST['org_ref'], "text"),
@@ -53,13 +53,13 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
       <td colspan="4" align="right" nowrap><table width="655" align="center">
           <tr valign="baseline"> 
             <td width="124" align="right" nowrap>Cod da OPM:</td>
-            <td width="86"><input type="text" name="org_Unidade" value="602350000" size="12"></td>
+            <td width="86"><input type="text" name="org_unidade" value="602350000" size="12"></td>
             <td width="129">Descri&ccedil;&atilde;o da OPM:</td>
             <td width="296"><input type="text" name="org_desc_unid" value="35&ordm; BPM/I" size="45"></td>
           </tr>
           <tr valign="baseline"> 
             <td nowrap align="right">Cod. doc da se&ccedil;&atilde;o:</td>
-            <td><input type="text" name="org_CodSecao" value="000" size="12"></td>
+            <td><input type="text" name="org_cod_secao" value="000" size="12"></td>
             <td>Descri&ccedil;&atilde;o da Se&ccedil;&atilde;o:</td>
             <td><input type="text" name="org_desc" size="45"></td>
           </tr>
@@ -75,7 +75,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
             <td width="67" align="right" nowrap>Cidade:</td>
             <td width="186"><input type="text" name="org_cidade" value="Campinas" size="30"></td>
             <td width="320">Bairro: 
-              <input type="text" name="org_Bairro" value="Ponte Preta" size="45"></td>
+              <input type="text" name="org_bairro" value="Ponte Preta" size="45"></td>
             <td width="62">UF: 
               <input type="text" name="org_uf" value="SP" size="4"></td>
           </tr>

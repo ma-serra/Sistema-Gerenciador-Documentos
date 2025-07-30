@@ -38,7 +38,7 @@ if (isset($_GET['cod_org'])) {
   $colname_listadoc = $_GET['cod_org'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_listadoc = sprintf("SELECT     num_doc.cod_org     , num_doc.tipo_doc     , num_tipodoc.desc_tipo_doc     , num_doc.ano_doc     , num_doc.num_doc     , num_org.org_CodSecao FROM     num_doc     INNER JOIN num_tipodoc          ON (num_doc.tipo_doc = num_tipodoc.tipo_doc)     INNER JOIN num_org          ON (num_doc.cod_org = num_org.org_id) WHERE (num_doc.cod_org = '%s') GROUP BY num_doc.tipo_doc;", $colname_listadoc);
+$query_listadoc = sprintf("SELECT     num_doc.cod_org     , num_doc.tipo_doc     , num_tipodoc.desc_tipo_doc     , num_doc.ano_doc     , num_doc.num_doc     , num_org.org_cod_secao FROM     num_doc     INNER JOIN num_tipodoc          ON (num_doc.tipo_doc = num_tipodoc.tipo_doc)     INNER JOIN num_org          ON (num_doc.cod_org = num_org.org_id) WHERE (num_doc.cod_org = '%s') GROUP BY num_doc.tipo_doc;", $colname_listadoc);
 $listadoc = mysqli_query($conexao, $query_listadoc);
 $row_listadoc = mysqli_fetch_assoc($listadoc);
 $totalRows_listadoc = mysqli_num_rows($listadoc);
@@ -110,7 +110,7 @@ $numdoc = str_pad($numdoc, 4, "0", STR_PAD_LEFT);
             <tr align="center" valign="baseline"> 
               <td valign="middle" nowrap bgcolor="#FFFFFF"> <div align="center"><font color="#000099" size="3"><?php echo $row_documento['desc_tipo_doc']; ?></font><font size="4"> <font color="#990000">N&ordm; 
                   &nbsp;<?php echo $numdoc ?></font></font><font color="#990000" size="4"> 
-                  / <?php echo $row_Recordset1['org_CodSecao']; ?>&nbsp;/&nbsp;<?php echo $ano1 ?></font><font color="#990000"><br>
+                  / <?php echo $row_Recordset1['org_cod_secao']; ?>&nbsp;/&nbsp;<?php echo $ano1 ?></font><font color="#990000"><br>
                   </font><font color="#FF0000"><br>
                   </font></div></td>
             </tr>
@@ -126,7 +126,7 @@ $numdoc = str_pad($numdoc, 4, "0", STR_PAD_LEFT);
                   <input name="observacao" type="hidden" id="observacao" value="sem obs" size="60">
                   <input type="hidden" name="data" value="<?php echo date("Y-m-d");  ?>" size="32">
                   <input type="hidden" name="ano_doc" value="<?php echo $ano1 ?>" size="32">
-                  <input type="hidden" name="cod_sec" value="<?php echo $row_Recordset1['org_CodSecao']; ?>" size="32">
+                  <input type="hidden" name="cod_sec" value="<?php echo $row_Recordset1['org_cod_secao']; ?>" size="32">
                   <input type="hidden" name="cod_org" value="<?php echo $row_Recordset1['org_id']; ?>" size="32">
                   <input name="submit" type="submit" value="Confirmar a reserva">
                   <input name="tipo_doc" type="hidden" id="tipo_doc" value="<?php echo $row_documento['tipo_doc']; ?>">

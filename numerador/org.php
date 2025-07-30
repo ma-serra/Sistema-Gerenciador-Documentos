@@ -27,13 +27,13 @@ $totalRows_secao = mysqli_num_rows($secao);
     <td colspan="4" align="right" nowrap><table width="655" align="center">
         <tr valign="baseline"> 
           <td width="123" align="right" nowrap><font size="3"><strong>Cod da OPM:</strong></font></td>
-          <td width="170"> <strong><font color="#990000" size="3"><?php echo $row_secao['org_Unidade']; ?></font></strong></td>
+          <td width="170"> <strong><font color="#990000" size="3"><?php echo $row_secao['org_unidade']; ?></font></strong></td>
           <td width="154"><font size="3"><strong>Descri&ccedil;&atilde;o da OPM:</strong></font></td>
           <td width="188"> <strong><font color="#990000" size="3"><?php echo $row_secao['org_desc_unid']; ?></font></strong></td>
         </tr>
         <tr valign="baseline"> 
           <td nowrap align="right"><font size="3"><strong>Cod. doc da se&ccedil;&atilde;o:</strong></font></td>
-          <td> <strong><font color="#990000" size="3"><?php echo $row_secao['org_CodSecao']; ?></font></strong></td>
+          <td> <strong><font color="#990000" size="3"><?php echo $row_secao['org_cod_secao']; ?></font></strong></td>
           <td><font size="3"><strong>Descri&ccedil;&atilde;o da Se&ccedil;&atilde;o:</strong></font></td>
           <td> <strong><font color="#990000" size="3"><?php echo $row_secao['org_desc']; ?></font></strong></td>
         </tr>
@@ -48,7 +48,7 @@ $totalRows_secao = mysqli_num_rows($secao);
         <tr valign="baseline"> 
           <td width="51" align="right" nowrap><font size="3"><strong>Cidade:</strong></font></td>
           <td width="188"> <strong><font color="#990000" size="3"><?php echo $row_secao['org_cidade']; ?></font></strong></td>
-          <td width="342"><font size="3"><strong>Bairro: <font color="#990000"><?php echo $row_secao['org_Bairro']; ?></font></strong></font></td>
+          <td width="342"><font size="3"><strong>Bairro: <font color="#990000"><?php echo $row_secao['org_bairro']; ?></font></strong></font></td>
           <td width="54"><font size="3"><strong>UF: <font color="#990000"><?php echo $row_secao['org_uf']; ?></font> </strong></font></td>
         </tr>
         <tr valign="baseline"> 
