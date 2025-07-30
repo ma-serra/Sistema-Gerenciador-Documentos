@@ -160,7 +160,7 @@ do {
           <?php
 do {  
 ?>
-          <option value="<?php echo $row_nivel['cod_nivel']?>"<?php if (!(strcmp($row_nivel['cod_nivel'], $row_useer['Nivel']))) {echo "SELECTED";} ?>><?php echo $row_nivel['desc_nivel']?></option>
+          <option value="<?php echo $row_nivel['nivel_id']?>"<?php if (!(strcmp($row_nivel['nivel_id'], $row_useer['Nivel']))) {echo "SELECTED";} ?>><?php echo $row_nivel['desc_nivel']?></option>
           <?php
 } while ($row_nivel = mysqli_fetch_assoc($nivel));
   $rows = mysqli_num_rows($nivel);

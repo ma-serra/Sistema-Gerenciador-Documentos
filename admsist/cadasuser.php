@@ -32,13 +32,13 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
   $insertSQL = sprintf("INSERT INTO num_user (rerg, postfunc, guerra, senha, Org_id, Nivel, situacao) VALUES (%s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_POST['rerg'], "text"),
-                       GetSQLValueString($_POST['postfunc'], "text"),
-                       GetSQLValueString($_POST['guerra'], "text"),
-                       GetSQLValueString(md5($_POST['senha']), "text"),
-                       GetSQLValueString($_POST['org_id'], "int"),
-                       GetSQLValueString($_POST['Nivel'], "text"),
-                       GetSQLValueString($_POST['situacao'], "text"));
+    GetSQLValueString($_POST['rerg'], "text"),
+    GetSQLValueString($_POST['postfunc'], "text"),
+    GetSQLValueString($_POST['guerra'], "text"),
+    GetSQLValueString(md5($_POST['senha']), "text"),
+    GetSQLValueString($_POST['org_id'], "int"),
+    GetSQLValueString($_POST['Nivel'], "int"),
+    GetSQLValueString($_POST['situacao'], "text"));
 
   mysqli_select_db($conexao, $database_conexao);
   $Result1 = mysqli_query($conexao, $insertSQL);
@@ -141,7 +141,7 @@ do {
           <?php
 do {  
 ?>
-          <option value="<?php echo $row_nivel['cod_nivel']?>"><?php echo $row_nivel['desc_nivel']?></option>
+          <option value="<?php echo $row_nivel['nivel_id']?>"><?php echo $row_nivel['desc_nivel']?></option>
           <?php
 } while ($row_nivel = mysqli_fetch_assoc($nivel));
   $rows = mysqli_num_rows($nivel);
