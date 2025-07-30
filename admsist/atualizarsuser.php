@@ -32,12 +32,12 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   $updateSQL = sprintf("UPDATE num_user SET postfunc=%s, guerra=%s, Org_id=%s, Nivel=%s, situacao=%s WHERE rerg=%s",
-                       GetSQLValueString($_POST['postfunc'], "text"),
-                       GetSQLValueString($_POST['guerra'], "text"),
-                       GetSQLValueString($_POST['org_id'], "int"),
-                       GetSQLValueString($_POST['Nivel'], "text"),
-                       GetSQLValueString($_POST['situacao'], "text"),
-                       GetSQLValueString($_POST['rerg'], "text"));
+                      GetSQLValueString($_POST['postfunc'], "text"),
+                      GetSQLValueString($_POST['guerra'], "text"),
+                      GetSQLValueString($_POST['org_id'], "int"),
+                      GetSQLValueString($_POST['Nivel'], "int"), // <-- Corrigido para "int"
+                      GetSQLValueString($_POST['situacao'], "text"),
+                      GetSQLValueString($_POST['rerg'], "text"));
 
   mysqli_select_db($conexao, $database_conexao);
   $Result1 = mysqli_query($conexao, $updateSQL);

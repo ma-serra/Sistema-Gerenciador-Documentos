@@ -41,7 +41,7 @@ echo " style=\"background-color:$mocolor\" onMouseOver=\"this.style.backgroundCo
 // technocurve arc 3 php mv block2/3 end
 ?>> 
     <td width="79%" height="13"><div align="center"><?php echo $row_user['postfunc']; ?>&nbsp;<?php echo $row_user['guerra']; ?> da <?php echo $row_user['org_desc']; ?> do <?php echo $row_user['org_descUnid']; ?> nivel <?php echo $row_user['desc_nivel']; ?></div></td>
-    <td width="9%" height="13"><div align="center"><a href="atualzarsuser.php?rerg=<?php echo $row_user['rerg']; ?>">Atualizar</a></div></td>
+    <td width="9%" height="13"><div align="center"><a href="atualizarsuser.php?rerg=<?php echo $row_user['rerg']; ?>">Atualizar</a></div></td>
     <td width="12%"><div align="center">Excluir</div></td>
   </tr>
   <?php 

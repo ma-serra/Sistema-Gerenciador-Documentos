@@ -39,7 +39,7 @@ $totalRows_listadoc = mysqli_num_rows($listadoc);
 echo " style=\"background-color:$mocolor\" onMouseOver=\"this.style.backgroundColor='$mocolor3'\" onMouseOut=\"this.style.backgroundColor='$mocolor'\"";
 // technocurve arc 3 php mv block2/3 end
 ?>> 
-          <td height="13"> <div align="left"><a href="icerirdoc.php?Cod_Org=<?php echo $row_listadoc['Cod_Org']; ?>&Tipo_Doc=<?php echo $row_listadoc['Tipo_Doc']; ?>&re=<?php echo $_GET['re']; ?>" target="novo"><?php echo $row_listadoc['DescTipo_Doc']; ?></a></div></td>
+          <td height="13"> <div align="left"><a href="inserirdoc.php?Cod_Org=<?php echo $row_listadoc['Cod_Org']; ?>&Tipo_Doc=<?php echo $row_listadoc['Tipo_Doc']; ?>&re=<?php echo $_GET['re']; ?>" target="novo"><?php echo $row_listadoc['DescTipo_Doc']; ?></a></div></td>
         </tr>
         <?php 
 // technocurve arc 3 php mv block3/3 start

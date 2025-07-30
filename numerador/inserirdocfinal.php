@@ -32,19 +32,19 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 if ((isset($_GET["MM_insert"])) && ($_GET["MM_insert"] == "form1")) {
   $insertSQL = sprintf("INSERT INTO num_doc (Cod_Org, Tipo_Doc, Num_Doc, Cod_Sec, Ano_Doc, ASSUNTO, DESTINO, `DATA`, ELABORADOR, obs_doc, ELABORADO, ASSINADO, ENCAMINHADO) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_GET['Cod_Org'], "text"),
-                       GetSQLValueString($_GET['Tipo_Doc'], "text"),
-                       GetSQLValueString($_GET['Num_Doc'], "text"),
-                       GetSQLValueString($_GET['Cod_Sec'], "text"),
-                       GetSQLValueString($_GET['Ano_Doc'], "text"),
-                       GetSQLValueString($_GET['ASSUNTO'], "text"),
-                       GetSQLValueString($_GET['DESTINO'], "text"),
-                       GetSQLValueString($_GET['DATA'], "date"),
-                       GetSQLValueString($_GET['ELABORADOR'], "text"),
-                       GetSQLValueString($_GET['observacao'], "text"),
-                       GetSQLValueString($_GET['ELABORADO'], "int"),
-                       GetSQLValueString($_GET['ASSINADO'], "int"),
-                       GetSQLValueString($_GET['ENCAMINHADO'], "int"));
+                      GetSQLValueString($_GET['Cod_Org'], "int"),
+                      GetSQLValueString($_GET['Tipo_Doc'], "int"),
+                      GetSQLValueString($_GET['Num_Doc'], "text"),
+                      GetSQLValueString($_GET['Cod_Sec'], "text"),
+                      GetSQLValueString($_GET['Ano_Doc'], "text"),
+                      GetSQLValueString($_GET['ASSUNTO'], "text"),
+                      GetSQLValueString($_GET['DESTINO'], "text"),
+                      GetSQLValueString($_GET['DATA'], "date"),
+                      GetSQLValueString($_GET['ELABORADOR'], "text"),
+                      GetSQLValueString($_GET['observacao'], "text"),
+                      GetSQLValueString($_GET['ELABORADO'], "int"),
+                      GetSQLValueString($_GET['ASSINADO'], "int"),
+                      GetSQLValueString($_GET['ENCAMINHADO'], "int"));
 
   mysqli_select_db($conexao, $database_conexao);
   $Result1 = mysqli_query($conexao, $insertSQL);

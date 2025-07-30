@@ -17,7 +17,7 @@ if (isset($_GET['rerg'])) {
   $colname_user = $_GET['rerg'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_user = sprintf("SELECT num_user.rerg     , num_user.postfunc     , num_user.guerra     , num_user.Org_id     , num_org.org_descUnid     , num_org.org_desc     , num_user.situacao     , num_nivel.desc_nivel     , num_nivel.visivl FROM num_org     INNER JOIN num_user          ON (num_org.org_id = num_user.Org_id)     INNER JOIN num_nivel          ON (num_user.Nivel = num_nivel.cod_nivel) WHERE (num_user.rerg LIKE '%s'     AND num_nivel.visivl <> 0   AND num_user.Org_id LIKE '%s') ORDER BY num_user.rerg ASC", $colname_user,$org_user);
+$query_user = sprintf("SELECT     num_user.rerg     , num_user.postfunc     , num_user.guerra     , num_user.Org_id     , num_org.org_descUnid     , num_org.org_desc     , num_user.situacao     , num_nivel.desc_nivel     , num_nivel.visivl FROM num_org     INNER JOIN num_user          ON (num_org.org_id = num_user.Org_id)     INNER JOIN num_nivel          ON (num_user.Nivel = num_nivel.nivel_id) WHERE (num_user.rerg LIKE '%%%s%%'     AND num_nivel.visivl <> 0   AND num_user.Org_id LIKE '%%%s%%') ORDER BY num_user.rerg ASC", $colname_user,$org_user);
 $user = mysqli_query($conexao, $query_user);
 $row_user = mysqli_fetch_assoc($user);
 $totalRows_user = mysqli_num_rows($user);
@@ -59,7 +59,7 @@ echo " style=\"background-color:$mocolor\" onMouseOver=\"this.style.backgroundCo
 	  $a = $row_user['Org_id'];
       $b = $_GET['org_id'];
       $outra = "Outra Se��o";
-      $atualizar = "<a href='atualzarsuser.php?rerg=" . $row_user['rerg'] . "'>Atualizar</a>";
+      $atualizar = "<a href='atualizarsuser.php?rerg=" . $row_user['rerg'] . "'>Atualizar</a>";
 if ($a == $b) {
     echo $atualizar;
 } else
