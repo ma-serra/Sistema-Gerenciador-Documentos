@@ -13,7 +13,7 @@ $totalRows_secao = mysqli_num_rows($secao);
 <html>
 <head>
 <title>Numerador</title>
-<link  href="file:///C|/xampp/htdocs/webcpi2/css/Geral.css" rel="stylesheet" type="text/css">
+<link  href="../css/Geral.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
 
