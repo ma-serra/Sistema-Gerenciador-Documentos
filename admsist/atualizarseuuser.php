@@ -4,7 +4,7 @@
 require_once('../Connections/conexao.php');
 
 // Define a ação do formulário para o próprio arquivo.
-$editFormAction = $_SERVER['PHP_SELF'];
+$editFormAction = htmlspecialchars($_SERVER['PHP_SELF']);
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . $_SERVER['QUERY_STRING'];
 }
@@ -14,20 +14,20 @@ if (isset($_SERVER['QUERY_STRING'])) {
 // --- ATUALIZAÇÃO DOS DADOS PRINCIPAIS ---
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   
-  // Correção CRÍTICA: As colunas no banco são `org_id` e `nivel_id`.
   $updateSQL = sprintf("UPDATE num_user SET postfunc=%s, guerra=%s, org_id=%s, nivel_id=%s, situacao=%s WHERE rerg=%s",
                        GetSQLValueString($conexao, $_POST['postfunc'], "text"),
                        GetSQLValueString($conexao, $_POST['guerra'], "text"),
                        GetSQLValueString($conexao, $_POST['org_id'], "int"),
-                       GetSQLValueString($conexao, $_POST['Nivel'], "int"), // O campo do formulário é 'Nivel'
+                       GetSQLValueString($conexao, $_POST['Nivel'], "int"),
                        GetSQLValueString($conexao, $_POST['situacao'], "text"),
                        GetSQLValueString($conexao, $_POST['rerg'], "text"));
 
   $Result1 = mysqli_query($conexao, $updateSQL);
 
   if ($Result1) {
-    $updateGoTo = "acaookuser.php";
-    // Lógica para manter os parâmetros da URL no redirecionamento.
+    // CORREÇÃO APLICADA AQUI
+    $updateGoTo = "../numerador/acaookuser.php"; 
+    
     if (isset($_SERVER['QUERY_STRING'])) {
       $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
       $updateGoTo .= $_SERVER['QUERY_STRING'];
@@ -49,7 +49,9 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "senhanova")) {
   $Result1 = mysqli_query($conexao, $updateSQL);
 
   if ($Result1) {
-    $updateGoTo = "acaookuser.php";
+    // CORREÇÃO APLICADA AQUI
+    $updateGoTo = "../numerador/acaookuser.php";
+    
     if (isset($_SERVER['QUERY_STRING'])) {
       $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
       $updateGoTo .= $_SERVER['QUERY_STRING'];
@@ -62,8 +64,8 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "senhanova")) {
 }
 
 // 3. CONSULTAS PARA PREENCHER O FORMULÁRIO
+// (O restante do arquivo permanece o mesmo)
 // ==========================================
-// Busca dados do usuário a ser editado.
 $colname_user = "-1";
 if (isset($_GET['rerg'])) {
   $colname_user = $_GET['rerg'];
@@ -73,15 +75,12 @@ $user_result = mysqli_query($conexao, $query_user);
 $row_user = mysqli_fetch_assoc($user_result);
 $totalRows_user = mysqli_num_rows($user_result);
 
-// Busca a lista de Postos/Graduações.
 $query_posto = "SELECT * FROM sai_posto ORDER BY cod_posto ASC";
 $posto_result = mysqli_query($conexao, $query_posto);
 
-// Busca a lista de Organizações.
 $query_org = "SELECT * FROM num_org ORDER BY org_desc ASC";
 $org_result = mysqli_query($conexao, $query_org);
 
-// Busca os Níveis de acesso.
 $query_nivel = "SELECT * FROM num_nivel ORDER BY nivel_id ASC";
 $nivel_result = mysqli_query($conexao, $query_nivel);
 ?>
@@ -128,7 +127,6 @@ $nivel_result = mysqli_query($conexao, $query_nivel);
           <?php
           mysqli_data_seek($org_result, 0);
           while($row_org_loop = mysqli_fetch_assoc($org_result)) {
-            // Correção: a coluna é 'org_id'
             $selected = ($row_org_loop['org_id'] == $row_user['org_id']) ? "SELECTED" : "";
             echo "<option value=\"" . $row_org_loop['org_id'] . "\" $selected>" . htmlspecialchars($row_org_loop['org_desc']) . "</option>";
           }
@@ -144,7 +142,6 @@ $nivel_result = mysqli_query($conexao, $query_nivel);
           <?php
           mysqli_data_seek($nivel_result, 0);
           while($row_nivel_loop = mysqli_fetch_assoc($nivel_result)) {
-            // Correção: a coluna é 'nivel_id'
             $selected = ($row_nivel_loop['nivel_id'] == $row_user['nivel_id']) ? "SELECTED" : "";
             echo "<option value=\"" . $row_nivel_loop['nivel_id'] . "\" $selected>" . htmlspecialchars($row_nivel_loop['desc_nivel']) . "</option>";
           }

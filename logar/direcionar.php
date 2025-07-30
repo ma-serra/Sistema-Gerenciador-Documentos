@@ -123,7 +123,7 @@ elseif ($user_level == 2): ?>
 <table width="100%" border="0" align="center">
   <tr bgcolor="#FFFFFF"> 
     <td width="14%"><div align="center"><strong><a href="../numerador/org.php?org_id=<?php echo $row_user['org_id']; ?>" target="numerador">INFORMAÇÃO DA SEÇÃO</a></strong></div></td>
-    <td width="9%"> <div align="center"><strong><a href="../numerador/atualizaruserseu.php?rerg=<?php echo $row_user['rerg']; ?>&org_id=<?php echo $row_user['org_id']; ?>" target="numerador">MEU USUÁRIO</a></strong></div></td>
+    <td width="9%"> <div align="center"><strong><a href="../numerador/atualizarseuuser.php?rerg=<?php echo $row_user['rerg']; ?>&org_id=<?php echo $row_user['org_id']; ?>" target="numerador">MEU USUÁRIO</a></strong></div></td>
     <td width="33%"><div align="center"><strong><a href="../numerador/listaudocgerar.php?cod_org=<?php echo $row_user['org_id']; ?>&re=<?php echo $row_user['rerg']; ?>" target="numerador">GERAR NOVO NÚMERO</a></strong></div></td>
     <td width="6%"> <div align="center"><strong><a href="../numerador/consultagerar.php?cod_org=<?php echo $row_user['org_id']; ?>&re=<?php echo $row_user['rerg']; ?>" target="numerador">CONSULTAR</a></strong></div></td>
     <td width="7%"><div align="center"><strong><a href="../numerador/pagina.php?org_id=<?php echo $row_user['org_id']; ?>" target="numerador">PENDÊNCIAS</a></strong></div></td>
@@ -137,7 +137,7 @@ elseif ($user_level == 5 && $totalRows_opm > 0): ?>
   <input type="hidden" name="re" value="<?php echo htmlspecialchars($_GET['re']); ?>">
   <table width="100%" border="0" align="center">
     <tr bgcolor="#FFFFFF"> 
-      <td width="30%"><div align="center"><strong><a href="../numerador/atualizaruserseu.php?rerg=<?php echo $row_user['rerg']; ?>&org_id=<?php echo $row_user['org_id']; ?>" target="numerador">MEU USUÁRIO</a></strong></div></td>
+      <td width="30%"><div align="center"><strong><a href="../numerador/atualizarseuuser.php?rerg=<?php echo $row_user['rerg']; ?>&org_id=<?php echo $row_user['org_id']; ?>" target="numerador">MEU USUÁRIO</a></strong></div></td>
       <td width="51%"> 
         <div align="center"><strong>Selecione a seção 
           <select name="cod_org" id="cod_org">

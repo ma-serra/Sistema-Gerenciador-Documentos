@@ -68,7 +68,7 @@ $totalRows_user = mysqli_num_rows($user_result);
               $a = $row_user['org_id'];
               $b = $_GET['org_id'];
               if ($a == $b) {
-                  echo "<a href='../admsist/atualizarsuser.php?rerg=" . $row_user['rerg'] . "'>Atualizar</a>";
+                  echo "<a href='../admsist/atualizarseuuser.php?rerg=" . $row_user['rerg'] . "'>Atualizar</a>";
               } else {
                   echo 'Outra Seção';
               }
