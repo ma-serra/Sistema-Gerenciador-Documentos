@@ -8,38 +8,25 @@ $mocolor = $mocolor1;
 ?>
 <?php require_once('../Connections/conexao.php'); ?>
 <?php
-$des_geral = "1";
-if (isset($_GET['des'])) {
-  $des_geral = $_GET['des'];
-}
-$ass_geral = "1";
-if (isset($_GET['ass'])) {
-  $ass_geral = $_GET['ass'];
-}
-$cod_geral = "1";
-if (isset($_GET['cod_org'])) {
-  $cod_geral = $_GET['cod_org'];
-}
-$ano_geral = "1";
-if (isset($_GET['ano'])) {
-  $ano_geral = $_GET['ano'];
-}
-$tipo_geral = "1";
-if (isset($_GET['tipo_doc'])) {
-  $tipo_geral = $_GET['tipo_doc'];
-}
-$numdoc_geral = "1";
-if (isset($_GET['num_doc'])) {
-  $numdoc_geral = $_GET['num_doc'];
-}
-mysqli_select_db($conexao, $database_conexao);
-$query_geral = sprintf("SELECT num_doc.id_num, num_doc.cod_org, num_doc.elaborador, num_tipodoc.desc_tipo_doc, num_tipodoc.tipo_doc, num_doc.data, 
-num_doc.num_doc, num_doc.cod_sec, num_doc.ano_doc, num_doc.assunto, num_doc.destino FROM num_doc INNER JOIN num_tipodoc ON (num_doc.tipo_doc = num_tipodoc.tipo_doc)
-WHERE (num_doc.cod_org = '%s' AND num_tipodoc.tipo_doc = '%s' AND num_doc.num_doc LIKE '%s' AND num_doc.ano_doc LIKE '%s' AND num_doc.assunto LIKE '%%%s%%' AND num_doc.destino LIKE '%%%s%%')
-ORDER BY num_doc.num_doc DESC", $cod_geral,$tipo_geral,$numdoc_geral,$ano_geral,$ass_geral,$des_geral);
-$geral = mysqli_query($conexao, $query_geral);
-$row_geral = mysqli_fetch_assoc($geral);
-$totalRows_geral = mysqli_num_rows($geral);
+// Validação de entrada
+$des_geral = isset($_GET['des']) ? $_GET['des'] : '%';
+$ass_geral = isset($_GET['ass']) ? $_GET['ass'] : '%';
+$cod_geral = isset($_GET['cod_org']) ? $_GET['cod_org'] : '1';
+$ano_geral = isset($_GET['ano']) ? $_GET['ano'] : '%';
+$tipo_geral = isset($_GET['tipo_doc']) ? $_GET['tipo_doc'] : '1';
+$numdoc_geral = isset($_GET['num_doc']) ? $_GET['num_doc'] : '%';
+
+$query_geral = sprintf("SELECT num_doc.id_num, num_doc.cod_org, num_doc.elaborador, num_tipodoc.desc_tipo_doc, num_doc.data, num_doc.num_doc, num_doc.cod_sec, num_doc.ano_doc, num_doc.assunto, num_doc.destino FROM num_doc INNER JOIN num_tipodoc ON (num_doc.tipo_doc = num_tipodoc.tipo_doc) WHERE (num_doc.cod_org = %s AND num_doc.tipo_doc = %s AND num_doc.num_doc LIKE %s AND num_doc.ano_doc LIKE %s AND num_doc.assunto LIKE %s AND num_doc.destino LIKE %s) ORDER BY num_doc.num_doc DESC", 
+    GetSQLValueString($conexao, $cod_geral, "int"),
+    GetSQLValueString($conexao, $tipo_geral, "int"),
+    GetSQLValueString($conexao, $numdoc_geral, "text"),
+    GetSQLValueString($conexao, $ano_geral, "text"),
+    GetSQLValueString($conexao, "%" . $ass_geral . "%", "text"),
+    GetSQLValueString($conexao, "%" . $des_geral . "%", "text")
+);
+$geral_result = mysqli_query($conexao, $query_geral);
+$row_geral = mysqli_fetch_assoc($geral_result);
+$totalRows_geral = mysqli_num_rows($geral_result);
 
 $colname_ano = "1";
 if (isset($_GET['cod_org'])) {

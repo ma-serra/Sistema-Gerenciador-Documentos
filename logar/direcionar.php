@@ -106,7 +106,9 @@ if ($user_level == 4): ?>
 elseif ($user_level == 1): ?>
 <table width="100%" border="0" align="center">
   <tr bgcolor="#FFFFFF"> 
-    <td width="15%"><div align="center"><strong><a href="../numerador/atualizarorg.php?org_id=<?php echo $row_user['org_id']; ?>" target="numerador">INFORMAÇÃO DA SEÇÃO</a></strong></div></td>
+    
+    <td width="15%"><div align="center"><strong><a href="../numerador/org.php?org_id=<?php echo $row_user['org_id']; ?>" target="numerador">INFORMAÇÃO DA SEÇÃO</a></strong></div></td>
+
     <td width="9%"> <div align="center"><strong><a href="../numerador/listauser.php?rerg=%&org_id=<?php echo $row_user['org_id']; ?>" target="numerador">USUÁRIOS</a></strong></div></td>
     <td width="21%"><div align="center"><strong><a href="../numerador/listaudoctipo.php?cod_org=<?php echo $row_user['org_id']; ?>&re=<?php echo $row_user['rerg']; ?>" target="numerador">ABERTURA DE NOVO NUMERADOR</a></strong></div></td>
     <td width="18%"><div align="center"><strong><a href="../numerador/listaudocgerar.php?cod_org=<?php echo $row_user['org_id']; ?>&re=<?php echo $row_user['rerg']; ?>" target="numerador">GERAR NOVO NÚMERO</a></strong></div></td>
