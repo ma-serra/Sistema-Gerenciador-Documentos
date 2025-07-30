@@ -31,8 +31,8 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
-  $updateSQL = sprintf("UPDATE num_tipodoc SET DescTipo_Doc=%s WHERE Tipo_Doc=%s",
-                       GetSQLValueString($_POST['DescTipo_Doc'], "text"),
+  $updateSQL = sprintf("UPDATE num_tipodoc SET desc_tipo_doc=%s WHERE Tipo_Doc=%s",
+                       GetSQLValueString($_POST['desc_tipo_doc'], "text"),
                        GetSQLValueString($_POST['Tipo_Doc'], "int"));
 
   mysqli_select_db($conexao, $database_conexao);
@@ -68,7 +68,7 @@ $totalRows_listatipodoc = mysqli_num_rows($listatipodoc);
   <table align="center">
     <tr valign="baseline"> 
       <td nowrap align="right">Atualizar tipo de Documento:</td>
-      <td><input type="text" name="DescTipo_Doc" value="<?php echo $row_listatipodoc['DescTipo_Doc']; ?>" size="32"></td>
+      <td><input type="text" name="desc_tipo_doc" value="<?php echo $row_listatipodoc['desc_tipo_doc']; ?>" size="32"></td>
     </tr>
     <tr valign="baseline"> 
       <td nowrap align="right">&nbsp;</td>

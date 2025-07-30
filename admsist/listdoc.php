@@ -9,7 +9,7 @@ $mocolor = $mocolor1;
 <?php require_once('../Connections/conexao.php'); ?>
 <?php
 mysqli_select_db($conexao, $database_conexao);
-$query_listatipodoc = "SELECT * FROM num_tipodoc ORDER BY DescTipo_Doc ASC";
+$query_listatipodoc = "SELECT * FROM num_tipodoc ORDER BY desc_tipo_doc ASC";
 $listatipodoc = mysqli_query($conexao, $query_listatipodoc);
 $row_listatipodoc = mysqli_fetch_assoc($listatipodoc);
 $totalRows_listatipodoc = mysqli_num_rows($listatipodoc);
@@ -30,7 +30,7 @@ $totalRows_listatipodoc = mysqli_num_rows($listatipodoc);
 echo " style=\"background-color:$mocolor\" onMouseOver=\"this.style.backgroundColor='$mocolor3'\" onMouseOut=\"this.style.backgroundColor='$mocolor'\"";
 // technocurve arc 3 php mv block2/3 end
 ?>> 
-    <td width="74%" height="13"><div align="center"><?php echo $row_listatipodoc['DescTipo_Doc']; ?> </div></td>
+    <td width="74%" height="13"><div align="center"><?php echo $row_listatipodoc['desc_tipo_doc']; ?> </div></td>
     <td width="26%" height="13"><div align="center"><a href="atualizardoctipo.php?Tipo_Doc=<?php echo $row_listatipodoc['Tipo_Doc']; ?>">Atualizar</a></div></td>
   </tr>
   <?php 

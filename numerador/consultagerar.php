@@ -9,11 +9,11 @@ $mocolor = $mocolor1;
 <?php require_once('../Connections/conexao.php'); ?>
 <?php
 $colname_listadoc = "1";
-if (isset($_GET['Cod_Org'])) {
-  $colname_listadoc = $_GET['Cod_Org'];
+if (isset($_GET['cod_org'])) {
+  $colname_listadoc = $_GET['cod_org'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_listadoc = sprintf("SELECT     num_doc.Cod_Org     , num_doc.Tipo_Doc     , num_tipodoc.DescTipo_Doc     , num_doc.Ano_Doc     , num_doc.Num_Doc     , num_org.org_CodSecao FROM     num_doc     INNER JOIN num_tipodoc          ON (num_doc.Tipo_Doc = num_tipodoc.Tipo_Doc)     INNER JOIN num_org          ON (num_doc.Cod_Org = num_org.org_id) WHERE (num_doc.Cod_Org = '%s') GROUP BY num_doc.Tipo_Doc;", $colname_listadoc);
+$query_listadoc = sprintf("SELECT     num_doc.cod_org     , num_doc.Tipo_Doc     , num_tipodoc.desc_tipo_doc     , num_doc.Ano_Doc     , num_doc.Num_Doc     , num_org.org_CodSecao FROM     num_doc     INNER JOIN num_tipodoc          ON (num_doc.Tipo_Doc = num_tipodoc.Tipo_Doc)     INNER JOIN num_org          ON (num_doc.cod_org = num_org.org_id) WHERE (num_doc.cod_org = '%s') GROUP BY num_doc.Tipo_Doc;", $colname_listadoc);
 $listadoc = mysqli_query($conexao, $query_listadoc);
 $row_listadoc = mysqli_fetch_assoc($listadoc);
 $totalRows_listadoc = mysqli_num_rows($listadoc);
@@ -42,7 +42,7 @@ echo " style=\"background-color:$mocolor\" onMouseOver=\"this.style.backgroundCo
 ?>>
           <td height="13"> 
             <div align="left">
-              <a href="geralcons.php?cod_org=<?php echo $row_listadoc['Cod_Org']; ?>&Tipo_Doc=<?php echo $row_listadoc['Tipo_Doc']; ?>&ano=<?php echo date("y");  ?>&re=<?php echo $_GET['re']; ?>&num_doc=%&ass=%&des=%" target="congeral"><?php echo $row_listadoc['DescTipo_Doc']; ?></a></div></td>
+              <a href="geralcons.php?cod_org=<?php echo $row_listadoc['cod_org']; ?>&Tipo_Doc=<?php echo $row_listadoc['Tipo_Doc']; ?>&ano=<?php echo date("y");  ?>&re=<?php echo $_GET['re']; ?>&num_doc=%&ass=%&des=%" target="congeral"><?php echo $row_listadoc['desc_tipo_doc']; ?></a></div></td>
         </tr>
         <?php 
 // technocurve arc 3 php mv block3/3 start

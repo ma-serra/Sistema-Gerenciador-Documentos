@@ -10,7 +10,7 @@
 <div align="center">
   <p>&nbsp;</p>
   <p>&nbsp;</p>
-  <p><a href="listaudoctipo.php?Cod_Org=<?php echo $_GET['Cod_Org']; ?>"onMouseOver="window.status='sua mensagem aqui'; return true"> 
+  <p><a href="listaudoctipo.php?cod_org=<?php echo $_GET['cod_org']; ?>"onMouseOver="window.status='sua mensagem aqui'; return true"> 
   <h2>A&Ccedil;&Atilde;O REALIZADA COM &Ecirc;XITO<br>
     <font color="#000099" size="4"><strong><font color="#FFFFFF" size="1"> 
     <script language="JavaScript" type="text/javascript">

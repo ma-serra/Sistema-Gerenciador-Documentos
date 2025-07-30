@@ -23,7 +23,7 @@ $totalRows_tipodoc = mysqli_num_rows($tipodoc);
   <p>&nbsp;</p>
   <p>&nbsp;</p>
   <p> 
-  <h2><?php echo $row_tipodoc['DescTipo_Doc']; ?> n&ordm; <?php echo $_GET['Num_Doc']; ?> / <?php echo $_GET['Cod_Sec']; ?> 
+  <h2><?php echo $row_tipodoc['desc_tipo_doc']; ?> n&ordm; <?php echo $_GET['Num_Doc']; ?> / <?php echo $_GET['Cod_Sec']; ?> 
     / <?php echo $_GET['Ano_Doc']; ?> com &Ecirc;xito</h2>
   </p>
   <font color="#000099" size="4"><strong><font color="#FFFFFF" size="1"> 

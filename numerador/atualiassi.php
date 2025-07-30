@@ -52,11 +52,14 @@ if ((isset($_GET["MM_update"])) && ($_GET["MM_update"] == "form1")) {
 }
 
 $colname_atualizar = "1";
-if (isset($_GET['Id_Num'])) {
-  $colname_atualizar = $_GET['Id_Num'];
+if (isset($_GET['id_num'])) {
+  $colname_atualizar = $_GET['id_num'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_atualizar = sprintf("SELECT num_doc.Id_Num     , num_doc.Cod_Org     , num_doc.Tipo_Doc     , num_tipodoc.DescTipo_Doc     , num_doc.Num_Doc     , num_doc.Cod_Sec     , num_doc.Ano_Doc     , num_doc.ASSUNTO     , num_doc.DESTINO     , num_doc.DATA     , num_doc.ELABORADOR     , num_doc.obs_doc    , num_doc.ELABORADO     , num_doc.ASSINADO     , num_doc.ENCAMINHADO FROM num_doc     INNER JOIN num_tipodoc          ON (num_doc.Tipo_Doc = num_tipodoc.Tipo_Doc) WHERE (num_doc.Id_Num = '%s')", $colname_atualizar);
+$query_atualizar = sprintf("SELECT d.id_num, d.cod_org, t.desc_tipo_doc, d.num_doc, d.cod_sec, d.ano_doc, d.assunto, d.destino, d.data, d.elaborador, d.obs_doc, d.elaborado, d.assinado, d.encaminhado 
+                           FROM num_doc d 
+                           INNER JOIN num_tipodoc t ON (d.tipo_doc = t.tipo_doc) 
+                           WHERE (d.id_num = %s)", GetSQLValueString($colname_atualizar, "int"));
 $atualizar = mysqli_query($conexao, $query_atualizar);
 $row_atualizar = mysqli_fetch_assoc($atualizar);
 $totalRows_atualizar = mysqli_num_rows($atualizar);
@@ -72,7 +75,7 @@ $totalRows_atualizar = mysqli_num_rows($atualizar);
 <form action="<?php echo $editFormAction; ?>" method="get" name="form1">
   <table width="400" border="12" align="center" cellpadding="0" cellspacing="0" bordercolor="#CCCCCC">
     <tr> 
-      <td height="28" colspan="2" bgcolor="#CCCCCC"><div align="center"><font color="#000099" size="3">ATUALIZAR&nbsp;&nbsp;<?php echo $row_atualizar['DescTipo_Doc']; ?> 
+      <td height="28" colspan="2" bgcolor="#CCCCCC"><div align="center"><font color="#000099" size="3">ATUALIZAR&nbsp;&nbsp;<?php echo $row_atualizar['desc_tipo_doc']; ?> 
           n&ordm; <?php echo $row_atualizar['Num_Doc']; ?> / <?php echo $row_atualizar['Cod_Sec']; ?> 
           / <?php echo $row_atualizar['Ano_Doc']; ?></font> </div></td>
     </tr>
@@ -111,7 +114,7 @@ $totalRows_atualizar = mysqli_num_rows($atualizar);
             <td align="right" nowrap bgcolor="#CCCCCC"> <div align="center"> 
                 <input type="hidden" name="MM_update" value="form1">
                 <input name="submit" type="submit" value="Atualizar registro">
-                <input name="id_num" type="hidden" id="id_num2" value="<?php echo $row_atualizar['Id_Num']; ?>">
+                <input name="id_num" type="hidden" id="id_num2" value="<?php echo $row_atualizar['id_num']; ?>">
                 <input name="ASSINADO" type="hidden" id="ASSINADO2" value="<?php echo $row_atualizar['ASSINADO']; ?>">
                 <input name="ENCAMINHADO" type="hidden" id="ENCAMINHADO2" value="<?php echo $row_atualizar['ENCAMINHADO']; ?>">
               </div></td>

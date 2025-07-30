@@ -56,8 +56,8 @@ if (isset($_GET['Num_Doc'])) {
   $numero_novo = $_GET['Num_Doc'];
 }
 $colname_novo = "1";
-if (isset($_GET['Cod_Org'])) {
-  $colname_novo = $_GET['Cod_Org'];
+if (isset($_GET['cod_org'])) {
+  $colname_novo = $_GET['cod_org'];
 }
 $tipo_novo = "1";
 if (isset($_GET['Tipo_Doc'])) {
@@ -68,7 +68,7 @@ if (isset($_GET['Ano_Doc'])) {
   $ano_novo = $_GET['Ano_Doc'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_novo = sprintf("SELECT * FROM num_doc WHERE Cod_Org = '%s'  AND Tipo_Doc = '%s' AND Ano_Doc = '%s'  AND Num_Doc = '%s'", $colname_novo,$tipo_novo,$ano_novo,$numero_novo);
+$query_novo = sprintf("SELECT * FROM num_doc WHERE cod_org = '%s'  AND Tipo_Doc = '%s' AND Ano_Doc = '%s'  AND Num_Doc = '%s'", $colname_novo,$tipo_novo,$ano_novo,$numero_novo);
 $novo = mysqli_query($conexao, $query_novo);
 $row_novo = mysqli_fetch_assoc($novo);
 $totalRows_novo = mysqli_num_rows($novo);
@@ -78,7 +78,7 @@ if (isset($_GET['Tipo_Doc'])) {
   $colname_documento = $_GET['Tipo_Doc'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_documento = sprintf("SELECT * FROM num_tipodoc WHERE Tipo_Doc = %s ORDER BY DescTipo_Doc ASC", $colname_documento);
+$query_documento = sprintf("SELECT * FROM num_tipodoc WHERE Tipo_Doc = %s ORDER BY desc_tipo_doc ASC", $colname_documento);
 $documento = mysqli_query($conexao, $query_documento);
 $row_documento = mysqli_fetch_assoc($documento);
 $totalRows_documento = mysqli_num_rows($documento);
@@ -94,7 +94,7 @@ $totalRows_documento = mysqli_num_rows($documento);
 <form action="<?php echo $editFormAction; ?>" method="get" name="form1">
   <table width="400" border="12" align="center" cellpadding="0" cellspacing="0" bordercolor="#CCCCCC">
     <tr> 
-      <td height="28" colspan="2" bgcolor="#CCCCCC"><div align="center"><font color="#000099" size="3">CRIADO&nbsp;&nbsp;<?php echo $row_documento['DescTipo_Doc']; ?> N&ordm; <?php echo $row_novo['Num_Doc']; ?> / <?php echo $row_novo['Cod_Sec']; ?> / <?php echo $row_novo['Ano_Doc']; ?></font> </div></td>
+      <td height="28" colspan="2" bgcolor="#CCCCCC"><div align="center"><font color="#000099" size="3">CRIADO&nbsp;&nbsp;<?php echo $row_documento['desc_tipo_doc']; ?> N&ordm; <?php echo $row_novo['Num_Doc']; ?> / <?php echo $row_novo['Cod_Sec']; ?> / <?php echo $row_novo['Ano_Doc']; ?></font> </div></td>
     </tr>
     <tr> 
       <td height="193" colspan="2" bgcolor="#FFFFFF"> <table width="100%" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#CCCCCC">
@@ -130,7 +130,7 @@ $totalRows_documento = mysqli_num_rows($documento);
           <tr valign="baseline"> 
             <td align="right" nowrap bgcolor="#CCCCCC"> <div align="center"> 
                 <input name="submit2" type="submit" value="novo registro">
-                <input name="id_num" type="hidden" id="id_num" value="<?php echo $row_novo['Id_Num']; ?>">
+                <input name="id_num" type="hidden" id="id_num" value="<?php echo $row_novo['id_num']; ?>">
                 <input name="ASSINADO" type="hidden" id="ASSINADO" value="<?php echo $row_novo['ASSINADO']; ?>">
                 <input name="ENCAMINHADO" type="hidden" id="ENCAMINHADO" value="<?php echo $row_novo['ENCAMINHADO']; ?>">
               </div></td>

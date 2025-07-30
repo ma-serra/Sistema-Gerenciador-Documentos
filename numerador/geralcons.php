@@ -33,7 +33,7 @@ if (isset($_GET['num_doc'])) {
   $numdoc_geral = $_GET['num_doc'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_geral = sprintf("SELECT num_doc.Id_Num     , num_doc.Cod_Org     , num_doc.ELABORADOR   , num_tipodoc.DescTipo_Doc     , num_tipodoc.Tipo_Doc    , num_doc.DATA      , num_doc.Num_Doc     , num_doc.Cod_Sec     , num_doc.Ano_Doc     , num_doc.ASSUNTO     , num_doc.DESTINO FROM num_doc     INNER JOIN num_tipodoc          ON (num_doc.Tipo_Doc = num_tipodoc.Tipo_Doc) WHERE (num_doc.Cod_Org = '%s'     AND num_tipodoc.Tipo_Doc = '%s'     AND num_doc.Num_Doc LIKE '%s'     AND num_doc.Ano_Doc LIKE '%s' AND num_doc.ASSUNTO LIKE '%%%s%%' AND num_doc.DESTINO LIKE '%%%s%%') ORDER BY num_doc.Num_Doc DESC", $cod_geral,$Tipo_geral,$numdoc_geral,$ano_geral,$ass_geral,$des_geral);
+$query_geral = sprintf("SELECT num_doc.id_num     , num_doc.cod_org     , num_doc.ELABORADOR   , num_tipodoc.desc_tipo_doc     , num_tipodoc.Tipo_Doc    , num_doc.DATA      , num_doc.Num_Doc     , num_doc.Cod_Sec     , num_doc.Ano_Doc     , num_doc.ASSUNTO     , num_doc.DESTINO FROM num_doc     INNER JOIN num_tipodoc          ON (num_doc.Tipo_Doc = num_tipodoc.Tipo_Doc) WHERE (num_doc.cod_org = '%s'     AND num_tipodoc.Tipo_Doc = '%s'     AND num_doc.Num_Doc LIKE '%s'     AND num_doc.Ano_Doc LIKE '%s' AND num_doc.ASSUNTO LIKE '%%%s%%' AND num_doc.DESTINO LIKE '%%%s%%') ORDER BY num_doc.Num_Doc DESC", $cod_geral,$Tipo_geral,$numdoc_geral,$ano_geral,$ass_geral,$des_geral);
 $geral = mysqli_query($conexao, $query_geral);
 $row_geral = mysqli_fetch_assoc($geral);
 $totalRows_geral = mysqli_num_rows($geral);
@@ -47,7 +47,7 @@ if (isset($_GET['Tipo_Doc'])) {
   $Tipo_ano = $_GET['Tipo_Doc'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_ano = sprintf("SELECT Cod_Org     , Tipo_Doc     , Ano_Doc FROM num_doc WHERE (Cod_Org = '%s'     AND Tipo_Doc = '%s') GROUP BY Ano_Doc", $colname_ano,$Tipo_ano);
+$query_ano = sprintf("SELECT cod_org     , Tipo_Doc     , Ano_Doc FROM num_doc WHERE (cod_org = '%s'     AND Tipo_Doc = '%s') GROUP BY Ano_Doc", $colname_ano,$Tipo_ano);
 $ano = mysqli_query($conexao, $query_ano);
 $row_ano = mysqli_fetch_assoc($ano);
 $totalRows_ano = mysqli_num_rows($ano);
@@ -61,7 +61,7 @@ if (isset($_GET['Tipo_Doc'])) {
   $Tipo_nurdoc = $_GET['Tipo_Doc'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_nurdoc = sprintf("SELECT Cod_Org     , Tipo_Doc     , Ano_Doc , Num_Doc FROM num_doc WHERE (Cod_Org = '%s'     AND Tipo_Doc = '%s') GROUP BY Num_Doc", $colname_nurdoc,$Tipo_nurdoc);
+$query_nurdoc = sprintf("SELECT cod_org     , Tipo_Doc     , Ano_Doc , Num_Doc FROM num_doc WHERE (cod_org = '%s'     AND Tipo_Doc = '%s') GROUP BY Num_Doc", $colname_nurdoc,$Tipo_nurdoc);
 $nurdoc = mysqli_query($conexao, $query_nurdoc);
 $row_nurdoc = mysqli_fetch_assoc($nurdoc);
 $totalRows_nurdoc = mysqli_num_rows($nurdoc);
@@ -133,7 +133,7 @@ do {
 echo " style=\"background-color:$mocolor\" onMouseOver=\"this.style.backgroundColor='$mocolor3'\" onMouseOut=\"this.style.backgroundColor='$mocolor'\"";
 // technocurve arc 3 php mv block2/3 end
 ?>> 
-    <td width="24%"> <div align="center"><font color="#FF0000"><strong><font color="#000066"><?php echo $row_geral['DescTipo_Doc']; ?></font></strong>&nbsp;</font></div>
+    <td width="24%"> <div align="center"><font color="#FF0000"><strong><font color="#000066"><?php echo $row_geral['desc_tipo_doc']; ?></font></strong>&nbsp;</font></div>
       <div align="center">N&ordm; <?php echo $row_geral['Num_Doc']; ?> / <?php echo $row_geral['Cod_Sec']; ?> / <?php echo $row_geral['Ano_Doc']; ?></div>
       <div align="center"><?php echo Consert_DataBr($row_geral['DATA']); ?></div></td>
     <td width="76%" align="left" valign="top"><font color="#0000FF"><strong>ASSUNTO</strong>:</font>&nbsp;<?php echo $row_geral['ASSUNTO']; ?> <br> <div align="left"><font color="#0000FF"><strong>DESTIO</strong>:</font> 

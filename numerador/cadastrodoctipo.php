@@ -31,8 +31,8 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
-  $insertSQL = sprintf("INSERT INTO num_tipodoc (DescTipo_Doc) VALUES (%s)",
-                       GetSQLValueString($_POST['DescTipo_Doc'], "text"));
+  $insertSQL = sprintf("INSERT INTO num_tipodoc (desc_tipo_doc) VALUES (%s)",
+                       GetSQLValueString($_POST['desc_tipo_doc'], "text"));
 
   mysqli_select_db($conexao, $database_conexao);
   $Result1 = mysqli_query($conexao, $insertSQL);
@@ -57,7 +57,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
   <table align="center">
     <tr valign="baseline"> 
       <td nowrap align="right">Novo tipo de Documento:</td>
-      <td><input type="text" name="DescTipo_Doc" value="" size="32"></td>
+      <td><input type="text" name="desc_tipo_doc" value="" size="32"></td>
     </tr>
     <tr valign="baseline"> 
       <td nowrap align="right">&nbsp;</td>
