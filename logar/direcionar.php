@@ -6,7 +6,7 @@ if (isset($_GET['re'])) {
   $colname_user = $_GET['re'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_user = sprintf("SELECT num_user.rerg     , num_user.postfunc     , num_user.guerra     , num_user.senha     , num_user.Org_id     , num_org.org_descUnid     , num_org.org_CodSecao     , num_org.org_desc FROM numerdor_doc.num_user     INNER JOIN numerdor_doc.num_org          ON (num_user.Org_id = num_org.org_id) WHERE (num_user.rerg = '%s')", $colname_user);
+$query_user = sprintf("SELECT num_user.rerg     , num_user.postfunc     , num_user.guerra     , num_user.senha     , num_user.Org_id     , num_org.org_descUnid     , num_org.org_CodSecao     , num_org.org_desc FROM numerador_db.num_user     INNER JOIN numerador_db.num_org          ON (num_user.Org_id = num_org.org_id) WHERE (num_user.rerg = '%s')", $colname_user);
 $user = mysqli_query($conexao, $query_user);
 $row_user = mysqli_fetch_assoc($user);
 $totalRows_user = mysqli_num_rows($user);
@@ -56,7 +56,7 @@ if (isset($_GET['org_Unidade'])) {
   $colname_opm = $_GET['org_Unidade'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_opm = sprintf("SELECT num_org.org_id     , num_org.org_Unidade     , num_opm.opm_prefixo     , num_opm.opm_descricao     , num_org.org_CodSecao     , num_org.org_desc FROM numerdor_doc.num_org     INNER JOIN numerdor_doc.num_opm          ON (num_org.org_Unidade = num_opm.opm_codigo) WHERE (num_org.org_Unidade LIKE '%s%%')", $colname_opm);
+$query_opm = sprintf("SELECT num_org.org_id     , num_org.org_Unidade     , num_opm.opm_prefixo     , num_opm.opm_descricao     , num_org.org_CodSecao     , num_org.org_desc FROM numerador_db.num_org     INNER JOIN numerador_db.num_opm          ON (num_org.org_Unidade = num_opm.opm_codigo) WHERE (num_org.org_Unidade LIKE '%s%%')", $colname_opm);
 $opm = mysqli_query($conexao, $query_opm);
 $row_opm = mysqli_fetch_assoc($opm);
 $totalRows_opm = mysqli_num_rows($opm);

@@ -34,14 +34,14 @@ Cole o projeto dentro do htdocs do Xampp
 Edite o arquivo conexao.php dentro da pasta conections
 ```bash
     $hostname_conexao = "localhost";
-    $database_conexao = "numerdor_doc";
+    $database_conexao = "numerador_db";
     $username_conexao = "root";
     $password_conexao = "";
 ```
 
 Apos isto, abra o navegador localhost/phpmyadmin
 
-Digite um nome do banco para criar nome_do_banco de preferencia use numerdor_doc
+Digite um nome do banco para criar nome_do_banco de preferencia use numerador_db
 
 Clique em importar, clique em  escolher e selecione o arquivo banco_de_dados.sql que foi enviado junto no anexo.
 

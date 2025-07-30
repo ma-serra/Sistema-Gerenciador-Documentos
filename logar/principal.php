@@ -21,7 +21,7 @@ if (isset($_SESSION['login'])) {
 
 
 mysqli_select_db($conexao, $database_conexao);
-$query_opm = sprintf("SELECT     num_org.org_id     , num_org.org_Unidade     , num_opm.opm_prefixo     , num_opm.opm_descricao     , num_org.org_CodSecao     , num_org.org_desc     , num_user.Org_id     , num_user.rerg FROM     numerdor_doc.num_org     INNER JOIN numerdor_doc.num_opm          ON (num_org.org_Unidade = num_opm.opm_codigo)     INNER JOIN numerdor_doc.num_user          ON (num_user.Org_id = num_org.org_id) WHERE (num_user.rerg ='%s');", $colname_opm);
+$query_opm = sprintf("SELECT     num_org.org_id     , num_org.org_Unidade     , num_opm.opm_prefixo     , num_opm.opm_descricao     , num_org.org_CodSecao     , num_org.org_desc     , num_user.Org_id     , num_user.rerg FROM     numerador_db.num_org     INNER JOIN numerador_db.num_opm          ON (num_org.org_Unidade = num_opm.opm_codigo)     INNER JOIN numerador_db.num_user          ON (num_user.Org_id = num_org.org_id) WHERE (num_user.rerg ='%s');", $colname_opm);
 $opm = mysqli_query($conexao, $query_opm);
 $row_opm = mysqli_fetch_assoc($opm);
 $totalRows_opm = mysqli_num_rows($opm);

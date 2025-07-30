@@ -3,7 +3,7 @@
 # Type="MYSQL"
 # HTTP="true"
 $hostname_conexao = "localhost";
-$database_conexao = "numerdor_doc";
+$database_conexao = "numerador_db";
 $username_conexao = "root";
 $password_conexao = "";
 $conexao = mysqli_connect($hostname_conexao, $username_conexao, $password_conexao, $database_conexao);
