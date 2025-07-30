@@ -46,17 +46,17 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_GET["MM_insert"])) && ($_GET["MM_insert"] == "form1")) {
-  $insertSQL = sprintf("INSERT INTO num_doc (cod_org, obs_doc, Tipo_Doc, Num_Doc, Cod_Sec, Ano_Doc, ASSUNTO, DESTINO, `DATA`, ELABORADOR, ELABORADO, ASSINADO, ENCAMINHADO) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+  $insertSQL = sprintf("INSERT INTO num_doc (cod_org, obs_doc, tipo_doc, num_doc, cod_sec, ano_doc, assunto, destino, `data`, elaborador, ELABORADO, ASSINADO, ENCAMINHADO) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                        GetSQLValueString($_GET['cod_org'], "text"),
                        GetSQLValueString($_GET['obeservacao'], "text"),
-                       GetSQLValueString($_GET['Tipo_Doc'], "text"),
-                       GetSQLValueString($_GET['Num_Doc'], "text"),
-                       GetSQLValueString($_GET['Cod_Sec'], "text"),
-                       GetSQLValueString($_GET['Ano_Doc'], "text"),
-                       GetSQLValueString($_GET['ASSUNTO'], "text"),
-                       GetSQLValueString($_GET['DESTINO'], "text"),
-                       GetSQLValueString($_GET['DATA'], "date"),
-                       GetSQLValueString($_GET['ELABORADOR'], "text"),
+                       GetSQLValueString($_GET['tipo_doc'], "text"),
+                       GetSQLValueString($_GET['num_doc'], "text"),
+                       GetSQLValueString($_GET['cod_sec'], "text"),
+                       GetSQLValueString($_GET['ano_doc'], "text"),
+                       GetSQLValueString($_GET['assunto'], "text"),
+                       GetSQLValueString($_GET['destino'], "text"),
+                       GetSQLValueString($_GET['data'], "date"),
+                       GetSQLValueString($_GET['elaborador'], "text"),
                        GetSQLValueString($_GET['ELABORADO'], "int"),
                        GetSQLValueString($_GET['ASSINADO'], "int"),
                        GetSQLValueString($_GET['ENCAMINHADO'], "int"));
@@ -77,7 +77,7 @@ if (isset($_GET['cod_org'])) {
   $colname_listadoc = $_GET['cod_org'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_listadoc = sprintf("SELECT num_doc.cod_org     , num_doc.Tipo_Doc     , num_tipodoc.desc_tipo_doc     , num_doc.Ano_Doc     , num_doc.Num_Doc     , num_org.org_CodSecao FROM num_doc     INNER JOIN num_tipodoc          ON (num_doc.Tipo_Doc = num_tipodoc.Tipo_Doc)     INNER JOIN num_org          ON (num_doc.cod_org = num_org.org_id) WHERE (num_doc.cod_org = '%s') GROUP BY num_doc.Tipo_Doc", $colname_listadoc);
+$query_listadoc = sprintf("SELECT num_doc.cod_org     , num_doc.tipo_doc     , num_tipodoc.desc_tipo_doc     , num_doc.ano_doc     , num_doc.num_doc     , num_org.org_CodSecao FROM num_doc     INNER JOIN num_tipodoc          ON (num_doc.tipo_doc = num_tipodoc.tipo_doc)     INNER JOIN num_org          ON (num_doc.cod_org = num_org.org_id) WHERE (num_doc.cod_org = '%s') GROUP BY num_doc.tipo_doc", $colname_listadoc);
 $listadoc = mysqli_query($conexao, $query_listadoc);
 $row_listadoc = mysqli_fetch_assoc($listadoc);
 $totalRows_listadoc = mysqli_num_rows($listadoc);
@@ -103,12 +103,12 @@ if (isset($_GET['cod_org'])) {
   $colname_numero = $_GET['cod_org'];
 }
 $tipo_numero = "1";
-if (isset($_GET['Tipo_Doc'])) {
-  $tipo_numero = $_GET['Tipo_Doc'];
+if (isset($_GET['tipo_doc'])) {
+  $tipo_numero = $_GET['tipo_doc'];
 }
 
 mysqli_select_db($conexao, $database_conexao);
-$query_numero = sprintf("SELECT* FROM     num_doc WHERE (cod_org = '%s'     AND Tipo_Doc = '%s') ORDER BY Ano_Doc DESC, Num_Doc DESC;", $colname_numero,$tipo_numero);
+$query_numero = sprintf("SELECT* FROM     num_doc WHERE (cod_org = '%s'     AND tipo_doc = '%s') ORDER BY ano_doc DESC, num_doc DESC;", $colname_numero,$tipo_numero);
 $numero = mysqli_query($conexao, $query_numero);
 $row_numero = mysqli_fetch_assoc($numero);
 $totalRows_numero = mysqli_num_rows($numero);
@@ -126,10 +126,10 @@ if ($ano == $ano1){
 $nbi = $row_connbi['numero_nbi']+1;
 }
 */
-$ano = !isset($row_numero['Ano_Doc']);
+$ano = !isset($row_numero['ano_doc']);
 $ano1 = date ("Y");
 if ($ano == $ano1){
-$numdoc = !isset($row_numero['Num_Doc']);
+$numdoc = !isset($row_numero['num_doc']);
 }
 else
 {$numdoc = 1;}
@@ -190,7 +190,7 @@ if ($mocolor == $mocolor1) {
                         do Documento, se for o primeiro inicie com 0001 ou se 
                         possui uma sequ&ecirc;ncia inicie com o pr&oacute;ximo 
                         n&uacute;mero utilizando 4 caracteres:<br>
-                        <input name="Num_Doc" type="text" id="Num_Doc2" onBlur="Completar(4,this.value.length,'0')" size="4">
+                        <input name="num_doc" type="text" id="Num_Doc2" onBlur="Completar(4,this.value.length,'0')" size="4">
                         <font color="#FF0000"><br>
                         Obs: obrigat&oacute;rio o uso de 4 caracteres,favor completar 
                         com o valor '0' &agrave; esquerda.</font></div></td>
@@ -198,12 +198,12 @@ if ($mocolor == $mocolor1) {
                   <tr> 
                     <td height="13"><div align="center"><font color="#FF0000">Selecione 
                         o tipo de documento: se n&atilde;o consta <br>
-                        <select name="Tipo_Doc" id="select2">
+                        <select name="tipo_doc" id="select2">
                           <option value="">Selecionar</option>
                           <?php
 do {  
 ?>
-                          <option value="<?php echo $row_documento['Tipo_Doc']?>"><?php echo $row_documento['desc_tipo_doc']?></option>
+                          <option value="<?php echo $row_documento['tipo_doc']?>"><?php echo $row_documento['desc_tipo_doc']?></option>
                           <?php
 } while ($row_documento = mysqli_fetch_assoc($documento));
   $rows = mysqli_num_rows($documento);
@@ -217,13 +217,13 @@ do {
                         novo</a> </font></div></td>
                   </tr>
                   <tr> 
-                    <td height="13"><div align="center">ASSUNTO:<br>
-                        <textarea name="ASSUNTO" cols="60" rows="2"></textarea>
+                    <td height="13"><div align="center">assunto:<br>
+                        <textarea name="assunto" cols="60" rows="2"></textarea>
                       </div></td>
                   </tr>
                   <tr> 
-                    <td height="13"><div align="center">DESTINO:<br>
-                        <textarea name="DESTINO" cols="60" rows="2"></textarea>
+                    <td height="13"><div align="center">destino:<br>
+                        <textarea name="destino" cols="60" rows="2"></textarea>
                       </div></td>
                   </tr>
                   <tr> 
@@ -240,12 +240,12 @@ do {
                   </tr>
                   <tr> 
                     <td height="13" bgcolor="#CCCCCC"> <div align="center"> 
-                        <input type="hidden" name="DATA" value="<?php echo date("Y-m-d");  ?>" size="32">
-                        <input type="hidden" name="Ano_Doc" value="<?php echo $ano1 ?>" size="32">
-                        <input type="hidden" name="Cod_Sec" value="<?php echo $row_Recordset1['org_CodSecao']; ?>" size="32">
+                        <input type="hidden" name="data" value="<?php echo date("Y-m-d");  ?>" size="32">
+                        <input type="hidden" name="ano_doc" value="<?php echo $ano1 ?>" size="32">
+                        <input type="hidden" name="cod_sec" value="<?php echo $row_Recordset1['org_CodSecao']; ?>" size="32">
                         <input type="hidden" name="cod_org" value="<?php echo $row_Recordset1['org_id']; ?>" size="32">
                         <input name="submit" type="submit" value="Inserir registro">
-                        <input type="hidden" name="ELABORADOR" value="<?php echo $_GET['re']; ?>" size="32">
+                        <input type="hidden" name="elaborador" value="<?php echo $_GET['re']; ?>" size="32">
                         <input name="ASSINADO" type="hidden" id="ASSINADO3" value="1">
                         <input name="ENCAMINHADO" type="hidden" id="ENCAMINHADO3" value="1">
                       </div></td>

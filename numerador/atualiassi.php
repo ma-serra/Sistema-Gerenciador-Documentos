@@ -32,8 +32,8 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 if ((isset($_GET["MM_update"])) && ($_GET["MM_update"] == "form1")) {
   $updateSQL = sprintf("UPDATE num_doc SET assunto=%s, destino=%s, elaborado=%s, assinado=%s, encaminhado=%s, obs_doc=%s WHERE id_num=%s",
-    GetSQLValueString($_GET['ASSUNTO'], "text"),
-    GetSQLValueString($_GET['DESTINO'], "text"),
+    GetSQLValueString($_GET['assunto'], "text"),
+    GetSQLValueString($_GET['destino'], "text"),
     GetSQLValueString($_GET['ELABORADO'], "int"),
     GetSQLValueString($_GET['ASSINADO'], "int"),
     GetSQLValueString($_GET['ENCAMINHADO'], "int"),
@@ -76,25 +76,25 @@ $totalRows_atualizar = mysqli_num_rows($atualizar);
   <table width="400" border="12" align="center" cellpadding="0" cellspacing="0" bordercolor="#CCCCCC">
     <tr> 
       <td height="28" colspan="2" bgcolor="#CCCCCC"><div align="center"><font color="#000099" size="3">ATUALIZAR&nbsp;&nbsp;<?php echo $row_atualizar['desc_tipo_doc']; ?> 
-          n&ordm; <?php echo $row_atualizar['Num_Doc']; ?> / <?php echo $row_atualizar['Cod_Sec']; ?> 
-          / <?php echo $row_atualizar['Ano_Doc']; ?></font> </div></td>
+          n&ordm; <?php echo $row_atualizar['num_doc']; ?> / <?php echo $row_atualizar['cod_sec']; ?> 
+          / <?php echo $row_atualizar['ano_doc']; ?></font> </div></td>
     </tr>
     <tr> 
       <td height="193" colspan="2" bgcolor="#FFFFFF"> <table width="100%" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#CCCCCC">
           <tr valign="baseline"> 
-            <td align="right" valign="middle" nowrap bgcolor="#CCCCCC"> <div align="center">ASSUNTO:</div>
+            <td align="right" valign="middle" nowrap bgcolor="#CCCCCC"> <div align="center">assunto:</div>
               <div align="center"> </div></td>
           </tr>
           <tr valign="baseline"> 
-            <td align="right" valign="middle" nowrap><textarea name="ASSUNTO" cols="70" rows="3"><?php echo $row_atualizar['ASSUNTO']; ?></textarea></td>
+            <td align="right" valign="middle" nowrap><textarea name="assunto" cols="70" rows="3"><?php echo $row_atualizar['assunto']; ?></textarea></td>
           </tr>
           <tr valign="baseline"> 
             <td height="17" align="right" valign="middle" nowrap bgcolor="#CCCCCC"> 
-              <div align="center">DESTINO:</div>
+              <div align="center">destino:</div>
               <div align="center"> </div></td>
           </tr>
           <tr valign="baseline"> 
-            <td height="18" align="right" valign="middle" nowrap><textarea name="DESTINO" cols="70" rows="3"><?php echo $row_atualizar['DESTINO']; ?></textarea></td>
+            <td height="18" align="right" valign="middle" nowrap><textarea name="destino" cols="70" rows="3"><?php echo $row_atualizar['destino']; ?></textarea></td>
           </tr>
           <tr valign="baseline"> 
             <td align="right" valign="middle" nowrap bgcolor="#CCCCCC"> <div align="center">OBSERVA��O:</div>

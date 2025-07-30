@@ -31,7 +31,7 @@ echo " style=\"background-color:$mocolor\" onMouseOver=\"this.style.backgroundCo
 // technocurve arc 3 php mv block2/3 end
 ?>> 
     <td width="74%" height="13"><div align="center"><?php echo $row_listatipodoc['desc_tipo_doc']; ?> </div></td>
-    <td width="26%" height="13"><div align="center"><a href="atualizardoctipo.php?Tipo_Doc=<?php echo $row_listatipodoc['Tipo_Doc']; ?>">Atualizar</a></div></td>
+    <td width="26%" height="13"><div align="center"><a href="atualizardoctipo.php?tipo_doc=<?php echo $row_listatipodoc['tipo_doc']; ?>">Atualizar</a></div></td>
   </tr>
   <?php 
 // technocurve arc 3 php mv block3/3 start

@@ -5,7 +5,7 @@ if (isset($_GET['id_num'])) {
   $colname_atualizar = $_GET['id_num'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_atualizar = sprintf("SELECT num_doc.id_num     , num_doc.cod_org     , num_doc.Tipo_Doc     , num_tipodoc.desc_tipo_doc     , num_doc.Num_Doc     , num_doc.Cod_Sec     , num_doc.Ano_Doc     , num_doc.ASSUNTO     , num_doc.DESTINO     , num_doc.DATA     , num_doc.ELABORADOR     , num_doc.obs_doc     , num_doc.ELABORADO     , num_doc.ASSINADO     , num_doc.ENCAMINHADO FROM num_doc     INNER JOIN num_tipodoc          ON (num_doc.Tipo_Doc = num_tipodoc.Tipo_Doc) WHERE (num_doc.id_num = '%s')", $colname_atualizar);
+$query_atualizar = sprintf("SELECT num_doc.id_num     , num_doc.cod_org     , num_doc.tipo_doc     , num_tipodoc.desc_tipo_doc     , num_doc.num_doc     , num_doc.cod_sec     , num_doc.ano_doc     , num_doc.assunto     , num_doc.destino     , num_doc.data     , num_doc.elaborador     , num_doc.obs_doc     , num_doc.ELABORADO     , num_doc.ASSINADO     , num_doc.ENCAMINHADO FROM num_doc     INNER JOIN num_tipodoc          ON (num_doc.tipo_doc = num_tipodoc.tipo_doc) WHERE (num_doc.id_num = '%s')", $colname_atualizar);
 $atualizar = mysqli_query($conexao, $query_atualizar);
 $row_atualizar = mysqli_fetch_assoc($atualizar);
 $totalRows_atualizar = mysqli_num_rows($atualizar);
@@ -23,8 +23,8 @@ $totalRows_atualizar = mysqli_num_rows($atualizar);
   <p>&nbsp;</p>
   <p>&nbsp;</p>
   <p> 
-  <h2><?php echo $row_atualizar['desc_tipo_doc']; ?> n&ordm; <?php echo $row_atualizar['num_doc']; ?> / <font color="#333333"><?php echo $row_atualizar['Cod_Sec']; ?></font> 
-    / <font color="#000000"><?php echo $row_atualizar['Ano_Doc']; ?></font> ATUALIZADO COM &Ecirc;XITO</h2>
+  <h2><?php echo $row_atualizar['desc_tipo_doc']; ?> n&ordm; <?php echo $row_atualizar['num_doc']; ?> / <font color="#333333"><?php echo $row_atualizar['cod_sec']; ?></font> 
+    / <font color="#000000"><?php echo $row_atualizar['ano_doc']; ?></font> ATUALIZADO COM &Ecirc;XITO</h2>
   </p>
   <font color="#000099" size="4"><strong><font color="#FFFFFF" size="1"> 
   <script language="JavaScript" type="text/javascript">

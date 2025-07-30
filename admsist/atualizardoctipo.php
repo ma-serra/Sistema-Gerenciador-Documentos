@@ -31,9 +31,9 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
-  $updateSQL = sprintf("UPDATE num_tipodoc SET desc_tipo_doc=%s WHERE Tipo_Doc=%s",
+  $updateSQL = sprintf("UPDATE num_tipodoc SET desc_tipo_doc=%s WHERE tipo_doc=%s",
                        GetSQLValueString($_POST['desc_tipo_doc'], "text"),
-                       GetSQLValueString($_POST['Tipo_Doc'], "int"));
+                       GetSQLValueString($_POST['tipo_doc'], "int"));
 
   mysqli_select_db($conexao, $database_conexao);
   $Result1 = mysqli_query($conexao, $updateSQL);
@@ -47,11 +47,11 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 }
 
 $colname_listatipodoc = "1";
-if (isset($_GET['Tipo_Doc'])) {
-  $colname_listatipodoc = $_GET['Tipo_Doc'];
+if (isset($_GET['tipo_doc'])) {
+  $colname_listatipodoc = $_GET['tipo_doc'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_listatipodoc = sprintf("SELECT * FROM num_tipodoc WHERE Tipo_Doc = %s", $colname_listatipodoc);
+$query_listatipodoc = sprintf("SELECT * FROM num_tipodoc WHERE tipo_doc = %s", $colname_listatipodoc);
 $listatipodoc = mysqli_query($conexao, $query_listatipodoc);
 $row_listatipodoc = mysqli_fetch_assoc($listatipodoc);
 $totalRows_listatipodoc = mysqli_num_rows($listatipodoc);
@@ -76,7 +76,7 @@ $totalRows_listatipodoc = mysqli_num_rows($listatipodoc);
     </tr>
   </table>
   <input type="hidden" name="MM_update" value="form1">
-  <input type="hidden" name="Tipo_Doc" value="<?php echo $row_listatipodoc['Tipo_Doc']; ?>">
+  <input type="hidden" name="tipo_doc" value="<?php echo $row_listatipodoc['tipo_doc']; ?>">
 </form>
 <p>&nbsp;</p>
   

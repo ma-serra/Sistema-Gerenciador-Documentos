@@ -31,16 +31,16 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_GET["MM_insert"])) && ($_GET["MM_insert"] == "form1")) {
-  $insertSQL = sprintf("INSERT INTO num_doc (cod_org, Tipo_Doc, Num_Doc, Cod_Sec, Ano_Doc, ASSUNTO, DESTINO, `DATA`, ELABORADOR, obs_doc, ELABORADO, ASSINADO, ENCAMINHADO) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+  $insertSQL = sprintf("INSERT INTO num_doc (cod_org, tipo_doc, num_doc, cod_sec, ano_doc, assunto, destino, `data`, elaborador, obs_doc, ELABORADO, ASSINADO, ENCAMINHADO) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                       GetSQLValueString($_GET['cod_org'], "int"),
-                      GetSQLValueString($_GET['Tipo_Doc'], "int"),
-                      GetSQLValueString($_GET['Num_Doc'], "text"),
-                      GetSQLValueString($_GET['Cod_Sec'], "text"),
-                      GetSQLValueString($_GET['Ano_Doc'], "text"),
-                      GetSQLValueString($_GET['ASSUNTO'], "text"),
-                      GetSQLValueString($_GET['DESTINO'], "text"),
-                      GetSQLValueString($_GET['DATA'], "date"),
-                      GetSQLValueString($_GET['ELABORADOR'], "text"),
+                      GetSQLValueString($_GET['tipo_doc'], "int"),
+                      GetSQLValueString($_GET['num_doc'], "text"),
+                      GetSQLValueString($_GET['cod_sec'], "text"),
+                      GetSQLValueString($_GET['ano_doc'], "text"),
+                      GetSQLValueString($_GET['assunto'], "text"),
+                      GetSQLValueString($_GET['destino'], "text"),
+                      GetSQLValueString($_GET['data'], "date"),
+                      GetSQLValueString($_GET['elaborador'], "text"),
                       GetSQLValueString($_GET['observacao'], "text"),
                       GetSQLValueString($_GET['ELABORADO'], "int"),
                       GetSQLValueString($_GET['ASSINADO'], "int"),
@@ -62,17 +62,17 @@ if (isset($_GET['cod_org'])) {
   $colname_listadoc = $_GET['cod_org'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_listadoc = sprintf("SELECT num_doc.cod_org     , num_doc.Tipo_Doc     , num_tipodoc.desc_tipo_doc     , num_doc.Ano_Doc     , num_doc.Num_Doc     , num_org.org_CodSecao FROM num_doc     INNER JOIN num_tipodoc          ON (num_doc.Tipo_Doc = num_tipodoc.Tipo_Doc)     INNER JOIN num_org          ON (num_doc.cod_org = num_org.org_id) WHERE (num_doc.cod_org = '%s') GROUP BY num_doc.Tipo_Doc", $colname_listadoc);
+$query_listadoc = sprintf("SELECT num_doc.cod_org     , num_doc.tipo_doc     , num_tipodoc.desc_tipo_doc     , num_doc.ano_doc     , num_doc.num_doc     , num_org.org_CodSecao FROM num_doc     INNER JOIN num_tipodoc          ON (num_doc.tipo_doc = num_tipodoc.tipo_doc)     INNER JOIN num_org          ON (num_doc.cod_org = num_org.org_id) WHERE (num_doc.cod_org = '%s') GROUP BY num_doc.tipo_doc", $colname_listadoc);
 $listadoc = mysqli_query($conexao, $query_listadoc);
 $row_listadoc = mysqli_fetch_assoc($listadoc);
 $totalRows_listadoc = mysqli_num_rows($listadoc);
 
 $colname_documento = "0";
-if (isset($_GET['Tipo_Doc'])) {
-  $colname_documento = $_GET['Tipo_Doc'];
+if (isset($_GET['tipo_doc'])) {
+  $colname_documento = $_GET['tipo_doc'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_documento = sprintf("SELECT * FROM num_tipodoc WHERE Tipo_Doc = %s ORDER BY desc_tipo_doc ASC", $colname_documento);
+$query_documento = sprintf("SELECT * FROM num_tipodoc WHERE tipo_doc = %s ORDER BY desc_tipo_doc ASC", $colname_documento);
 $documento = mysqli_query($conexao, $query_documento);
 $row_documento = mysqli_fetch_assoc($documento);
 $totalRows_documento = mysqli_num_rows($documento);
@@ -92,11 +92,11 @@ if (isset($_GET['cod_org'])) {
   $colname_numero = $_GET['cod_org'];
 }
 $tipo_numero = "0";
-if (isset($_GET['Tipo_Doc'])) {
-  $tipo_numero = $_GET['Tipo_Doc'];
+if (isset($_GET['tipo_doc'])) {
+  $tipo_numero = $_GET['tipo_doc'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_numero = sprintf("SELECT * FROM num_doc WHERE cod_org = '%s' AND Tipo_Doc = '%s' ORDER BY id_num DESC", $colname_numero,$tipo_numero);
+$query_numero = sprintf("SELECT * FROM num_doc WHERE cod_org = '%s' AND tipo_doc = '%s' ORDER BY id_num DESC", $colname_numero,$tipo_numero);
 $Recordset1 = mysqli_query($conexao, $query_numero);
 $row_Recordset1 = mysqli_fetch_assoc($numero);
 $totalRows_numero = mysqli_num_rows($numero);
@@ -110,10 +110,10 @@ $totalRows_numero = mysqli_num_rows($numero);
 
 <body>
 <?php 
-$ano = $row_numero['Ano_Doc'];
+$ano = $row_numero['ano_doc'];
 $ano1 = date ("Y");
 if ($ano == $ano1){
-$numdoc = $row_numero['Num_Doc']+1;
+$numdoc = $row_numero['num_doc']+1;
 }
 else
 {$numdoc = 1;}
@@ -133,20 +133,20 @@ $numdoc = str_pad($numdoc, 4, "0", STR_PAD_LEFT);
             <tr align="center" valign="baseline"> 
               <td colspan="2" valign="middle" nowrap bgcolor="#FFFFFF"> <div align="center">N&uacute;mero 
                   do Documento<font color="#000099" size="6"> <?php echo $numdoc ?></font><font color="#FF0000"> 
-                  /&nbsp; <?php echo $row_numero['cod_org']; ?>&nbsp;/&nbsp;<?php echo $row_numero['Ano_Doc']; ?><br>
+                  /&nbsp; <?php echo $row_numero['cod_org']; ?>&nbsp;/&nbsp;<?php echo $row_numero['ano_doc']; ?><br>
                   </font></div></td>
             </tr>
             <tr valign="baseline"> 
-              <td width="239" align="right" valign="middle" nowrap> <div align="center">ASSUNTO:</div></td>
+              <td width="239" align="right" valign="middle" nowrap> <div align="center">assunto:</div></td>
               <td width="784"><div align="center"> 
-                  <textarea name="ASSUNTO" cols="60" rows="2"></textarea>
+                  <textarea name="assunto" cols="60" rows="2"></textarea>
                 </div></td>
             </tr>
             <tr valign="baseline"> 
               <td height="35" align="right" valign="middle" nowrap bgcolor="#FFFFFF"> 
-                <div align="center">DESTINO:</div></td>
+                <div align="center">destino:</div></td>
               <td valign="middle" bgcolor="#FFFFFF"> <div align="center"> 
-                  <textarea name="DESTINO" cols="60" rows="2"></textarea>
+                  <textarea name="destino" cols="60" rows="2"></textarea>
                 </div></td>
             </tr>
             <tr valign="baseline"> 
@@ -166,14 +166,14 @@ $numdoc = str_pad($numdoc, 4, "0", STR_PAD_LEFT);
             </tr>
             <tr valign="baseline"> 
               <td colspan="2" align="right" nowrap bgcolor="#CCCCCC"> <div align="center"> 
-                  <input type="hidden" name="DATA" value="<?php echo date("Y-m-d");  ?>" size="32">
-                  <input type="hidden" name="Ano_Doc" value="<?php echo $ano1 ?>" size="32">
-                  <input type="hidden" name="Cod_Sec" value="<?php echo $row_Recordset1['org_CodSecao']; ?>" size="32">
+                  <input type="hidden" name="data" value="<?php echo date("Y-m-d");  ?>" size="32">
+                  <input type="hidden" name="ano_doc" value="<?php echo $ano1 ?>" size="32">
+                  <input type="hidden" name="cod_sec" value="<?php echo $row_Recordset1['org_CodSecao']; ?>" size="32">
                   <input type="hidden" name="cod_org" value="<?php echo $row_Recordset1['org_id']; ?>" size="32">
                   <input name="submit" type="submit" value="Inserir registro">
-                  <input name="Tipo_Doc" type="hidden" id="Tipo_Doc" value="<?php echo $row_documento['Tipo_Doc']; ?>">
-                  <input type="hidden" name="ELABORADOR" value="<?php echo $_GET['re']; ?>" size="32">
-                  <input name="Num_Doc" type="hidden" value="<?php echo $numdoc ?>" size="6">
+                  <input name="tipo_doc" type="hidden" id="tipo_doc" value="<?php echo $row_documento['tipo_doc']; ?>">
+                  <input type="hidden" name="elaborador" value="<?php echo $_GET['re']; ?>" size="32">
+                  <input name="num_doc" type="hidden" value="<?php echo $numdoc ?>" size="6">
                   <input name="ASSINADO" type="hidden" id="ASSINADO2" value="<?php echo $row_numero['ASSINADO']; ?>">
                   <input name="ENCAMINHADO" type="hidden" id="ENCAMINHADO2" value="<?php echo $row_numero['ENCAMINHADO']; ?>">
                 </div></td>

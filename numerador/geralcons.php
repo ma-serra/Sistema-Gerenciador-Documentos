@@ -24,16 +24,19 @@ $ano_geral = "1";
 if (isset($_GET['ano'])) {
   $ano_geral = $_GET['ano'];
 }
-$Tipo_geral = "1";
-if (isset($_GET['Tipo_Doc'])) {
-  $Tipo_geral = $_GET['Tipo_Doc'];
+$tipo_geral = "1";
+if (isset($_GET['tipo_doc'])) {
+  $tipo_geral = $_GET['tipo_doc'];
 }
 $numdoc_geral = "1";
 if (isset($_GET['num_doc'])) {
   $numdoc_geral = $_GET['num_doc'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_geral = sprintf("SELECT num_doc.id_num     , num_doc.cod_org     , num_doc.ELABORADOR   , num_tipodoc.desc_tipo_doc     , num_tipodoc.Tipo_Doc    , num_doc.DATA      , num_doc.Num_Doc     , num_doc.Cod_Sec     , num_doc.Ano_Doc     , num_doc.ASSUNTO     , num_doc.DESTINO FROM num_doc     INNER JOIN num_tipodoc          ON (num_doc.Tipo_Doc = num_tipodoc.Tipo_Doc) WHERE (num_doc.cod_org = '%s'     AND num_tipodoc.Tipo_Doc = '%s'     AND num_doc.Num_Doc LIKE '%s'     AND num_doc.Ano_Doc LIKE '%s' AND num_doc.ASSUNTO LIKE '%%%s%%' AND num_doc.DESTINO LIKE '%%%s%%') ORDER BY num_doc.Num_Doc DESC", $cod_geral,$Tipo_geral,$numdoc_geral,$ano_geral,$ass_geral,$des_geral);
+$query_geral = sprintf("SELECT num_doc.id_num, num_doc.cod_org, num_doc.elaborador, num_tipodoc.desc_tipo_doc, num_tipodoc.tipo_doc, num_doc.data, 
+num_doc.num_doc, num_doc.cod_sec, num_doc.ano_doc, num_doc.assunto, num_doc.destino FROM num_doc INNER JOIN num_tipodoc ON (num_doc.tipo_doc = num_tipodoc.tipo_doc)
+WHERE (num_doc.cod_org = '%s' AND num_tipodoc.tipo_doc = '%s' AND num_doc.num_doc LIKE '%s' AND num_doc.ano_doc LIKE '%s' AND num_doc.assunto LIKE '%%%s%%' AND num_doc.destino LIKE '%%%s%%')
+ORDER BY num_doc.num_doc DESC", $cod_geral,$tipo_geral,$numdoc_geral,$ano_geral,$ass_geral,$des_geral);
 $geral = mysqli_query($conexao, $query_geral);
 $row_geral = mysqli_fetch_assoc($geral);
 $totalRows_geral = mysqli_num_rows($geral);
@@ -43,11 +46,11 @@ if (isset($_GET['cod_org'])) {
   $colname_ano = $_GET['cod_org'];
 }
 $Tipo_ano = "1";
-if (isset($_GET['Tipo_Doc'])) {
-  $Tipo_ano = $_GET['Tipo_Doc'];
+if (isset($_GET['tipo_doc'])) {
+  $Tipo_ano = $_GET['tipo_doc'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_ano = sprintf("SELECT cod_org     , Tipo_Doc     , Ano_Doc FROM num_doc WHERE (cod_org = '%s'     AND Tipo_Doc = '%s') GROUP BY Ano_Doc", $colname_ano,$Tipo_ano);
+$query_ano = sprintf("SELECT cod_org     , tipo_doc     , ano_doc FROM num_doc WHERE (cod_org = '%s'     AND tipo_doc = '%s') GROUP BY ano_doc", $colname_ano,$Tipo_ano);
 $ano = mysqli_query($conexao, $query_ano);
 $row_ano = mysqli_fetch_assoc($ano);
 $totalRows_ano = mysqli_num_rows($ano);
@@ -57,11 +60,11 @@ if (isset($_GET['cod_org'])) {
   $colname_nurdoc = $_GET['cod_org'];
 }
 $Tipo_nurdoc = "1";
-if (isset($_GET['Tipo_Doc'])) {
-  $Tipo_nurdoc = $_GET['Tipo_Doc'];
+if (isset($_GET['tipo_doc'])) {
+  $Tipo_nurdoc = $_GET['tipo_doc'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_nurdoc = sprintf("SELECT cod_org     , Tipo_Doc     , Ano_Doc , Num_Doc FROM num_doc WHERE (cod_org = '%s'     AND Tipo_Doc = '%s') GROUP BY Num_Doc", $colname_nurdoc,$Tipo_nurdoc);
+$query_nurdoc = sprintf("SELECT cod_org     , tipo_doc     , ano_doc , num_doc FROM num_doc WHERE (cod_org = '%s'     AND tipo_doc = '%s') GROUP BY num_doc", $colname_nurdoc,$Tipo_nurdoc);
 $nurdoc = mysqli_query($conexao, $query_nurdoc);
 $row_nurdoc = mysqli_fetch_assoc($nurdoc);
 $totalRows_nurdoc = mysqli_num_rows($nurdoc);
@@ -85,7 +88,7 @@ $totalRows_nurdoc = mysqli_num_rows($nurdoc);
               <?php
 do {  
 ?>
-              <option value="<?php echo $row_nurdoc['Num_Doc']?>"><?php echo $row_nurdoc['Num_Doc']?></option>
+              <option value="<?php echo $row_nurdoc['num_doc']?>"><?php echo $row_nurdoc['num_doc']?></option>
               <?php
 } while ($row_nurdoc = mysqli_fetch_assoc($nurdoc));
   $rows = mysqli_num_rows($nurdoc);
@@ -101,7 +104,7 @@ do {
               <?php
 do {  
 ?>
-              <option value="<?php echo $row_ano['Ano_Doc']?>"<?php if (!(strcmp($row_ano['Ano_Doc'], $_GET['ano']))) {echo "SELECTED";} ?>><?php echo $row_ano['Ano_Doc']?></option>
+              <option value="<?php echo $row_ano['ano_doc']?>"<?php if (!(strcmp($row_ano['ano_doc'], $_GET['ano']))) {echo "SELECTED";} ?>><?php echo $row_ano['ano_doc']?></option>
               <?php
 } while ($row_ano = mysqli_fetch_assoc($ano));
   $rows = mysqli_num_rows($ano);
@@ -113,12 +116,12 @@ do {
             </select>
             &nbsp; 
             <input type="submit" name="Submit" value="Filtragem">
-            <input name="Tipo_Doc" type="hidden" id="Tipo_Doc" value="<?php echo $_GET['Tipo_Doc']; ?>">
+            <input name="tipo_doc" type="hidden" id="tipo_doc" value="<?php echo $_GET['tipo_doc']; ?>">
             <input name="cod_org" type="hidden" id="cod_org" value="<?php echo $_GET['cod_org']; ?>">
             <br>
-            PARTE DO ASSUNTO 
+            PARTE DO assunto 
             <input name="ass" type="text" id="ass">
-            PARTE DO DESTINO 
+            PARTE DO destino 
             <input name="des" type="text" id="des">
           </div></td>
       </tr>
@@ -134,11 +137,11 @@ echo " style=\"background-color:$mocolor\" onMouseOver=\"this.style.backgroundCo
 // technocurve arc 3 php mv block2/3 end
 ?>> 
     <td width="24%"> <div align="center"><font color="#FF0000"><strong><font color="#000066"><?php echo $row_geral['desc_tipo_doc']; ?></font></strong>&nbsp;</font></div>
-      <div align="center">N&ordm; <?php echo $row_geral['Num_Doc']; ?> / <?php echo $row_geral['Cod_Sec']; ?> / <?php echo $row_geral['Ano_Doc']; ?></div>
-      <div align="center"><?php echo Consert_DataBr($row_geral['DATA']); ?></div></td>
-    <td width="76%" align="left" valign="top"><font color="#0000FF"><strong>ASSUNTO</strong>:</font>&nbsp;<?php echo $row_geral['ASSUNTO']; ?> <br> <div align="left"><font color="#0000FF"><strong>DESTIO</strong>:</font> 
-        <?php echo $row_geral['DESTINO']; ?><br>
-        <font color="#0000FF"><strong>ELABORADOR:</strong></font> RE <?php echo $row_geral['ELABORADOR']; ?> <br>
+      <div align="center">N&ordm; <?php echo $row_geral['num_doc']; ?> / <?php echo $row_geral['cod_sec']; ?> / <?php echo $row_geral['ano_doc']; ?></div>
+      <div align="center"><?php echo Consert_DataBr($row_geral['data']); ?></div></td>
+    <td width="76%" align="left" valign="top"><font color="#0000FF"><strong>assunto</strong>:</font>&nbsp;<?php echo $row_geral['assunto']; ?> <br> <div align="left"><font color="#0000FF"><strong>DESTIO</strong>:</font> 
+        <?php echo $row_geral['destino']; ?><br>
+        <font color="#0000FF"><strong>elaborador:</strong></font> RE <?php echo $row_geral['elaborador']; ?> <br>
       </div></td>
   </tr>
   <?php 

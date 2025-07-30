@@ -13,7 +13,7 @@ if (isset($_GET['cod_org'])) {
   $colname_listadoc = $_GET['cod_org'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_listadoc = sprintf("SELECT     num_doc.cod_org     , num_doc.Tipo_Doc     , num_tipodoc.desc_tipo_doc     , num_doc.Ano_Doc     , num_doc.Num_Doc     , num_org.org_CodSecao FROM     num_doc     INNER JOIN num_tipodoc          ON (num_doc.Tipo_Doc = num_tipodoc.Tipo_Doc)     INNER JOIN num_org          ON (num_doc.cod_org = num_org.org_id) WHERE (num_doc.cod_org = '%s') GROUP BY num_doc.Tipo_Doc;", $colname_listadoc);
+$query_listadoc = sprintf("SELECT     num_doc.cod_org     , num_doc.tipo_doc     , num_tipodoc.desc_tipo_doc     , num_doc.ano_doc     , num_doc.num_doc     , num_org.org_CodSecao FROM     num_doc     INNER JOIN num_tipodoc          ON (num_doc.tipo_doc = num_tipodoc.tipo_doc)     INNER JOIN num_org          ON (num_doc.cod_org = num_org.org_id) WHERE (num_doc.cod_org = '%s') GROUP BY num_doc.tipo_doc;", $colname_listadoc);
 $listadoc = mysqli_query($conexao, $query_listadoc);
 $row_listadoc = mysqli_fetch_assoc($listadoc);
 $totalRows_listadoc = mysqli_num_rows($listadoc);
@@ -42,7 +42,7 @@ echo " style=\"background-color:$mocolor\" onMouseOver=\"this.style.backgroundCo
 ?>>
           <td height="13"> 
             <div align="left">
-              <a href="geralcons.php?cod_org=<?php echo $row_listadoc['cod_org']; ?>&Tipo_Doc=<?php echo $row_listadoc['Tipo_Doc']; ?>&ano=<?php echo date("y");  ?>&re=<?php echo $_GET['re']; ?>&num_doc=%&ass=%&des=%" target="congeral"><?php echo $row_listadoc['desc_tipo_doc']; ?></a></div></td>
+              <a href="geralcons.php?cod_org=<?php echo $row_listadoc['cod_org']; ?>&tipo_doc=<?php echo $row_listadoc['tipo_doc']; ?>&ano=<?php echo date("y");  ?>&re=<?php echo $_GET['re']; ?>&num_doc=%&ass=%&des=%" target="congeral"><?php echo $row_listadoc['desc_tipo_doc']; ?></a></div></td>
         </tr>
         <?php 
 // technocurve arc 3 php mv block3/3 start
@@ -94,7 +94,7 @@ if ($mocolor == $mocolor1) {
       </table>
     </td>
     <td width="75%" height="200"> 
-      <iframe  src="geralconsadm.php?cod_org=<?php echo $row_usersisbai['Org_id']; ?>&Tipo_Doc=
+      <iframe  src="geralconsadm.php?cod_org=<?php echo $row_usersisbai['Org_id']; ?>&tipo_doc=
 	  &ano=<?php echo date("y");  ?>&re=<?php echo $_GET['re']; ?>&num_doc=%" name="congeral" width="100%" height="400" scrolling="auto" frameborder="no"  allowtransparency="true" ></iframe>
 </td>
   </tr>
