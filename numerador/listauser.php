@@ -17,7 +17,14 @@ if (isset($_GET['rerg'])) {
   $colname_user = $_GET['rerg'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_user = sprintf("SELECT     num_user.rerg     , num_user.postfunc     , num_user.guerra     , num_user.Org_id     , num_org.org_descUnid     , num_org.org_desc     , num_user.situacao     , num_nivel.desc_nivel     , num_nivel.visivl FROM num_org     INNER JOIN num_user          ON (num_org.org_id = num_user.Org_id)     INNER JOIN num_nivel          ON (num_user.Nivel = num_nivel.nivel_id) WHERE (num_user.rerg LIKE '%%%s%%'     AND num_nivel.visivl <> 0   AND num_user.Org_id LIKE '%%%s%%') ORDER BY num_user.rerg ASC", $colname_user,$org_user);
+$query_user = sprintf("SELECT u.rerg, u.postfunc, u.guerra, u.org_id, o.org_desc_unid, o.org_desc, u.situacao, n.desc_nivel, n.visivel 
+                       FROM num_user u 
+                       INNER JOIN num_org o ON (o.org_id = u.org_id) 
+                       INNER JOIN num_nivel n ON (u.nivel_id = n.nivel_id) 
+                       WHERE (u.rerg LIKE %s AND n.visivel <> 0 AND u.org_id LIKE %s) 
+                       ORDER BY u.rerg ASC", 
+                       GetSQLValueString("%" . $colname_user . "%", "text"),
+                       GetSQLValueString("%" . $org_user . "%", "text"));
 $user = mysqli_query($conexao, $query_user);
 $row_user = mysqli_fetch_assoc($user);
 $totalRows_user = mysqli_num_rows($user);

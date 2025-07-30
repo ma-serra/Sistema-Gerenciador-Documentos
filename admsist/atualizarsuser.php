@@ -31,13 +31,13 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
-  $updateSQL = sprintf("UPDATE num_user SET postfunc=%s, guerra=%s, Org_id=%s, Nivel=%s, situacao=%s WHERE rerg=%s",
-                      GetSQLValueString($_POST['postfunc'], "text"),
-                      GetSQLValueString($_POST['guerra'], "text"),
-                      GetSQLValueString($_POST['org_id'], "int"),
-                      GetSQLValueString($_POST['Nivel'], "int"), // <-- Corrigido para "int"
-                      GetSQLValueString($_POST['situacao'], "text"),
-                      GetSQLValueString($_POST['rerg'], "text"));
+  $updateSQL = sprintf("UPDATE num_user SET postfunc=%s, guerra=%s, org_id=%s, nivel_id=%s, situacao=%s WHERE rerg=%s",
+                       GetSQLValueString($_POST['postfunc'], "text"),
+                       GetSQLValueString($_POST['guerra'], "text"),
+                       GetSQLValueString($_POST['org_id'], "int"),
+                       GetSQLValueString($_POST['Nivel'], "int"),
+                       GetSQLValueString($_POST['situacao'], "text"),
+                       GetSQLValueString($_POST['rerg'], "text"));
 
   mysqli_select_db($conexao, $database_conexao);
   $Result1 = mysqli_query($conexao, $updateSQL);
@@ -89,7 +89,7 @@ if (isset($_GET['rerg'])) {
   $colname_useer = $_GET['rerg'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_useer = sprintf("SELECT * FROM num_user WHERE rerg = '%s'", $colname_useer);
+$query_useer = sprintf("SELECT * FROM num_user WHERE rerg = %s", GetSQLValueString($colname_useer, "text"));
 $useer = mysqli_query($conexao, $query_useer);
 $row_useer = mysqli_fetch_assoc($useer);
 $totalRows_useer = mysqli_num_rows($useer);
@@ -160,7 +160,7 @@ do {
           <?php
 do {  
 ?>
-          <option value="<?php echo $row_nivel['nivel_id']?>"<?php if (!(strcmp($row_nivel['nivel_id'], $row_useer['Nivel']))) {echo "SELECTED";} ?>><?php echo $row_nivel['desc_nivel']?></option>
+          <option value="<?php echo $row_nivel['nivel_id']?>"<?php if (!(strcmp($row_nivel['nivel_id'], $row_useer['nivel_id']))) {echo "SELECTED";} ?>><?php echo $row_nivel['desc_nivel']?></option>
           <?php
 } while ($row_nivel = mysqli_fetch_assoc($nivel));
   $rows = mysqli_num_rows($nivel);

@@ -31,14 +31,14 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_GET["MM_update"])) && ($_GET["MM_update"] == "form1")) {
-  $updateSQL = sprintf("UPDATE num_doc SET ASSUNTO=%s, DESTINO=%s, obs_doc=%s, ELABORADO=%s, ASSINADO=%s, ENCAMINHADO=%s WHERE Id_Num=%s",
-                       GetSQLValueString($_GET['ASSUNTO'], "text"),
-                       GetSQLValueString($_GET['DESTINO'], "text"),
-                       GetSQLValueString($_GET['OBS_DOC'], "text"),
-                       GetSQLValueString($_GET['ELABORADO'], "int"),
-                       GetSQLValueString($_GET['ASSINADO'], "int"),
-                       GetSQLValueString($_GET['ENCAMINHADO'], "int"),
-                       GetSQLValueString($_GET['id_num'], "int"));
+  $updateSQL = sprintf("UPDATE num_doc SET assunto=%s, destino=%s, elaborado=%s, assinado=%s, encaminhado=%s, obs_doc=%s WHERE id_num=%s",
+    GetSQLValueString($_GET['ASSUNTO'], "text"),
+    GetSQLValueString($_GET['DESTINO'], "text"),
+    GetSQLValueString($_GET['ELABORADO'], "int"),
+    GetSQLValueString($_GET['ASSINADO'], "int"),
+    GetSQLValueString($_GET['ENCAMINHADO'], "int"),
+    GetSQLValueString($_GET['observacao'], "text"),
+    GetSQLValueString($_GET['id_num'], "int"));
 
   mysqli_select_db($conexao, $database_conexao);
   $Result1 = mysqli_query($conexao, $updateSQL);

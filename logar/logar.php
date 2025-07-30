@@ -17,7 +17,7 @@ if ($num_logar == 0){
    echo "Login ou senha invalido.";
    echo "<br><a href='javascript:window.history.go(-1)'>Clique aqui para volta.</a>";   
 } 
-elseif($fet_logar['activo'] == "N"){ // Note que não há coluna 'activo' na sua tabela, mas mantive a lógica caso você a adicione.
+elseif($fet_logar['activo'] == "N"){ 
    echo "Usuario nao ativado, verifique seu e-mail para ativa a conta.";
    echo "<br><a href='javascript:window.history.go(-1)'>Clique aqui para volta.</a>"; 
 }
