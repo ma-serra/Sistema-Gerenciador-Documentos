@@ -1,7 +1,7 @@
-### Sistema de Numerador Documentos
+## Sistema de Numerador Documentos
 
 <div align="center">
-    <img src="https://github.com/alexandrefreitass/numerador/assets/109884524/617b7155-6a93-490c-a747-509984ca0cdd"/>
+    <img src="https://github.com/alexandrefreitass/numerador/assets/109884524/1f1a55be-8c4e-4a76-82ee-71a6f4e6d531"/>
 </div>
 <br/>
 Desenvolvido em PHP e integrado ao banco de dados MySQL, o projeto é uma aplicação web completa que atua como um sistema de gerenciamento de documentos, 
@@ -13,11 +13,11 @@ organizada e acessível.
 
 Os usuários podem consultar o numerador para acessar documentos criados por eles próprios, permitindo uma fácil visualização e recuperação de informações relevantes.
     
-# Supervisão de Documentos:
+### Supervisão de Documentos:
 
 Além disso, o sistema possui diferentes níveis de supervisores, que têm permissão para visualizar o numerador de documentos criados por outros usuários. Isso facilita a supervisão e colaboração entre os membros da equipe.
 
-# Autenticação Segura:
+### Autenticação Segura:
 
 O sistema conta com um sistema de autenticação seguro, onde as senhas dos usuários são criptografadas, garantindo a segurança dos dados e protegendo contra acessos não autorizados.
 
@@ -50,3 +50,6 @@ Execute o xampp e start no apache e mysql:
 ```bash
   localhost:8080 ou a porta definida por voce
 ```
+
+### Licença
+Este projeto está sob a licença MIT. Consulte o arquivo <a href="https://github.com/alexandrefreitass/numerador/blob/master/LICENSE">LICENSE</a> para obter mais detalhes.
