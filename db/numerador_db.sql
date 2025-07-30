@@ -186,21 +186,23 @@ INSERT INTO `num_nivel` (`nivel_id`, `cod_nivel`, `desc_nivel`, `visivel`) VALUE
 
 INSERT INTO `num_user` (`rerg`, `postfunc`, `guerra`, `senha`, `org_id`, `nivel_id`, `situacao`) VALUES
 ('100100', '2º Sgt PM', 'Bilão', 'b9c93fbdfd2a30504e05d3b0b32307da', 31, 2, 'ATIVO'),
-('100759', '1º Sgt PM', 'SANCHES', '12a02da69f7bac41b1945545efd5eac2', 28, 1, 'ATIVO'),
-('103122', '3º Sgt PM', 'Samuel', '518ebae8d5025d8d309af6502f36771d', 28, 2, 'ATIVO'),
+('100759', '1º Sgt PM', 'SANCHES', '895e487725e049f5d51a955154695920', 28, 1, 'ATIVO'),
+('103122', '3º Sgt PM', 'Samuel', 'ffd6d7a3aa7665b48099dd64ed4031ed', 28, 2, 'ATIVO'),
 ('105288', 'Cb PM', 'Jaques', 'd48b1cf06d01005f80cf3b8cf1d8a0d1', 28, 2, 'ATIVO'),
 ('105387', 'Sgt PM', 'Previero', '700369a48f30f205d5b759c56410a804', 28, 1, 'ATIVO'),
-('105419', '3º Sgt PM', 'MOISES', 'e011bb3d2a4a359056b9fea0d837815f', 31, 2, 'ATIVO'),
+('105419', '3º Sgt PM', 'MOISES', 'f1c2d0b863dd06c00fac472fb3515e10', 31, 2, 'ATIVO'),
 ('109094', 'Cb PM', 'TYAGO', 'ca9c5b7936624ad3d719909abffcf40f', 28, 2, 'ATIVO'),
-('114186', 'Cb PM', 'M. CARVALHO', '1a2e25d2b713d0abba325b540008a6b5', 28, 2, 'ATIVO'),
-('115521', '2º Sgt PM', 'Ponciano', '3178f3594f35883e37b31cc8a678731f', 36, 1, 'ATIVO'),
-('115538', 'Cb PM', 'POLICIANO', '81dc9bdb52d04dc20036dbd8313ed055', 28, 2, 'ATIVO'),
-('115646', 'Cb PM', 'AGOSTINHO', '903f346c3e3d55b69f630b63d6aa174b', 28, 2, 'ATIVO'),
-('115653', '1º Ten PM', 'PETERNUCCI', '051c2ede3267fcaf8c022cebf120a6e6', 28, 1, 'ATIVO'),
-('115777', '2º Sgt PM', 'FURLAN', 'a4ffd79e1f6e2c5232cb800f603002c5', 28, 1, 'ATIVO'),
-('117263', 'Cb PM', 'Meneguecci', '60f86fdf7bb14ec23a28f7c91fc34a34', 28, 2, 'ATIVO'),
+('114186', 'Cb PM', 'M. CARVALHO', '77da8ad446d00989e2687d6867f307a6', 28, 2, 'ATIVO'),
+('115521', '2º Sgt PM', 'Ponciano', '8b9eb2c56745032c4a25a0e8b80a7fe5', 36, 1, 'ATIVO'),
+('115538', 'Cb PM', 'POLICIANO', 'ec16df78efccbb5704eef5778e0bc4df', 28, 2, 'ATIVO'),
+('115646', 'Cb PM', 'AGOSTINHO', '109bcf8ddba64394d5a909f2482b1cc6', 28, 2, 'ATIVO'),
+('115653', '1º Ten PM', 'PETERNUCCI', '6ea992752c5e0704d705b3842909eba3', 28, 1, 'ATIVO'),
+('115777', '2º Sgt PM', 'FURLAN', '983d66b7934ebcd240a03639ac0b511c', 28, 1, 'ATIVO'),
+('117263', 'Cb PM', 'Meneguecci', 'eda054b4a9390c45dac6163cde47fc90', 28, 2, 'ATIVO'),
 ('117600', 'Ten PM', 'Mendonça 2', 'f991ccd483f3ed86f2b87cf692ffb30f', 35, 4, 'ATIVO'),
 ('117606', 'Cap PM', 'MENDONÇA', '951477c405c46624e7650ab6e4354d4b', 35, 5, 'ATIVO');
+
+
 
 INSERT INTO `sai_posto` (`cod_posto`, `posto`, `bi`, `grupo_posto`, `desc_grupo_posto`) VALUES
 (101, 'Cel PM', 'RESERVADO', '1', 'Cel PM'),
