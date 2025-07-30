@@ -1,71 +1,98 @@
-<?php require_once('../Connections/conexao.php'); ?>
 <?php
-function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
-{
-  $theValue = $theValue;
+// 1. INICIALIZAÇÃO E CONEXÃO
+// =============================
+// Usamos require_once para garantir que a conexão e as funções sejam carregadas apenas uma vez.
+require_once('../Connections/conexao.php');
 
-  switch ($theType) {
-    case "text":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;    
-    case "long":
-    case "int":
-      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
-      break;
-    case "double":
-      $theValue = ($theValue != "") ? "'" . doubleval($theValue) . "'" : "NULL";
-      break;
-    case "date":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;
-    case "defined":
-      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
-      break;
-  }
-  return $theValue;
+// 2. LÓGICA DE EXCLUSÃO (PROCESSAMENTO DO FORMULÁRIO)
+// ===================================================
+// Esta parte SÓ é executada se o formulário for enviado (método POST).
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rerg'])) {
+    
+    // Prepara o SQL para deletar o usuário, usando a função de segurança.
+    $deleteSQL = sprintf("DELETE FROM num_user WHERE rerg=%s",
+                       GetSQLValueString($conexao, $_POST['rerg'], "text"));
+
+    $Result1 = mysqli_query($conexao, $deleteSQL);
+
+    // Verifica se a exclusão deu certo.
+    if ($Result1) {
+        // Redireciona para a página de sucesso.
+        $deleteGoTo = "acaoexcluiruser.php";
+        header(sprintf("Location: %s", $deleteGoTo));
+        exit(); // Encerra o script após o redirecionamento.
+    } else {
+        // Se der erro, exibe uma mensagem clara.
+        die("Erro ao excluir o usuário: " . mysqli_error($conexao));
+    }
 }
 
-if ((isset($_GET['rerg'])) && ($_GET['rerg'] != "")) {
-  $deleteSQL = sprintf("DELETE FROM num_user WHERE rerg=%s",
-                       GetSQLValueString($_GET['rerg'], "text"));
-
-  mysqli_select_db($conexao, $database_conexao);
-  $Result1 = mysqli_query($conexao, $deleteSQL);
-
-  $deleteGoTo = "acaoexcluiruser.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
-    $deleteGoTo .= $_SERVER['QUERY_STRING'];
-  }
-  header(sprintf("Location: %s", $deleteGoTo));
+// 3. LÓGICA DE EXIBIÇÃO (CARREGAMENTO DA PÁGINA)
+// =================================================
+// Esta parte SÓ é executada quando a página é carregada pela primeira vez (método GET).
+// Garante que temos um 'rerg' na URL para saber quem mostrar.
+if (!isset($_GET['rerg'])) {
+    die("Nenhum usuário especificado para exclusão.");
 }
 
-$colname_USER = "0";
-if (isset($_GET['rerg'])) {
-  $colname_USER = $_GET['rerg'];
+$colname_USER = $_GET['rerg'];
+
+// Busca os dados do usuário para exibir na tela de confirmação.
+$query_USER = sprintf("SELECT * FROM num_user WHERE rerg = %s", GetSQLValueString($conexao, $colname_USER, "text"));
+$USER_result = mysqli_query($conexao, $query_USER);
+
+if (!$USER_result) {
+    die("Erro ao buscar dados do usuário: " . mysqli_error($conexao));
 }
-mysqli_select_db($conexao, $database_conexao);
-$query_USER = sprintf("SELECT * FROM num_user WHERE rerg = '%s'", $colname_USER);
-$USER = mysqli_query($conexao, $query_USER);
-$row_USER = mysqli_fetch_assoc($USER);
-$totalRows_USER = mysqli_num_rows($USER);
+
+$row_USER = mysqli_fetch_assoc($USER_result);
+$totalRows_USER = mysqli_num_rows($USER_result);
+
+// Se o usuário não for encontrado, não há o que excluir.
+if ($totalRows_USER == 0) {
+    echo "Usuário não encontrado.";
+    exit();
+}
 ?>
 <html>
 <head>
-<title>Documento sem t&iacute;tulo</title>
+<title>Confirmar Exclusão de Usuário</title>
+<link href="../css/Geral.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
 
 <body>
-<form name="form1" method="post" action="">
-  <?php echo $row_USER['postfunc']; ?>&nbsp;&nbsp;<?php echo $row_USER['guerra']; ?><br>
-  CONFIRME A EXCLUS&Atilde;O DO PM<br>
-  <input type="submit" name="Submit" value="EXCLUIR USUARIO">
-  <input name="RERG" type="text" id="RERG" value="<?php echo $row_USER['rerg']; ?>">
+<form name="form1" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>?rerg=<?php echo htmlspecialchars($row_USER['rerg']); ?>">
+  <table align="center" border="1" cellpadding="10" cellspacing="0" bgcolor="#E6E6E6">
+    <tr bgcolor="#CCCCCC">
+      <td align="center">
+        <font color="#990000" size="4"><strong>CONFIRMAR EXCLUSÃO</strong></font>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <p>Você tem certeza que deseja excluir permanentemente o usuário?</p>
+        <p>
+          <font size="3">
+            <strong><?php echo htmlspecialchars($row_USER['postfunc']); ?>&nbsp;&nbsp;<?php echo htmlspecialchars($row_USER['guerra']); ?></strong>
+          </font>
+        </p>
+        <p><strong>RE:</strong> <?php echo htmlspecialchars($row_USER['rerg']); ?></p>
+        <p>Esta ação não pode ser desfeita.</p>
+      </td>
+    </tr>
+    <tr bgcolor="#CCCCCC">
+      <td align="center">
+        <input name="rerg" type="hidden" id="rerg" value="<?php echo htmlspecialchars($row_USER['rerg']); ?>">
+        <input type="submit" name="Submit" value="SIM, EXCLUIR USUÁRIO" style="background-color: #d9534f; color: white; padding: 10px; border: none; cursor: pointer;">
+        <input type="button" name="Cancel" value="CANCELAR" onclick="window.history.back();" style="padding: 10px; cursor: pointer;">
+      </td>
+    </tr>
+  </table>
 </form>
 </body>
 </html>
 <?php
-mysqli_free_result($USER);
+// Libera a memória do resultado da consulta.
+mysqli_free_result($USER_result);
 ?>
-

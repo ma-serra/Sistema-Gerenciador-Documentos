@@ -1,7 +1,6 @@
 <?php
 // 1. INICIALIZAÇÃO E CONEXÃO
 // =============================
-// Inclui o arquivo de conexão que contém a função de segurança GetSQLValueString.
 require_once('../Connections/conexao.php');
 
 // Define a ação do formulário para o próprio arquivo.
