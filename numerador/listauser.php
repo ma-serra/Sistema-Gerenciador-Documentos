@@ -58,7 +58,7 @@ de Novo Usu&aacute;rio</a> <br>
 echo " style=\"background-color:$mocolor\" onMouseOver=\"this.style.backgroundColor='$mocolor3'\" onMouseOut=\"this.style.backgroundColor='$mocolor'\"";
 // technocurve arc 3 php mv block2/3 end
 ?>> 
-    <td width="84%" height="13"> <div align="left"><font size="3"><?php echo $row_user['postfunc']; ?>&nbsp;<?php echo $row_user['guerra']; ?>&nbsp;da <?php echo $row_user['org_desc']; ?> do <?php echo $row_user['org_descUnid']; ?> com nivel <?php echo $row_user['desc_nivel']; ?></font></div></td>
+    <td width="84%" height="13"> <div align="left"><font size="3"><?php echo $row_user['postfunc']; ?>&nbsp;<?php echo $row_user['guerra']; ?>&nbsp;da <?php echo $row_user['org_desc']; ?> do <?php echo $row_user['org_desc_unid']; ?> com nivel <?php echo $row_user['desc_nivel']; ?></font></div></td>
     <td width="8%"> 
       <div align="center"></div>
       <div align="center">

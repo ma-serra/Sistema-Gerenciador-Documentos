@@ -13,7 +13,7 @@ if (isset($_GET['rerg'])) {
   $colname_user = $_GET['rerg'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_user = sprintf("SELECT     num_user.rerg     , num_user.postfunc     , num_user.guerra     , num_org.org_desc     , num_nivel.desc_nivel     , num_org.org_descUnid     , num_user.Org_id FROM     num_user     INNER JOIN num_nivel          ON (num_user.Nivel = num_nivel.cod_nivel)     INNER JOIN num_org          ON (num_user.Org_id = num_org.org_id) WHERE (num_user.rerg LIKE '%s') ORDER BY num_user.Org_id ASC;", $colname_user);
+$query_user = sprintf("SELECT     num_user.rerg     , num_user.postfunc     , num_user.guerra     , num_org.org_desc     , num_nivel.desc_nivel     , num_org.org_desc_unid     , num_user.Org_id FROM     num_user     INNER JOIN num_nivel          ON (num_user.Nivel = num_nivel.cod_nivel)     INNER JOIN num_org          ON (num_user.Org_id = num_org.org_id) WHERE (num_user.rerg LIKE '%s') ORDER BY num_user.Org_id ASC;", $colname_user);
 $user = mysqli_query($conexao, $query_user);
 $row_user = mysqli_fetch_assoc($user);
 $totalRows_user = mysqli_num_rows($user);
@@ -40,7 +40,7 @@ $totalRows_user = mysqli_num_rows($user);
 echo " style=\"background-color:$mocolor\" onMouseOver=\"this.style.backgroundColor='$mocolor3'\" onMouseOut=\"this.style.backgroundColor='$mocolor'\"";
 // technocurve arc 3 php mv block2/3 end
 ?>> 
-    <td width="79%" height="13"><div align="center"><?php echo $row_user['postfunc']; ?>&nbsp;<?php echo $row_user['guerra']; ?> da <?php echo $row_user['org_desc']; ?> do <?php echo $row_user['org_descUnid']; ?> nivel <?php echo $row_user['desc_nivel']; ?></div></td>
+    <td width="79%" height="13"><div align="center"><?php echo $row_user['postfunc']; ?>&nbsp;<?php echo $row_user['guerra']; ?> da <?php echo $row_user['org_desc']; ?> do <?php echo $row_user['org_desc_unid']; ?> nivel <?php echo $row_user['desc_nivel']; ?></div></td>
     <td width="9%" height="13"><div align="center"><a href="atualizarsuser.php?rerg=<?php echo $row_user['rerg']; ?>">Atualizar</a></div></td>
     <td width="12%"><div align="center">Excluir</div></td>
   </tr>

@@ -7,9 +7,9 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
-  $updateSQL = sprintf("UPDATE num_org SET org_Unidade=%s, org_descUnid=%s, org_CodSecao=%s, org_desc=%s, org_cidade=%s, org_uf=%s, org_Bairro=%s, org_via=%s, org_num=%s, org_ref=%s, org_tel=%s, org_fax=%s, org_email=%s, org_tp=%s, org_obs=%s WHERE org_id=%s",
+  $updateSQL = sprintf("UPDATE num_org SET org_Unidade=%s, org_desc_unid=%s, org_CodSecao=%s, org_desc=%s, org_cidade=%s, org_uf=%s, org_Bairro=%s, org_via=%s, org_num=%s, org_ref=%s, org_tel=%s, org_fax=%s, org_email=%s, org_tp=%s, org_obs=%s WHERE org_id=%s",
                        GetSQLValueString($_POST['org_Unidade'], "int"),
-                       GetSQLValueString($_POST['org_descUnid'], "text"),
+                       GetSQLValueString($_POST['org_desc_unid'], "text"),
                        GetSQLValueString($_POST['org_CodSecao'], "text"),
                        GetSQLValueString($_POST['org_desc'], "text"),
                        GetSQLValueString($_POST['org_cidade'], "text"),
@@ -66,7 +66,7 @@ $totalRows_secao = mysqli_num_rows($secao);
             <td width="124" align="right" nowrap>Cod da OPM:</td>
             <td width="86"><input type="text" name="org_Unidade" value="<?php echo $row_secao['org_Unidade']; ?>" size="12"></td>
             <td width="129">Descri&ccedil;&atilde;o da OPM:</td>
-            <td width="296"><input type="text" name="org_descUnid" value="<?php echo $row_secao['org_descUnid']; ?>" size="45"></td>
+            <td width="296"><input type="text" name="org_desc_unid" value="<?php echo $row_secao['org_desc_unid']; ?>" size="45"></td>
           </tr>
           <tr valign="baseline"> 
             <td nowrap align="right">Cod. doc da se&ccedil;&atilde;o:</td>

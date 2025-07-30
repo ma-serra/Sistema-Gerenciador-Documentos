@@ -13,7 +13,7 @@ if (isset($_GET['org_id'])) {
   $colname_faltaelab = $_GET['org_id'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_faltaelab = sprintf("SELECT num_org.org_id     , num_doc.id_num     , num_doc.tipo_doc     , num_tipodoc.desc_tipo_doc     , num_doc.num_doc     , num_doc.cod_sec     , num_doc.ano_doc     , num_doc.assunto     , num_doc.ELABORADO     , num_doc.ASSINADO     , num_doc.ENCAMINHADO     , num_org.org_descUnid     , num_org.org_desc FROM num_doc     INNER JOIN num_org          ON (num_doc.cod_org = num_org.org_id)     INNER JOIN num_tipodoc          ON (num_tipodoc.tipo_doc = num_doc.tipo_doc) WHERE (num_org.org_id = '%s'     AND num_doc.ELABORADO = '0'  )", $colname_faltaelab);
+$query_faltaelab = sprintf("SELECT num_org.org_id     , num_doc.id_num     , num_doc.tipo_doc     , num_tipodoc.desc_tipo_doc     , num_doc.num_doc     , num_doc.cod_sec     , num_doc.ano_doc     , num_doc.assunto     , num_doc.ELABORADO     , num_doc.ASSINADO     , num_doc.ENCAMINHADO     , num_org.org_desc_unid     , num_org.org_desc FROM num_doc     INNER JOIN num_org          ON (num_doc.cod_org = num_org.org_id)     INNER JOIN num_tipodoc          ON (num_tipodoc.tipo_doc = num_doc.tipo_doc) WHERE (num_org.org_id = '%s'     AND num_doc.ELABORADO = '0'  )", $colname_faltaelab);
 $faltaelab = mysqli_query($conexao, $query_faltaelab);
 $row_faltaelab = mysqli_fetch_assoc($faltaelab);
 $totalRows_faltaelab = mysqli_num_rows($faltaelab);
@@ -23,7 +23,7 @@ if (isset($_GET['org_id'])) {
   $colname_faltaassinar = $_GET['org_id'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_faltaassinar = sprintf("SELECT num_org.org_id     , num_doc.id_num     , num_doc.tipo_doc     , num_tipodoc.desc_tipo_doc     , num_doc.num_doc     , num_doc.cod_sec     , num_doc.ano_doc     , num_doc.assunto     , num_doc.ELABORADO     , num_doc.ASSINADO     , num_doc.ENCAMINHADO     , num_org.org_descUnid     , num_org.org_desc FROM num_doc     INNER JOIN num_org          ON (num_doc.cod_org = num_org.org_id)     INNER JOIN num_tipodoc          ON (num_tipodoc.tipo_doc = num_doc.tipo_doc) WHERE (num_org.org_id = '%s'    AND num_doc.ELABORADO = '1'  AND num_doc.ASSINADO= '0')", $colname_faltaassinar);
+$query_faltaassinar = sprintf("SELECT num_org.org_id     , num_doc.id_num     , num_doc.tipo_doc     , num_tipodoc.desc_tipo_doc     , num_doc.num_doc     , num_doc.cod_sec     , num_doc.ano_doc     , num_doc.assunto     , num_doc.ELABORADO     , num_doc.ASSINADO     , num_doc.ENCAMINHADO     , num_org.org_desc_unid     , num_org.org_desc FROM num_doc     INNER JOIN num_org          ON (num_doc.cod_org = num_org.org_id)     INNER JOIN num_tipodoc          ON (num_tipodoc.tipo_doc = num_doc.tipo_doc) WHERE (num_org.org_id = '%s'    AND num_doc.ELABORADO = '1'  AND num_doc.ASSINADO= '0')", $colname_faltaassinar);
 $faltaassinar = mysqli_query($conexao, $query_faltaassinar);
 $row_faltaassinar = mysqli_fetch_assoc($faltaassinar);
 $totalRows_faltaassinar = mysqli_num_rows($faltaassinar);
@@ -33,7 +33,7 @@ if (isset($_GET['org_id'])) {
   $colname_faltaEnviar = $_GET['org_id'];
 }
 mysqli_select_db($conexao, $database_conexao);
-$query_faltaEnviar = sprintf("SELECT num_org.org_id     , num_doc.id_num     , num_doc.tipo_doc     , num_tipodoc.desc_tipo_doc     , num_doc.num_doc     , num_doc.cod_sec     , num_doc.ano_doc     , num_doc.assunto     , num_doc.ELABORADO     , num_doc.ASSINADO     , num_doc.ENCAMINHADO     , num_org.org_descUnid     , num_org.org_desc FROM num_doc     INNER JOIN num_org          ON (num_doc.cod_org = num_org.org_id)     INNER JOIN num_tipodoc          ON (num_tipodoc.tipo_doc = num_doc.tipo_doc) WHERE (num_org.org_id = '%s'    AND num_doc.ELABORADO = '1'  AND num_doc.ASSINADO= '1'  AND num_doc.ENCAMINHADO = '0')", $colname_faltaEnviar);
+$query_faltaEnviar = sprintf("SELECT num_org.org_id     , num_doc.id_num     , num_doc.tipo_doc     , num_tipodoc.desc_tipo_doc     , num_doc.num_doc     , num_doc.cod_sec     , num_doc.ano_doc     , num_doc.assunto     , num_doc.ELABORADO     , num_doc.ASSINADO     , num_doc.ENCAMINHADO     , num_org.org_desc_unid     , num_org.org_desc FROM num_doc     INNER JOIN num_org          ON (num_doc.cod_org = num_org.org_id)     INNER JOIN num_tipodoc          ON (num_tipodoc.tipo_doc = num_doc.tipo_doc) WHERE (num_org.org_id = '%s'    AND num_doc.ELABORADO = '1'  AND num_doc.ASSINADO= '1'  AND num_doc.ENCAMINHADO = '0')", $colname_faltaEnviar);
 $faltaEnviar = mysqli_query($conexao, $query_faltaEnviar);
 $row_faltaEnviar = mysqli_fetch_assoc($faltaEnviar);
 $totalRows_faltaEnviar = mysqli_num_rows($faltaEnviar);

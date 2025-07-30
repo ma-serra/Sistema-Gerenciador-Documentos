@@ -23,7 +23,7 @@ $totalRows_con_secao = mysqli_num_rows($con_secao);
 
 <body>
 <div align="center"><font color="#000099" size="3"><strong>Lista de se&ccedil;&otilde;es cadastradas 
-  do <?php echo $row_con_secao['org_descUnid']; ?></strong></font></div>
+  do <?php echo $row_con_secao['org_desc_unid']; ?></strong></font></div>
 <?php do { ?>
 <table width="52%" border="0" align="center">
   <tr <?php 

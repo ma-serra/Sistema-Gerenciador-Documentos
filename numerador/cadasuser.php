@@ -117,7 +117,7 @@ $totalRows_nivel = mysqli_num_rows($nivel_result);
             while($row_org_loop = mysqli_fetch_assoc($org_result)) {
           ?>
           <option value="<?php echo $row_org_loop['org_id']; ?>" selected>
-            <?php echo htmlspecialchars($row_org_loop['org_desc']); ?> <?php echo htmlspecialchars($row_org_loop['org_descUnid']); ?>
+            <?php echo htmlspecialchars($row_org_loop['org_desc']); ?> <?php echo htmlspecialchars($row_org_loop['org_desc_unid']); ?>
           </option>
           <?php
             }

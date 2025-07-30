@@ -29,7 +29,7 @@ $totalRows_secao = mysqli_num_rows($secao);
           <td width="123" align="right" nowrap><font size="3"><strong>Cod da OPM:</strong></font></td>
           <td width="170"> <strong><font color="#990000" size="3"><?php echo $row_secao['org_Unidade']; ?></font></strong></td>
           <td width="154"><font size="3"><strong>Descri&ccedil;&atilde;o da OPM:</strong></font></td>
-          <td width="188"> <strong><font color="#990000" size="3"><?php echo $row_secao['org_descUnid']; ?></font></strong></td>
+          <td width="188"> <strong><font color="#990000" size="3"><?php echo $row_secao['org_desc_unid']; ?></font></strong></td>
         </tr>
         <tr valign="baseline"> 
           <td nowrap align="right"><font size="3"><strong>Cod. doc da se&ccedil;&atilde;o:</strong></font></td>
