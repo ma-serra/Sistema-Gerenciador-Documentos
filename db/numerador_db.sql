@@ -112,7 +112,7 @@ CREATE TABLE `sai_posto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- =================================================================
--- INSERÇÃO DE DADOS COM CAMPOS NULOS PREENCHIDOS (Atualizados)
+-- INSERÇÃO DE DADOS 
 -- =================================================================
 
 INSERT INTO `num_org` (`org_id`, `org_unidade`, `org_desc_unid`, `org_cod_secao`, `org_desc`, `org_cidade`, `org_uf`, `org_bairro`, `org_via`, `org_num`, `org_ref`, `org_tel`, `org_fax`, `org_email`, `org_tp`, `org_obs`) VALUES
@@ -133,31 +133,56 @@ INSERT INTO `num_tipodoc` (`tipo_doc`, `desc_tipo_doc`) VALUES
 (1, 'APRECIAÇÃO'),(2, 'CARTAO ESTACIONAMENTO'),(3, 'COMUNICADO'),(4, 'DESPACHO'),(5, 'FAX'),(6, 'GUIA REMESSA'),(7, 'INFORMAÇÃO'),(8, 'INFORME'),(9, 'INVESTIGAÇÃO PRELIMINAR'),(10, 'MEMORANDO'),(11, 'NBI'),(12, 'NBI RESERVADA'),(13, 'OFICIO'),(14, 'ORDEM DE SERVIÇO'),(15, 'PARTE'),(16, 'PEDIDO DE BUSCA'),(17, 'PROTOCOLO'),(18, 'TERMO INVENTARIO'),(20, 'RAIIA'),(21, 'Nota de Imprensa'),(22, 'TERMO DE VISTORIA'),(23, 'DIÁRIA DE DILIGENCIA'),(24, 'TERMO DE AVALIAÇÃO'),(25, 'BOLETIM GERAL'),(26, 'MEMORANDO INSPEÇÃO DE SAÚDE'),(28, 'AUXÍLIO RECLUSÃO'),(29, 'TERMO DE RECEBIMENTO'),(30, 'TERMO RECEBIMENTO DE PNEUS'),(31, 'E-MAIL'),(32, 'PTAC'),(33, 'FMM'),(34, 'PROJETO BÁSICO'),(35, 'RADIO'),(36, 'RECIBO'),(37, 'P.D.F.'),(38, 'Nota de Serviço'),(39, 'ELOGIO'),(40, 'TERMO DE SUCATA'),(41, 'CONTRATO'),(42, 'CONVITE-BEC'),(43, 'DL'),(44, 'FEPOM'),(45, 'INEXIGIBILIDADE'),(46, 'NOTES'),(47, 'PREGAO'),(48, 'TESOURO'),(49, 'RIOG'),(50, 'FAM'),(51, 'TERMO DE DOAÇÃO'),(52, 'TERMO DE INSERVIBILIDADE'),(53, 'FAMI'),(54, 'PDF'),(55, 'GRC'),(56, 'Atestado/Declaração/Certidão'),(57, 'PLANILHA PERIÓDICO ANUAL'),(58, 'RELATÓRIO'),(59, 'FISP'),(60, 'ESCALA'),(61, 'TOMADA DE PREÇO'),(62, 'PORTARIA DE IPM'),(64, 'PORTARIA DE APFD'),(65, 'ATA DE REUNIÃO'),(66, 'CARTA PRECATÓRIA'),(67, 'PORTARIA DE CD'),(68, 'CONVITE SJD'),(69, 'DESERÇÃO'),(70, 'PORTARIA DE PAD'),(71, 'PROCEDIMENTO DISCIPLINAR'),(72, 'PORTARIA DE SINDICÂNCIA'),(73, 'NOTIFICAÇÃO'),(74, 'CITAÇÃO'),(75, 'INTIMAÇÃO'),(76, 'FAM - BÉLICO'),(77, 'FAM - INTENDENCIA'),(78, 'SANCIONATÓRIO'),(81, 'NOTA BOLETIM'),(82, 'PROJETO BÁSICO'),(83, 'INSTRUÇÃO NUMERADOR'),(84, 'RELATÓRIO OPERACIONAL'),(85, 'PERÍCIA IC'),(86, 'Termo de Descarga'),(87, 'Nota Instrução'),(98, 'ELIMINAÇÃO DE DOCUMENTOS'),(99, 'TROCA DE SERVIÇO'),(100, 'CEPOL/CECOM Comunicação Prévia'),(102, 'teste');
 
 INSERT INTO `num_doc` (`id_num`, `cod_org`, `tipo_doc`, `num_doc`, `cod_sec`, `ano_doc`, `assunto`, `destino`, `data`, `elaborador`, `obs_doc`, `elaborado`, `assinado`, `encaminhado`) VALUES
-(1, 28, 15, '0001', '203', 2012, 'Prorrogação do contrato de limpeza.', 'Sr. Dirigente da UGE 180157- CPI-2', '2012-01-23', '528641', 'Documentação anexa.', 1, 1, 1),
-(2, 28, 13, '0001', '203', 2012, 'Análise de processo.', 'Sr. Diretor de Finanças e Patrimônio.', '2012-01-23', '528641', 'Análise concluída.', 1, 1, 1),
-(3, 28, 14, '0001', '203', 2012, 'Relação de processos para o Tribunal de Contas.', 'SJD', '2012-01-23', '528641', 'Conforme solicitado.', 1, 1, 1),
-(4, 28, 47, '0001', '203', 2012, 'Pregão de pneus', 'DF-1', '2012-01-23', '528641', 'Processo de pregão iniciado.', 1, 1, 1),
-(5, 28, 42, '0001', '203', 2012, 'Aquisição de oleo lubrificante.', 'Motomec CPI-2', '2012-01-23', '528641', 'Convite enviado.', 1, 1, 1),
-(6, 28, 48, '0001', '203', 2012, 'Compras de pneumaticos', 'Motomec ', '2012-01-23', '528641', 'Pagamento efetuado.', 1, 1, 1),
-(14, 28, 48, '0009', '203', 2012, 'Serviço de agua e esgoto vinhedo (  SANEBAVI )', 'Dirigente', '2012-01-23', '528641', 'sem obs', 1, 1, 1),
-(29, 28, 48, '0018', '203', 2012, 'Adiantamento de manutenção de vtr Ten. Pereira', 'Tesouraria', '2012-01-23', '528641', 'sem obs', 1, 1, 1),
-(34, 28, 15, '0003', '203', 2012, 'Solicitação de material de escritório.', 'Setor de Almoxarifado', '2012-01-23', '999999', 'sem obs', 1, 1, 1),
-(35, 28, 15, '0004', '203', 2012, 'Pedido de reparo em viatura.', 'Setor de Manutenção', '2012-01-23', '999999', 'sem obs', 1, 1, 1),
-(40, 33, 13, '0030', '200', 2012, 'Solicitação de movimentação', 'DP-2', '2012-01-23', '904745', 'Referente ao Sd PM Silva.', 1, 1, 1),
-(42, 33, 4, '0006', '200', 2012, 'Restituição de expediente sobre movimentação', '35º BPM/I', '2012-01-23', '904745', 'Documentação incompleta.', 1, 1, 1),
-(44, 33, 10, '0028', '200', 2012, 'Apresentação do Sd PM Temp Carolina no COPOM', 'COPOM', '2012-01-23', '904745', 'Para início das atividades.', 1, 1, 1),
-(45, 28, 4, '0001', '203', 2012, 'Aditamento do contrato de limpeza', 'Dirigente', '2012-01-23', '528641', 'Contrato aditado com sucesso.', 1, 1, 1),
-(48, 33, 14, '0004', '200', 2012, 'Apresentação em 19JAN12 do Sd PM 991965-1 Anderson', '47º BPM/I', '2012-01-23', '904745', 'Conforme BI.', 1, 1, 1),
-(50, 33, 5, '0010', '200', 2012, 'Alteração na Escala de Oficial Supervisor Regional', 'Todas OPM', '2012-01-23', '904745', 'Publicar em boletim.', 1, 1, 1),
-(51, 33, 56, '0006', '200', 2012, 'Confecção de Certidão de Serviço prestado para fins empregaticio', 'Interessado', '2012-01-23', '904745', 'A pedido do interessado.', 1, 1, 1),
-(52, 33, 31, '0000', '200', 2012, 'Comunicação interna sobre nova diretriz.', 'Corpo de Oficiais', '2012-01-23', '904745', 'E-mail informativo.', 1, 1, 1),
-(53, 33, 15, '0003', '200', 2012, 'converSão em serviço', 'Presid PD', '2012-01-23', '904745', 'Relativo ao PD nº 123/2012.', 1, 1, 1),
-(55, 33, 57, '0021', '200', 2012, 'Planilha de periódico anual - 2012.', 'Seção de Pessoal', '2012-01-23', '904745', 'Dados compilados.', 1, 1, 1),
-(56, 33, 58, '0000', '200', 2012, 'Relatório de Atividades Mensal - Janeiro', 'Comando', '2012-01-23', '904745', 'Atividades da Seção.', 1, 1, 1),
-(57, 33, 55, '0000', '200', 2012, 'Guia de Recolhimento da Contribuição (GRC)', 'Setor Financeiro', '2012-01-23', '904745', 'Referente a contribuições.', 1, 1, 1),
-(81, 28, 48, '0032', '203', 2012, 'Contrato de aluguel 2GP Louveira 49BPM/I', 'Contrato 49BPM/I', '2012-01-25', '853137', 'Pagamento realizado.', 1, 1, 1),
-(93, 28, 43, '0001', '203', 2012, 'pagamento de taxa de coleta de lixo 47ºBPM/I', '47ºBPM/I', '2012-01-26', '528641', 'Pagamento efetuado.', 1, 1, 1),
-(97, 28, 46, '0001', '203', 2012, 'Planilha de investimentos', 'DFP-3', '2012-01-26', '528641', 'Dados atualizados.', 1, 1, 1);
+(1, 28, 15, '0001', '203', '2012', 'Prorrogação do contrato de limpeza.', 'Sr. Dirigente da UGE 180157- CPI-2', '2012-01-23', '528641', 'Documentação anexa.', 1, 1, 1),
+(2, 28, 13, '0001', '203', '2012', 'Análise de processo.', 'Sr. Diretor de Finanças e Patrimônio.', '2012-01-23', '528641', 'Análise concluída.', 1, 1, 1),
+(3, 28, 14, '0001', '203', '2012', 'Relação de processos para o Tribunal de Contas.', 'SJD', '2012-01-23', '528641', 'Conforme solicitado.', 1, 1, 1),
+(4, 28, 47, '0001', '203', '2012', 'Pregão de pneus', 'DF-1', '2012-01-23', '528641', 'Processo de pregão iniciado.', 1, 1, 1),
+(5, 28, 42, '0001', '203', '2012', 'Aquisição de oleo lubrificante.', 'Motomec CPI-2', '2012-01-23', '528641', 'Convite enviado.', 1, 1, 1),
+(6, 28, 48, '0001', '203', '2012', 'Compras de pneumaticos', 'Motomec ', '2012-01-23', '528641', 'Pagamento efetuado.', 1, 1, 1),
+(14, 28, 48, '0009', '203', '2012', 'Serviço de agua e esgoto vinhedo (  SANEBAVI )', 'Dirigente', '2012-01-23', '528641', 'sem obs', 1, 1, 1),
+(29, 28, 48, '0018', '203', '2012', 'Adiantamento de manutenção de vtr Ten. Pereira', 'Tesouraria', '2012-01-23', '528641', 'sem obs', 1, 1, 1),
+(34, 28, 15, '0003', '203', '2012', 'Solicitação de material de escritório.', 'Setor de Almoxarifado', '2012-01-23', '999999', 'sem obs', 1, 1, 1),
+(35, 28, 15, '0004', '203', '2012', 'Pedido de reparo em viatura.', 'Setor de Manutenção', '2012-01-23', '999999', 'sem obs', 1, 1, 1),
+(40, 33, 13, '0030', '200', '2012', 'Solicitação de movimentação', 'DP-2', '2012-01-23', '904745', 'Referente ao Sd PM Silva.', 1, 1, 1),
+(42, 33, 4, '0006', '200', '2012', 'Restituição de expediente sobre movimentação', '35º BPM/I', '2012-01-23', '904745', 'Documentação incompleta.', 1, 1, 1),
+(44, 33, 10, '0028', '200', '2012', 'Apresentação do Sd PM Temp Carolina no COPOM', 'COPOM', '2012-01-23', '904745', 'Para início das atividades.', 1, 1, 1),
+(45, 28, 4, '0001', '203', '2012', 'Aditamento do contrato de limpeza', 'Dirigente', '2012-01-23', '528641', 'Contrato aditado com sucesso.', 1, 1, 1),
+(48, 33, 14, '0004', '200', '2012', 'Apresentação em 19JAN12 do Sd PM 991965-1 Anderson', '47º BPM/I', '2012-01-23', '904745', 'Conforme BI.', 1, 1, 1),
+(50, 33, 5, '0010', '200', '2012', 'Alteração na Escala de Oficial Supervisor Regional', 'Todas OPM', '2012-01-23', '904745', 'Publicar em boletim.', 1, 1, 1),
+(51, 33, 56, '0006', '200', '2012', 'Confecção de Certidão de Serviço prestado para fins empregaticio', 'Interessado', '2012-01-23', '904745', 'A pedido do interessado.', 1, 1, 1),
+(52, 33, 31, '0000', '200', '2012', 'Comunicação interna sobre nova diretriz.', 'Corpo de Oficiais', '2012-01-23', '904745', 'E-mail informativo.', 1, 1, 1),
+(53, 33, 15, '0003', '200', '2012', 'converSão em serviço', 'Presid PD', '2012-01-23', '904745', 'Relativo ao PD nº 123/2012.', 1, 1, 1),
+(55, 33, 57, '0021', '200', '2012', 'Planilha de periódico anual - 2012.', 'Seção de Pessoal', '2012-01-23', '904745', 'Dados compilados.', 1, 1, 1),
+(56, 33, 58, '0000', '200', '2012', 'Relatório de Atividades Mensal - Janeiro', 'Comando', '2012-01-23', '904745', 'Atividades da Seção.', 1, 1, 1),
+(57, 33, 55, '0000', '200', '2012', 'Guia de Recolhimento da Contribuição (GRC)', 'Setor Financeiro', '2012-01-23', '904745', 'Referente a contribuições.', 1, 1, 1),
+(81, 28, 48, '0032', '203', '2012', 'Contrato de aluguel 2GP Louveira 49BPM/I', 'Contrato 49BPM/I', '2012-01-25', '853137', 'Pagamento realizado.', 1, 1, 1),
+(93, 28, 43, '0001', '203', '2012', 'pagamento de taxa de coleta de lixo 47ºBPM/I', '47ºBPM/I', '2012-01-26', '528641', 'Pagamento efetuado.', 1, 1, 1),
+(97, 28, 46, '0001', '203', '2012', 'Planilha de investimentos', 'DFP-3', '2012-01-26', '528641', 'Dados atualizados.', 1, 1, 1);
+
+-- Inserção na tabela `num_opm`
+INSERT INTO `num_opm` (`opm_codigo`, `opm_prefixo`, `opm_secao`, `opm_descricao`) VALUES
+(602000000, 2, 1, 'Comando de Policiamento do Interior 2'),
+(602008430, 843, 1, 'COPOM Campinas'),
+(602350000, 35, 1, '35º Batalhão de Polícia Militar');
+
+-- Inserção na tabela `num_pd` (Procedimentos Disciplinares)
+INSERT INTO `num_pd` (`id_pd`, `fin_pd`, `org_id`, `num_pd`, `cod_secao`, `ano_pd`, `readm_pd`, `repd_pd`, `digpd_pd`, `postpd_pd`, `nomepd_pd`, `cia_pd`, `enguatram_pd`, `data_pd`, `conclusao_pd`, `dias_pd`) VALUES
+(101, 'Concluído', 33, '001/1.1/24', '200', '2024', '117606', '105387', '1', 'Sd PM', 'José da Silva', '1ª Cia', 'Cap PM MENDONÇA', '2024-05-10', 'Absolvido', 30),
+(102, 'Em Andamento', 33, '002/1.1/24', '200', '2024', '117606', '100759', '5', 'Cb PM', 'João Santos', '2ª Cia', 'Cap PM MENDONÇA', '2024-06-20', '-', 45);
+
+-- Inserção na tabela `num_histpd` (Histórico de Procedimentos)
+INSERT INTO `num_histpd` (`idhis_pd`, `id_pd`, `readm_pd`, `data`, `tituhist_pd`, `hist_pd`) VALUES
+(1, 101, '105387', '2024-05-15', 'Oitiva de Testemunhas', 'Foram ouvidas as testemunhas de acusação.'),
+(2, 101, '105387', '2024-05-25', 'Interrogatório do Acusado', 'Realizado o interrogatório do militar implicado.'),
+(3, 101, '105387', '2024-06-05', 'Relatório Final', 'Conclusão do procedimento com proposta de absolvição.'),
+(4, 102, '100759', '2024-06-22', 'Instauração', 'Procedimento instaurado para apurar possível transgressão disciplinar.');
+
+INSERT INTO `num_nivel` (`nivel_id`, `cod_nivel`, `desc_nivel`, `visivel`) VALUES
+(1, 'a', 'Administrador', 1),
+(2, 'u', 'Usuário', 1),
+(3, 'v', 'Visitante', 1),
+(4, 'm', 'Master', 0),
+(5, 'c', 'CMT', 1);
 
 INSERT INTO `num_user` (`rerg`, `postfunc`, `guerra`, `senha`, `org_id`, `nivel_id`, `situacao`) VALUES
 ('100100', '2º Sgt PM', 'Bilão', 'b9c93fbdfd2a30504e05d3b0b32307da', 31, 2, 'ATIVO'),
@@ -177,7 +202,6 @@ INSERT INTO `num_user` (`rerg`, `postfunc`, `guerra`, `senha`, `org_id`, `nivel_
 ('117600', 'Ten PM', 'Mendonça 2', 'f991ccd483f3ed86f2b87cf692ffb30f', 35, 4, 'Of Telemati'),
 ('117606', 'Cap PM', 'MENDONÇA', '951477c405c46624e7650ab6e4354d4b', 35, 1, 'CHEFE COPOM');
 
--- Tabela de Postos sem duplicidades (cod_posto, posto, bi, grupo_posto, desc_grupo_posto)
 INSERT INTO `sai_posto` (`cod_posto`, `posto`, `bi`, `grupo_posto`, `desc_grupo_posto`) VALUES
 (101, 'Cel PM', 'RESERVADO', '1', 'Cel PM'),
 (102, 'Ten Cel PM', 'RESERVADO', '2', 'Ten Cel PM'),
@@ -236,7 +260,7 @@ ALTER TABLE `num_user`
 ALTER TABLE `num_doc`
   MODIFY `id_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 ALTER TABLE `num_histpd`
-  MODIFY `idhis_pd` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idhis_pd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 ALTER TABLE `num_nivel`
   MODIFY `nivel_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 ALTER TABLE `num_org`
@@ -244,7 +268,7 @@ ALTER TABLE `num_org`
 ALTER TABLE `num_pd`
   MODIFY `id_pd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 ALTER TABLE `num_tipodoc`
-  MODIFY `tipo_doc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `tipo_doc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 -- Chaves estrangeiras
 ALTER TABLE `num_doc`
