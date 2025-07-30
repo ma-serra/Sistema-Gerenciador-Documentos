@@ -1,185 +1,156 @@
-<?php require_once('../Connections/conexao.php'); ?>
 <?php
-function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
-{
-  $theValue = $theValue;
+// 1. INICIALIZAÇÃO E CONEXÃO
+// =============================
+require_once('../Connections/conexao.php');
 
-  switch ($theType) {
-    case "text":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;    
-    case "long":
-    case "int":
-      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
-      break;
-    case "double":
-      $theValue = ($theValue != "") ? "'" . doubleval($theValue) . "'" : "NULL";
-      break;
-    case "date":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;
-    case "defined":
-      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
-      break;
-  }
-  return $theValue;
-}
-
+// Define a ação do formulário para o próprio arquivo.
 $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . $_SERVER['QUERY_STRING'];
 }
 
-if ((isset($_GET["MM_insert"])) && ($_GET["MM_insert"] == "form1")) {
-  $insertSQL = sprintf("INSERT INTO num_doc (cod_org, tipo_doc, num_doc, cod_sec, ano_doc, assunto, destino, `data`, elaborador, obs_doc, ELABORADO, ASSINADO, ENCAMINHADO) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                      GetSQLValueString($_GET['cod_org'], "int"),
-                      GetSQLValueString($_GET['tipo_doc'], "int"),
-                      GetSQLValueString($_GET['num_doc'], "text"),
-                      GetSQLValueString($_GET['cod_sec'], "text"),
-                      GetSQLValueString($_GET['ano_doc'], "text"),
-                      GetSQLValueString($_GET['assunto'], "text"),
-                      GetSQLValueString($_GET['destino'], "text"),
-                      GetSQLValueString($_GET['data'], "date"),
-                      GetSQLValueString($_GET['elaborador'], "text"),
-                      GetSQLValueString($_GET['observacao'], "text"),
-                      GetSQLValueString($_GET['ELABORADO'], "int"),
-                      GetSQLValueString($_GET['ASSINADO'], "int"),
-                      GetSQLValueString($_GET['ENCAMINHADO'], "int"));
+// 2. LÓGICA DE INSERÇÃO DE DADOS
+// =============================
+// O formulário agora usa POST, que é o método correto para inserção.
+if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
+  
+  $insertSQL = sprintf("INSERT INTO num_doc (cod_org, tipo_doc, num_doc, cod_sec, ano_doc, assunto, destino, `data`, elaborador, obs_doc, elaborado, assinado, encaminhado) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                       GetSQLValueString($conexao, $_POST['cod_org'], "int"),
+                       GetSQLValueString($conexao, $_POST['tipo_doc'], "int"),
+                       GetSQLValueString($conexao, $_POST['num_doc'], "text"),
+                       GetSQLValueString($conexao, $_POST['cod_sec'], "text"),
+                       GetSQLValueString($conexao, $_POST['ano_doc'], "text"),
+                       GetSQLValueString($conexao, $_POST['assunto'], "text"),
+                       GetSQLValueString($conexao, $_POST['destino'], "text"),
+                       GetSQLValueString($conexao, $_POST['data'], "date"),
+                       GetSQLValueString($conexao, $_POST['elaborador'], "text"),
+                       GetSQLValueString($conexao, $_POST['observacao'], "text"),
+                       GetSQLValueString($conexao, $_POST['ELABORADO'], "int"),
+                       GetSQLValueString($conexao, $_POST['ASSINADO'], "int"),
+                       GetSQLValueString($conexao, $_POST['ENCAMINHADO'], "int"));
 
-  mysqli_select_db($conexao, $database_conexao);
   $Result1 = mysqli_query($conexao, $insertSQL);
 
-  $insertGoTo = "acaooknumerador.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
+  if ($Result1) {
+    // Para a página de sucesso, passamos os parâmetros via GET para exibir a mensagem.
+    $insertGoTo = "acaooknumerador.php?num_doc=" . urlencode($_POST['num_doc']) . 
+                  "&cod_sec=" . urlencode($_POST['cod_sec']) . 
+                  "&ano_doc=" . urlencode($_POST['ano_doc']) . 
+                  "&tipo_doc=" . urlencode($_POST['tipo_doc']);
+                  
+    header(sprintf("Location: %s", $insertGoTo));
+    exit();
+  } else {
+    die("Erro ao inserir o documento: " . mysqli_error($conexao));
   }
-  header(sprintf("Location: %s", $insertGoTo));
 }
 
-$colname_listadoc = "0";
-if (isset($_GET['cod_org'])) {
-  $colname_listadoc = $_GET['cod_org'];
-}
-mysqli_select_db($conexao, $database_conexao);
-$query_listadoc = sprintf("SELECT num_doc.cod_org     , num_doc.tipo_doc     , num_tipodoc.desc_tipo_doc     , num_doc.ano_doc     , num_doc.num_doc     , num_org.org_CodSecao FROM num_doc     INNER JOIN num_tipodoc          ON (num_doc.tipo_doc = num_tipodoc.tipo_doc)     INNER JOIN num_org          ON (num_doc.cod_org = num_org.org_id) WHERE (num_doc.cod_org = '%s') GROUP BY num_doc.tipo_doc", $colname_listadoc);
-$listadoc = mysqli_query($conexao, $query_listadoc);
-$row_listadoc = mysqli_fetch_assoc($listadoc);
-$totalRows_listadoc = mysqli_num_rows($listadoc);
+// 3. CONSULTAS PARA PREENCHER O FORMULÁRIO
+// ==========================================
+// Pega os parâmetros da URL.
+$cod_org_param = isset($_GET['cod_org']) ? $_GET['cod_org'] : '-1';
+$tipo_doc_param = isset($_GET['tipo_doc']) ? $_GET['tipo_doc'] : '-1';
 
-$colname_documento = "0";
-if (isset($_GET['tipo_doc'])) {
-  $colname_documento = $_GET['tipo_doc'];
-}
-mysqli_select_db($conexao, $database_conexao);
-$query_documento = sprintf("SELECT * FROM num_tipodoc WHERE tipo_doc = %s ORDER BY desc_tipo_doc ASC", $colname_documento);
-$documento = mysqli_query($conexao, $query_documento);
-$row_documento = mysqli_fetch_assoc($documento);
-$totalRows_documento = mysqli_num_rows($documento);
+// Busca o tipo de documento.
+$query_documento = sprintf("SELECT * FROM num_tipodoc WHERE tipo_doc = %s", GetSQLValueString($conexao, $tipo_doc_param, "int"));
+$documento_result = mysqli_query($conexao, $query_documento);
+$row_documento = mysqli_fetch_assoc($documento_result);
 
-$colname_Recordset1 = "0";
-if (isset($_GET['cod_org'])) {
-  $colname_Recordset1 = $_GET['cod_org'];
-}
-mysqli_select_db($conexao, $database_conexao);
-$query_Recordset1 = sprintf("SELECT * FROM num_org WHERE org_id = %s", $colname_Recordset1);
-$Recordset1 = mysqli_query($conexao, $query_Recordset1);
-$row_Recordset1 = mysqli_fetch_assoc($Recordset1);
-$totalRows_Recordset1 = mysqli_num_rows($Recordset1);
+// Busca os dados da seção (organização).
+$query_org = sprintf("SELECT * FROM num_org WHERE org_id = %s", GetSQLValueString($conexao, $cod_org_param, "int"));
+$org_result = mysqli_query($conexao, $query_org);
+$row_org = mysqli_fetch_assoc($org_result);
 
-$colname_numero = "0";
-if (isset($_GET['cod_org'])) {
-  $colname_numero = $_GET['cod_org'];
+// Busca o último documento registrado para este tipo e seção.
+$current_year = date("Y");
+$query_numero = sprintf("SELECT * FROM num_doc WHERE cod_org = %s AND tipo_doc = %s AND ano_doc = %s ORDER BY num_doc DESC LIMIT 1",
+                        GetSQLValueString($conexao, $cod_org_param, "int"),
+                        GetSQLValueString($conexao, $tipo_doc_param, "int"),
+                        GetSQLValueString($conexao, $current_year, "text"));
+$numero_result = mysqli_query($conexao, $query_numero);
+$row_numero = mysqli_fetch_assoc($numero_result);
+$totalRows_numero = mysqli_num_rows($numero_result);
+
+// 4. LÓGICA PARA CALCULAR O PRÓXIMO NÚMERO
+// ==========================================
+$numdoc = 1; // Padrão, caso seja o primeiro do ano.
+if ($totalRows_numero > 0) {
+    // Se já existem documentos, pega o último número e soma 1.
+    $numdoc = intval($row_numero['num_doc']) + 1;
 }
-$tipo_numero = "0";
-if (isset($_GET['tipo_doc'])) {
-  $tipo_numero = $_GET['tipo_doc'];
-}
-mysqli_select_db($conexao, $database_conexao);
-$query_numero = sprintf("SELECT * FROM num_doc WHERE cod_org = '%s' AND tipo_doc = '%s' ORDER BY id_num DESC", $colname_numero,$tipo_numero);
-$Recordset1 = mysqli_query($conexao, $query_numero);
-$row_Recordset1 = mysqli_fetch_assoc($numero);
-$totalRows_numero = mysqli_num_rows($numero);
+// Formata o número para ter sempre 4 dígitos (ex: 0001, 0015, 0123).
+$numdoc_formatado = str_pad($numdoc, 4, "0", STR_PAD_LEFT);
 ?>
 <html>
 <head>
-<title>Numerador</title>
-<link  href="../css/Geral.css" rel="stylesheet" type="text/css">
+<title>Numerador - Inserir Documento</title>
+<link href="../css/Geral.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
 
 <body>
-<?php 
-$ano = $row_numero['ano_doc'];
-$ano1 = date ("Y");
-if ($ano == $ano1){
-$numdoc = $row_numero['num_doc']+1;
-}
-else
-{$numdoc = 1;}
-$numdoc = str_pad($numdoc, 4, "0", STR_PAD_LEFT);
- ?>
-<form action="<?php echo $editFormAction; ?>" method="get" name="form1">
-  <table width="420" border="12" align="center" cellpadding="0" cellspacing="0">
+<form action="<?php echo $editFormAction; ?>" method="POST" name="form1">
+  <table width="600" border="12" align="center" cellpadding="0" cellspacing="0">
     <tr> 
-      <td height="105" valign="top"><div align="center"> 
-          <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+      <td valign="top">
+        <div align="center"> 
+          <table width="100%" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#FFFFFF">
             <tr valign="baseline"> 
-              <td colspan="2" align="right" nowrap bgcolor="#CCCCCC"> <div align="center"><font color="#000099" size="3">Cadastro 
-                  de novo numerador da se&ccedil;&atilde;o<br>
-                  <?php echo $row_documento['desc_tipo_doc']; ?><br>
-                  </font></div></td>
+              <td colspan="2" align="center" nowrap bgcolor="#CCCCCC">
+                <font color="#000099" size="3">
+                  Cadastro de Novo Documento<br>
+                  <strong><?php echo htmlspecialchars($row_documento['desc_tipo_doc']); ?></strong>
+                </font>
+              </td>
             </tr>
             <tr align="center" valign="baseline"> 
-              <td colspan="2" valign="middle" nowrap bgcolor="#FFFFFF"> <div align="center">N&uacute;mero 
-                  do Documento<font color="#000099" size="6"> <?php echo $numdoc ?></font><font color="#FF0000"> 
-                  /&nbsp; <?php echo $row_numero['cod_org']; ?>&nbsp;/&nbsp;<?php echo $row_numero['ano_doc']; ?><br>
-                  </font></div></td>
+              <td colspan="2" valign="middle" nowrap bgcolor="#FFFFFF">
+                <div align="center">
+                  Número do Documento:<br>
+                  <font color="#000099" size="6"><strong><?php echo $numdoc_formatado; ?></strong></font>
+                  <font color="#990000" size="4"> / <?php echo htmlspecialchars($row_org['org_cod_secao']); ?> / <?php echo $current_year; ?></font>
+                </div>
+              </td>
             </tr>
             <tr valign="baseline"> 
-              <td width="239" align="right" valign="middle" nowrap> <div align="center">assunto:</div></td>
-              <td width="784"><div align="center"> 
-                  <textarea name="assunto" cols="60" rows="2"></textarea>
-                </div></td>
+              <td width="100" align="right" valign="middle" nowrap>Assunto:</td>
+              <td><textarea name="assunto" cols="60" rows="2"></textarea></td>
             </tr>
             <tr valign="baseline"> 
-              <td height="35" align="right" valign="middle" nowrap bgcolor="#FFFFFF"> 
-                <div align="center">destino:</div></td>
-              <td valign="middle" bgcolor="#FFFFFF"> <div align="center"> 
-                  <textarea name="destino" cols="60" rows="2"></textarea>
-                </div></td>
+              <td align="right" valign="middle" nowrap>Destino:</td>
+              <td><textarea name="destino" cols="60" rows="2"></textarea></td>
             </tr>
             <tr valign="baseline"> 
-              <td align="right" valign="middle" nowrap> <div align="center">OBSERVA��O:</div></td>
-              <td> <div align="center"> 
-                  <textarea name="observacao" cols="60" rows="2" id="observacao"></textarea>
-                </div></td>
+              <td align="right" valign="middle" nowrap>Observação:</td>
+              <td><textarea name="observacao" cols="60" rows="2" id="observacao"></textarea></td>
             </tr>
             <tr valign="baseline"> 
-              <td colspan="2" align="right" valign="middle" nowrap bgcolor="#FFFFFF"> 
-                <div align="center"></div>
-                <div align="center">ELABORADO:&nbsp;&nbsp;&nbsp;N&atilde;o 
-                  <input name="ELABORADO" type="radio" value="0" checked>
-                  &nbsp;&nbsp;&nbsp;SIM 
-                  <input type="radio" name="ELABORADO" value="1">
-                </div></td>
+              <td colspan="2" align="center" valign="middle" nowrap bgcolor="#FFFFFF"> 
+                ELABORADO:&nbsp;&nbsp;&nbsp;
+                Não <input name="ELABORADO" type="radio" value="0" checked>
+                &nbsp;&nbsp;&nbsp;
+                Sim <input type="radio" name="ELABORADO" value="1">
+              </td>
             </tr>
             <tr valign="baseline"> 
-              <td colspan="2" align="right" nowrap bgcolor="#CCCCCC"> <div align="center"> 
-                  <input type="hidden" name="data" value="<?php echo date("Y-m-d");  ?>" size="32">
-                  <input type="hidden" name="ano_doc" value="<?php echo $ano1 ?>" size="32">
-                  <input type="hidden" name="cod_sec" value="<?php echo $row_Recordset1['org_CodSecao']; ?>" size="32">
-                  <input type="hidden" name="cod_org" value="<?php echo $row_Recordset1['org_id']; ?>" size="32">
-                  <input name="submit" type="submit" value="Inserir registro">
-                  <input name="tipo_doc" type="hidden" id="tipo_doc" value="<?php echo $row_documento['tipo_doc']; ?>">
-                  <input type="hidden" name="elaborador" value="<?php echo $_GET['re']; ?>" size="32">
-                  <input name="num_doc" type="hidden" value="<?php echo $numdoc ?>" size="6">
-                  <input name="ASSINADO" type="hidden" id="ASSINADO2" value="<?php echo $row_numero['ASSINADO']; ?>">
-                  <input name="ENCAMINHADO" type="hidden" id="ENCAMINHADO2" value="<?php echo $row_numero['ENCAMINHADO']; ?>">
-                </div></td>
+              <td colspan="2" align="center" nowrap bgcolor="#CCCCCC"> 
+                <input type="hidden" name="data" value="<?php echo date("Y-m-d"); ?>">
+                <input type="hidden" name="ano_doc" value="<?php echo $current_year; ?>">
+                <input type="hidden" name="cod_sec" value="<?php echo htmlspecialchars($row_org['org_cod_secao']); ?>">
+                <input type="hidden" name="cod_org" value="<?php echo htmlspecialchars($row_org['org_id']); ?>">
+                <input type="hidden" name="tipo_doc" value="<?php echo htmlspecialchars($row_documento['tipo_doc']); ?>">
+                <input type="hidden" name="elaborador" value="<?php echo htmlspecialchars($_GET['re']); ?>">
+                <input type="hidden" name="num_doc" value="<?php echo $numdoc_formatado; ?>">
+                
+                <input name="ASSINADO" type="hidden" id="ASSINADO2" value="0">
+                <input name="ENCAMINHADO" type="hidden" id="ENCAMINHADO2" value="0">
+                
+                <input name="submit" type="submit" value="Inserir Registro">
+              </td>
             </tr>
           </table>
-        </div></td>
+        </div>
+      </td>
     </tr>
   </table>
   <input type="hidden" name="MM_insert" value="form1">
@@ -187,12 +158,9 @@ $numdoc = str_pad($numdoc, 4, "0", STR_PAD_LEFT);
 </body>
 </html>
 <?php
-mysqli_free_result($listadoc);
-
-mysqli_free_result($documento);
-
-mysqli_free_result($Recordset1);
-
-mysqli_free_result($numero);
+// 5. LIBERAÇÃO DE MEMÓRIA
+// =======================
+mysqli_free_result($documento_result);
+mysqli_free_result($org_result);
+mysqli_free_result($numero_result);
 ?>
-

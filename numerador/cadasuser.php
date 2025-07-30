@@ -1,183 +1,172 @@
-
-<?php require_once('../Connections/conexao.php'); ?>
 <?php
-function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
-{
-  $theValue = $theValue;
+// 1. INICIALIZAÇÃO E CONEXÃO
+// =============================
+// Inclui o arquivo de conexão que agora contém a função GetSQLValueString.
+require_once('../Connections/conexao.php');
 
-  switch ($theType) {
-    case "text":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;    
-    case "long":
-    case "int":
-      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
-      break;
-    case "double":
-      $theValue = ($theValue != "") ? "'" . doubleval($theValue) . "'" : "NULL";
-      break;
-    case "date":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;
-    case "defined":
-      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
-      break;
-  }
-  return $theValue;
-}
-
+// Define a ação do formulário para o próprio arquivo.
 $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . $_SERVER['QUERY_STRING'];
 }
 
-if ((isset($_GET["MM_insert"])) && ($_GET["MM_insert"] == "form1")) {
-  $insertSQL = sprintf("INSERT INTO num_user (rerg, postfunc, guerra, senha, Org_id, Nivel, situacao) VALUES (%s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_GET['rerg'], "text"),
-                       GetSQLValueString($_GET['postfunc'], "text"),
-                       GetSQLValueString($_GET['guerra'], "text"),
-                       GetSQLValueString(md5($_GET['senha']), "text"),
-                       GetSQLValueString($_GET['org_id'], "int"),
-                       GetSQLValueString($_GET['Nivel'], "text"),
-                       GetSQLValueString($_GET['situacao'], "text"));
+// 2. LÓGICA DE INSERÇÃO DE DADOS
+// =============================
+// Verifica se o formulário foi submetido via POST.
+if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
+  
+  // Correção CRÍTICA: As colunas no banco de dados são 'org_id' e 'nivel_id'.
+  // O uso de 'Org_id' e 'Nivel' com maiúsculas causaria erro.
+  $insertSQL = sprintf("INSERT INTO num_user (rerg, postfunc, guerra, senha, org_id, nivel_id, situacao) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                       GetSQLValueString($conexao, $_POST['rerg'], "text"),
+                       GetSQLValueString($conexao, $_POST['postfunc'], "text"),
+                       GetSQLValueString($conexao, $_POST['guerra'], "text"),
+                       GetSQLValueString($conexao, md5($_POST['senha']), "text"),
+                       GetSQLValueString($conexao, $_POST['org_id'], "int"),
+                       GetSQLValueString($conexao, $_POST['Nivel'], "int"),
+                       GetSQLValueString($conexao, $_POST['situacao'], "text"));
 
-  mysqli_select_db($conexao, $database_conexao);
   $Result1 = mysqli_query($conexao, $insertSQL);
 
-  $insertGoTo = "acaookuser.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
+  if ($Result1) {
+    // Redireciona para a página de sucesso.
+    $insertGoTo = "acaookuser.php";
+    if (isset($_SERVER['QUERY_STRING'])) {
+      $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
+      $insertGoTo .= $_SERVER['QUERY_STRING'];
+    }
+    header(sprintf("Location: %s", $insertGoTo));
+    exit();
+  } else {
+    die("Erro ao inserir o usuário: " . mysqli_error($conexao));
   }
-  header(sprintf("Location: %s", $insertGoTo));
 }
-?>
-<?php require_once('../Connections/conexao.php'); ?>
-<?php
-mysqli_select_db($conexao, $database_conexao);
-$query_posto = "SELECT * FROM sai_posto ORDER BY CodPosto ASC";
-$posto = mysqli_query($conexao, $query_posto);
-$row_posto = mysqli_fetch_assoc($posto);
-$totalRows_posto = mysqli_num_rows($posto);
 
-$colname_Recordset1 = "1";
+// 3. CONSULTAS PARA PREENCHER OS MENUS <select>
+// ===============================================
+// Busca a lista de Postos/Graduações.
+$query_posto = "SELECT * FROM sai_posto ORDER BY cod_posto ASC";
+$posto_result = mysqli_query($conexao, $query_posto);
+$row_posto = mysqli_fetch_assoc($posto_result);
+$totalRows_posto = mysqli_num_rows($posto_result);
+
+// Busca a Organização (Seção) específica passada pela URL.
+$colname_org = "-1";
 if (isset($_GET['org_id'])) {
-  $colname_Recordset1 = $_GET['org_id'];
+  $colname_org = $_GET['org_id'];
 }
-mysqli_select_db($conexao, $database_conexao);
-$query_Recordset1 = sprintf("SELECT * FROM num_org WHERE org_id = %s", $colname_Recordset1);
-$Recordset1 = mysqli_query($conexao, $query_Recordset1);
-$row_Recordset1 = mysqli_fetch_assoc($Recordset1);
-$totalRows_Recordset1 = mysqli_num_rows($Recordset1);
+$query_org = sprintf("SELECT * FROM num_org WHERE org_id = %s", GetSQLValueString($conexao, $colname_org, "int"));
+$org_result = mysqli_query($conexao, $query_org);
+$row_org = mysqli_fetch_assoc($org_result);
+$totalRows_org = mysqli_num_rows($org_result);
 
-mysqli_select_db($conexao, $database_conexao);
-$query_nivel = "SELECT * FROM num_nivel WHERE num_nivel.cod_nivel <> 'm' and num_nivel.cod_nivel <> 'c'  ORDER BY nivel_id ASC";
-$nivel = mysqli_query($conexao, $query_nivel);
-$row_nivel = mysqli_fetch_assoc($nivel);
-$totalRows_nivel = mysqli_num_rows($nivel);
-
+// Busca os Níveis de acesso, excluindo Master e CMT.
+$query_nivel = "SELECT * FROM num_nivel WHERE cod_nivel NOT IN ('m', 'c') ORDER BY nivel_id ASC";
+$nivel_result = mysqli_query($conexao, $query_nivel);
+$row_nivel = mysqli_fetch_assoc($nivel_result);
+$totalRows_nivel = mysqli_num_rows($nivel_result);
 ?>
 <html>
 <head>
-<title>Numerador</title>
-<link  href="../css/Geral.css" rel="stylesheet" type="text/css">
+<title>Numerador - Cadastro de Usuário</title>
+<link href="../css/Geral.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
 
 <body>
-<form action="<?php echo $editFormAction; ?>" method="get" name="form1">
+<form action="<?php echo $editFormAction; ?>" method="POST" name="form1">
   <table align="center" bgcolor="#E6E6E6">
     <tr valign="baseline" bgcolor="#CCCCCC"> 
-      <td colspan="2" align="right" nowrap> <div align="center"><font color="#000099" size="3">CADASTRO 
-          DE USU&Aacute;RIO</font></div></td>
+      <td colspan="2" align="right" nowrap> 
+        <div align="center"><font color="#000099" size="3">CADASTRO DE USUÁRIO</font></div>
+      </td>
     </tr>
     <tr valign="baseline"> 
       <td nowrap align="right">RE:</td>
-      <td><input type="text" name="rerg" value="" size="9">
-        <font color="#990000">Obs: sem d&iacute;gito</font></td>
+      <td><input type="text" name="rerg" value="" size="9"> <font color="#990000">Obs: sem dígito</font></td>
     </tr>
     <tr valign="baseline"> 
-      <td nowrap align="right">POSTO / FUN&Ccedil;&Atilde;O:</td>
-      <td> <select name="postfunc" id="postfunc">
-          <option value="">Selecionar</option>
+      <td nowrap align="right">POSTO / FUNÇÃO:</td>
+      <td> 
+        <select name="postfunc" id="postfunc">
+          <option value="">Selecionar...</option>
           <?php
-do {  
-?>
-          <option value="<?php echo $row_posto['Posto']?>"><?php echo $row_posto['Posto']?></option>
+          if ($totalRows_posto > 0) {
+            mysqli_data_seek($posto_result, 0);
+            while($row_posto_loop = mysqli_fetch_assoc($posto_result)) {
+          ?>
+          <option value="<?php echo htmlspecialchars($row_posto_loop['Posto']); ?>"><?php echo htmlspecialchars($row_posto_loop['Posto']); ?></option>
           <?php
-} while ($row_posto = mysqli_fetch_assoc($posto));
-  $rows = mysqli_num_rows($posto);
-  if($rows > 0) {
-      mysqli_data_seek($posto, 0);
-	  $row_posto = mysqli_fetch_assoc($posto);
-  }
-?>
-        </select></td>
+            }
+          }
+          ?>
+        </select>
+      </td>
     </tr>
     <tr valign="baseline"> 
       <td nowrap align="right">NOME DE GUERRA:</td>
       <td><input type="text" name="guerra" value="" size="32"></td>
     </tr>
     <tr valign="baseline"> 
-      <td nowrap align="right">SELECIONE A SE&Ccedil;&Atilde;O:</td>
-      <td> <select name="org_id" id="org_id">
+      <td nowrap align="right">SEÇÃO:</td>
+      <td> 
+        <select name="org_id" id="org_id">
           <?php
-do {  
-?>
-          <option value="<?php echo $row_Recordset1['org_id']?>"><?php echo $row_Recordset1['org_desc']?> <?php echo $row_Recordset1['org_descUnid']; ?></option>
+          if ($totalRows_org > 0) {
+            mysqli_data_seek($org_result, 0);
+            while($row_org_loop = mysqli_fetch_assoc($org_result)) {
+          ?>
+          <option value="<?php echo $row_org_loop['org_id']; ?>" selected>
+            <?php echo htmlspecialchars($row_org_loop['org_desc']); ?> <?php echo htmlspecialchars($row_org_loop['org_descUnid']); ?>
+          </option>
           <?php
-} while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1));
-  $rows = mysqli_num_rows($Recordset1);
-  if($rows > 0) {
-      mysqli_data_seek($Recordset1, 0);
-	  $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
-  }
-?>
-        </select> </td>
+            }
+          }
+          ?>
+        </select> 
+      </td>
     </tr>
     <tr valign="baseline"> 
-      <td nowrap align="right">SELECIONE O NIVELl:</td>
-      <td> <select name="Nivel" id="Nivel">
-          <option value="">Selecione</option>
+      <td nowrap align="right">NÍVEL DE ACESSO:</td>
+      <td> 
+        <select name="Nivel" id="Nivel">
+          <option value="">Selecione...</option>
           <?php
-do {  
-?>
-          <option value="<?php echo $row_nivel['cod_nivel']?>"><?php echo $row_nivel['desc_nivel']?></option>
+          if ($totalRows_nivel > 0) {
+            mysqli_data_seek($nivel_result, 0);
+            while($row_nivel_loop = mysqli_fetch_assoc($nivel_result)) {
+          ?>
+            <option value="<?php echo $row_nivel_loop['nivel_id']; ?>"><?php echo htmlspecialchars($row_nivel_loop['desc_nivel']); ?></option>
           <?php
-} while ($row_nivel = mysqli_fetch_assoc($nivel));
-  $rows = mysqli_num_rows($nivel);
-  if($rows > 0) {
-      mysqli_data_seek($nivel, 0);
-	  $row_nivel = mysqli_fetch_assoc($nivel);
-  }
-?>
-        </select> </td>
+            }
+          }
+          ?>
+        </select> 
+      </td>
     </tr>
     <tr valign="baseline"> 
-      <td nowrap align="right">FUN&Ccedil;&Atilde;O:</td>
-      <td><input type="text" name="situacao" value="" size="32"></td>
+      <td nowrap align="right">FUNÇÃO:</td>
+      <td><input type="text" name="situacao" value="ATIVO" size="32"></td>
     </tr>
     <tr valign="baseline"> 
-      <td colspan="2" align="right" nowrap bgcolor="#CCCCCC"> <div align="center"> 
+      <td colspan="2" align="right" nowrap bgcolor="#CCCCCC"> 
+        <div align="center"> 
           <input type="submit" value="INSERIR REGISTRO">
-          <input type="hidden" name="senha" value="senhas" size="32">
-        </div></td>
+          <input type="hidden" name="senha" value="senhas">
+        </div>
+      </td>
     </tr>
   </table>
   
   <input type="hidden" name="MM_insert" value="form1">
-  <input type="hidden" name="MM_insert" value="form1">
 </form>
 <p>&nbsp;</p>
-  
-
 </body>
 </html>
 <?php
-mysqli_free_result($posto);
-
-mysqli_free_result($Recordset1);
-
-mysqli_free_result($nivel);
+// 4. LIBERAÇÃO DE MEMÓRIA
+// =======================
+mysqli_free_result($posto_result);
+mysqli_free_result($org_result);
+mysqli_free_result($nivel_result);
 ?>
-
