@@ -6,16 +6,13 @@ require_once('restrito.php');
 
 // 1. VALIDAÇÃO DE ENTRADA
 // =========================
-// Garante que o parâmetro 're' (Registro do Empregado) foi passado na URL.
 if (!isset($_GET['re'])) {
-    // Interrompe a execução com uma mensagem clara se o parâmetro estiver faltando.
     die("Erro: Parâmetro de usuário 're' não foi encontrado na URL.");
 }
 $colname_user = $_GET['re'];
 
 // 2. CONSULTA PRINCIPAL DE DADOS DO USUÁRIO
 // ===========================================
-// A consulta usa os nomes de coluna corretos do banco de dados (snake_case), como 'nivel_id' e 'org_id'.
 $query_user = sprintf("SELECT u.rerg, u.postfunc, u.guerra, u.senha, u.org_id, u.nivel_id, o.org_desc_unid, o.org_cod_secao, o.org_desc 
                        FROM num_user u 
                        INNER JOIN num_org o ON u.org_id = o.org_id 
@@ -23,7 +20,6 @@ $query_user = sprintf("SELECT u.rerg, u.postfunc, u.guerra, u.senha, u.org_id, u
 
 $user_result = mysqli_query($conexao, $query_user);
 
-// Verificação de erro na consulta.
 if (!$user_result) {
     die("Erro fatal na consulta de usuário: " . mysqli_error($conexao));
 }
@@ -31,34 +27,36 @@ if (!$user_result) {
 $row_user = mysqli_fetch_assoc($user_result);
 $totalRows_user = mysqli_num_rows($user_result);
 
-// Se a consulta não retornar nenhum usuário, o script é interrompido.
 if ($totalRows_user == 0) {
     die("Usuário com o RE informado não foi encontrado no sistema.");
 }
 
-// Armazena o nível do usuário, que definirá qual menu será exibido.
 $user_level = $row_user['nivel_id'];
 
 // 3. CONSULTA PARA O MENU ESPECÍFICO DE CMT (SE APLICÁVEL)
 // =========================================================
 $totalRows_opm = 0;
-$opm_result = null; // Inicializa a variável para evitar erros
+$opm_result = null; 
 if ($user_level == 5) { // Nível 5 = CMT
     $colname_opm = isset($_GET['org_unidade']) ? $_GET['org_unidade'] : '';
     if (!empty($colname_opm)) {
+        // *** AQUI ESTÁ A CORREÇÃO ***
+        // A consulta agora busca pelo prefixo da OPM, como deveria ser.
         $query_opm = sprintf("SELECT o.org_id, o.org_unidade, opm.opm_prefixo, opm.opm_descricao, o.org_cod_secao, o.org_desc 
                               FROM num_org o
                               INNER JOIN num_opm opm ON o.org_unidade = opm.opm_codigo 
-                              WHERE o.org_unidade LIKE %s", GetSQLValueString($conexao, $colname_opm . '%', "text"));
+                              WHERE opm.opm_prefixo = %s", GetSQLValueString($conexao, $colname_opm, "text"));
         $opm_result = mysqli_query($conexao, $query_opm);
-        $row_opm = mysqli_fetch_assoc($opm_result);
-        $totalRows_opm = mysqli_num_rows($opm_result);
+        if ($opm_result) {
+            $totalRows_opm = mysqli_num_rows($opm_result);
+        }
     }
 }
 ?>
 <html>
 <head>
 <title>WEB CPI-2</title>
+<link rel="icon" href="../gifs/numerador.png" type="image/png">
 <link href="../css/Geral.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <style type="text/css">
@@ -178,7 +176,6 @@ elseif ($user_level == 3): ?>
 <?php
 // 5. LIBERAÇÃO DE MEMÓRIA
 // ==========================
-// Libera os resultados das consultas da memória.
-mysqli_free_result($user_result);
+if($user_result) mysqli_free_result($user_result);
 if (isset($opm_result) && $opm_result) { mysqli_free_result($opm_result); }
 ?>
