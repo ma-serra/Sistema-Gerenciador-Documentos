@@ -1,6 +1,5 @@
 <?php
 require_once('../Connections/conexao.php');
-// ob_start(); // Geralmente não é necessário aqui, a menos que você tenha saídas antes dos headers.
 
 // Define a ação do formulário para o próprio arquivo, protegendo contra XSS.
 $editFormAction = htmlspecialchars($_SERVER['PHP_SELF']);
@@ -11,12 +10,11 @@ if (isset($_SERVER['QUERY_STRING'])) {
 // --- LÓGICA DE ATUALIZAÇÃO DE DADOS PRINCIPAIS ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["MM_update"]) && $_POST["MM_update"] == "form1") {
   
-  // CORRIGIDO: Nomes das colunas ajustados para snake_case (org_id, nivel_id)
   $updateSQL = sprintf("UPDATE num_user SET postfunc=%s, guerra=%s, org_id=%s, nivel_id=%s, situacao=%s WHERE rerg=%s",
                        GetSQLValueString($conexao, $_POST['postfunc'], "text"),
                        GetSQLValueString($conexao, $_POST['guerra'], "text"),
                        GetSQLValueString($conexao, $_POST['org_id'], "int"),
-                       GetSQLValueString($conexao, $_POST['nivel_id'], "int"), // CORRIGIDO
+                       GetSQLValueString($conexao, $_POST['nivel_id'], "int"),
                        GetSQLValueString($conexao, $_POST['situacao'], "text"),
                        GetSQLValueString($conexao, $_POST['rerg'], "text"));
 
@@ -95,8 +93,8 @@ $nivel_result = mysqli_query($conexao, $query_nivel);
     <tr valign="baseline"> 
       <td nowrap align="right"><strong>RE:</strong></td>
       <td>
-        <?php echo htmlspecialchars($row_useer['rerg']); ?>
-        <input type="hidden" name="rerg" value="<?php echo htmlspecialchars($row_useer['rerg']); ?>">
+        <?php echo htmlspecialchars($row_useer['rerg'] ?? ''); ?>
+        <input type="hidden" name="rerg" value="<?php echo htmlspecialchars($row_useer['rerg'] ?? ''); ?>">
       </td>
     </tr>
     <tr valign="baseline"> 
@@ -105,10 +103,14 @@ $nivel_result = mysqli_query($conexao, $query_nivel);
         <select name="postfunc" id="postfunc">
           <option value="">Selecionar</option>
           <?php
-          while ($row_posto = mysqli_fetch_assoc($posto_result)) {
-            // CORRIGIDO: A coluna no BD é 'posto', com 'p' minúsculo.
-            $selected = (strcmp($row_posto['posto'], $row_useer['postfunc']) == 0) ? "SELECTED" : "";
-            echo "<option value=\"" . htmlspecialchars($row_posto['posto']) . "\" $selected>" . htmlspecialchars($row_posto['posto']) . "</option>";
+          if($posto_result) {
+              while ($row_posto = mysqli_fetch_assoc($posto_result)) {
+                // *** AQUI ESTÁ A CORREÇÃO PRINCIPAL ***
+                // Usando 'posto' com 'p' minúsculo para corresponder à coluna do banco
+                $posto_valor = $row_posto['posto'] ?? '';
+                $selected = (strcmp($posto_valor, $row_useer['postfunc'] ?? '') == 0) ? "SELECTED" : "";
+                echo "<option value=\"" . htmlspecialchars($posto_valor) . "\" $selected>" . htmlspecialchars($posto_valor) . "</option>";
+              }
           }
           ?>
         </select>
@@ -116,16 +118,16 @@ $nivel_result = mysqli_query($conexao, $query_nivel);
     </tr>
     <tr valign="baseline"> 
       <td nowrap align="right"><strong>Nome de Guerra:</strong></td>
-      <td><input type="text" name="guerra" value="<?php echo htmlspecialchars($row_useer['guerra']); ?>" size="32"></td>
+      <td><input type="text" name="guerra" value="<?php echo htmlspecialchars($row_useer['guerra'] ?? ''); ?>" size="32"></td>
     </tr>
     <tr valign="baseline"> 
       <td nowrap align="right"><strong>Situação:</strong></td>
-      <td><input type="text" name="situacao" value="<?php echo htmlspecialchars($row_useer['situacao']); ?>" size="32"></td>
+      <td><input type="text" name="situacao" value="<?php echo htmlspecialchars($row_useer['situacao'] ?? ''); ?>" size="32"></td>
     </tr>
     <tr valign="baseline"> 
       <td colspan="2" align="center" nowrap bgcolor="#CCCCCC"> 
-        <input name="nivel_id" type="hidden" id="nivel_id" value="<?php echo htmlspecialchars($row_useer['nivel_id']); ?>">
-        <input name="org_id" type="hidden" id="org_id" value="<?php echo htmlspecialchars($row_useer['org_id']); ?>">
+        <input name="nivel_id" type="hidden" id="nivel_id" value="<?php echo htmlspecialchars($row_useer['nivel_id'] ?? ''); ?>">
+        <input name="org_id" type="hidden" id="org_id" value="<?php echo htmlspecialchars($row_useer['org_id'] ?? ''); ?>">
         <input type="submit" value="ATUALIZAR MEUS DADOS">
       </td>
     </tr>
@@ -148,7 +150,7 @@ $nivel_result = mysqli_query($conexao, $query_nivel);
     </tr>
     <tr valign="baseline"> 
       <td colspan="2" align="center" nowrap bgcolor="#CCCCCC"> 
-        <input name="rerg2" type="hidden" value="<?php echo htmlspecialchars($row_useer['rerg']); ?>">
+        <input name="rerg2" type="hidden" value="<?php echo htmlspecialchars($row_useer['rerg'] ?? ''); ?>">
         <input type="submit" value="TROCAR SENHA">
       </td>
     </tr>
@@ -161,8 +163,8 @@ $nivel_result = mysqli_query($conexao, $query_nivel);
 </html>
 <?php
 // Liberando a memória dos resultados das consultas
-mysqli_free_result($useer_result);
-mysqli_free_result($posto_result);
-mysqli_free_result($org_result);
-mysqli_free_result($nivel_result);
+if($useer_result) mysqli_free_result($useer_result);
+if($posto_result) mysqli_free_result($posto_result);
+if($org_result) mysqli_free_result($org_result);
+if($nivel_result) mysqli_free_result($nivel_result);
 ?>

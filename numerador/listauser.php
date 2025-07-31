@@ -25,8 +25,8 @@ $query_user = sprintf("SELECT u.rerg, u.postfunc, u.guerra, u.org_id, o.org_desc
                        INNER JOIN num_nivel n ON (u.nivel_id = n.nivel_id) 
                        WHERE (u.rerg LIKE %s AND n.visivel <> 0 AND u.org_id LIKE %s) 
                        ORDER BY u.rerg ASC", 
-                       GetSQLValueString($conexao, "%" . $colname_user . "%", "text"), // CORRIGIDO
-                       GetSQLValueString($conexao, $org_user, "text")); // CORRIGIDO
+                       GetSQLValueString($conexao, "%" . $colname_user . "%", "text"),
+                       GetSQLValueString($conexao, $org_user, "text"));
 
 $user_result = mysqli_query($conexao, $query_user);
 $row_user = mysqli_fetch_assoc($user_result);
@@ -43,12 +43,12 @@ $totalRows_user = mysqli_num_rows($user_result);
 <form name="form1" method="get" action="listauser.php">
   <div align="center">DIGITE O RE SEM DÍGITO PARA LOCALIZAR NA LISTA
     <input name="rerg" type="text" id="rerg" size="9">
-    <input name="org_id" type="hidden" id="org_id" value="<?php echo htmlspecialchars($_GET['org_id']); ?>">
+    <input name="org_id" type="hidden" id="org_id" value="<?php echo htmlspecialchars($_GET['org_id'] ?? ''); ?>">
     <input type="submit" name="Submit" value="Buscar">
   </div>
 </form>
 
-<p align="center"><a href="cadasuser.php?org_id=<?php echo htmlspecialchars($_GET['org_id']); ?>">Cadastro de Novo Usuário</a></p>
+<p align="center"><a href="cadasuser.php?org_id=<?php echo htmlspecialchars($_GET['org_id'] ?? ''); ?>">Cadastro de Novo Usuário</a></p>
 <br>
 
 <?php if ($totalRows_user > 0): ?>
@@ -58,7 +58,7 @@ $totalRows_user = mysqli_num_rows($user_result);
         <td width="84%" height="13"> 
             <div align="left">
                 <font size="3">
-                    <?php echo htmlspecialchars($row_user['postfunc']); ?>&nbsp;<?php echo htmlspecialchars($row_user['guerra']); ?>&nbsp;da <?php echo htmlspecialchars($row_user['org_desc']); ?> do <?php echo htmlspecialchars($row_user['org_desc_unid']); ?> com nivel <?php echo htmlspecialchars($row_user['desc_nivel']); ?>
+                    <?php echo htmlspecialchars($row_user['postfunc'] ?? ''); ?>&nbsp;<?php echo htmlspecialchars($row_user['guerra'] ?? ''); ?>&nbsp;da <?php echo htmlspecialchars($row_user['org_desc'] ?? ''); ?> do <?php echo htmlspecialchars($row_user['org_desc_unid'] ?? ''); ?> com nivel <?php echo htmlspecialchars($row_user['desc_nivel'] ?? ''); ?>
                 </font>
             </div>
         </td>
@@ -66,9 +66,9 @@ $totalRows_user = mysqli_num_rows($user_result);
           <div align="center">
             <?php
               $a = $row_user['org_id'];
-              $b = $_GET['org_id'];
+              $b = $_GET['org_id'] ?? '';
               if ($a == $b) {
-                  echo "<a href='../admsist/atualizarseuuser.php?rerg=" . $row_user['rerg'] . "'>Atualizar</a>";
+                  echo "<a href='../admsist/atualizarseuuser.php?rerg=" . ($row_user['rerg'] ?? '') . "'>Atualizar</a>";
               } else {
                   echo 'Outra Seção';
               }
@@ -79,7 +79,7 @@ $totalRows_user = mysqli_num_rows($user_result);
             <div align="center">
             <?php
               if ($a == $b) {
-                  echo "<a href='excluirpm.php?rerg=" . $row_user['rerg'] . "'>EXCLUIR</a>";
+                  echo "<a href='excluirpm.php?rerg=" . ($row_user['rerg'] ?? '') . "'>EXCLUIR</a>";
               }
             ?>
           </div>
@@ -95,5 +95,7 @@ $totalRows_user = mysqli_num_rows($user_result);
 </body>
 </html>
 <?php
-mysqli_free_result($user_result);
+if ($user_result) {
+    mysqli_free_result($user_result);
+}
 ?>

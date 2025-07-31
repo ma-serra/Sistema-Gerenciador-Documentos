@@ -1,33 +1,42 @@
 <?php require_once('../Connections/conexao.php'); ?>
 <?php
 
-$editFormAction = $_SERVER['PHP_SELF'];
+// **BOA PRÁTICA:** Protegendo a ação do formulário contra XSS.
+$editFormAction = htmlspecialchars($_SERVER['PHP_SELF']);
 if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . $_SERVER['QUERY_STRING'];
+  $editFormAction .= "?" . htmlspecialchars($_SERVER['QUERY_STRING']);
 }
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
+    
+  // **CORREÇÃO:** Adicionado o argumento $conexao em ambas as chamadas.
   $updateSQL = sprintf("UPDATE num_tipodoc SET desc_tipo_doc=%s WHERE tipo_doc=%s",
-                       GetSQLValueString($_POST['desc_tipo_doc'], "text"),
-                       GetSQLValueString($_POST['tipo_doc'], "int"));
+                       GetSQLValueString($conexao, $_POST['desc_tipo_doc'], "text"),
+                       GetSQLValueString($conexao, $_POST['tipo_doc'], "int"));
 
-  mysqli_select_db($conexao, $database_conexao);
   $Result1 = mysqli_query($conexao, $updateSQL);
 
-  $updateGoTo = "acaookdoc.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
+  if ($Result1) {
+    $updateGoTo = "acaookdoc.php";
+    if (isset($_SERVER['QUERY_STRING'])) {
+      $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
+      $updateGoTo .= $_SERVER['QUERY_STRING'];
+    }
+    header(sprintf("Location: %s", $updateGoTo));
+    exit();
+  } else {
+    die("Erro ao atualizar o tipo de documento: " . mysqli_error($conexao));
   }
-  header(sprintf("Location: %s", $updateGoTo));
 }
 
-$colname_listatipodoc = "1";
+// --- Busca de dados para exibir no formulário ---
+$colname_listatipodoc = "-1"; // Padrão seguro
 if (isset($_GET['tipo_doc'])) {
   $colname_listatipodoc = $_GET['tipo_doc'];
 }
-mysqli_select_db($conexao, $database_conexao);
-$query_listatipodoc = sprintf("SELECT * FROM num_tipodoc WHERE tipo_doc = %s", $colname_listatipodoc);
+
+// **CORREÇÃO (SEGURANÇA):** Consulta protegida contra SQL Injection.
+$query_listatipodoc = sprintf("SELECT * FROM num_tipodoc WHERE tipo_doc = %s", GetSQLValueString($conexao, $colname_listatipodoc, "int"));
 $listatipodoc = mysqli_query($conexao, $query_listatipodoc);
 $row_listatipodoc = mysqli_fetch_assoc($listatipodoc);
 $totalRows_listatipodoc = mysqli_num_rows($listatipodoc);
@@ -44,7 +53,7 @@ $totalRows_listatipodoc = mysqli_num_rows($listatipodoc);
   <table align="center">
     <tr valign="baseline"> 
       <td nowrap align="right">Atualizar tipo de Documento:</td>
-      <td><input type="text" name="desc_tipo_doc" value="<?php echo $row_listatipodoc['desc_tipo_doc']; ?>" size="32"></td>
+      <td><input type="text" name="desc_tipo_doc" value="<?php echo htmlspecialchars($row_listatipodoc['desc_tipo_doc'] ?? ''); ?>" size="32"></td>
     </tr>
     <tr valign="baseline"> 
       <td nowrap align="right">&nbsp;</td>
@@ -52,13 +61,12 @@ $totalRows_listatipodoc = mysqli_num_rows($listatipodoc);
     </tr>
   </table>
   <input type="hidden" name="MM_update" value="form1">
-  <input type="hidden" name="tipo_doc" value="<?php echo $row_listatipodoc['tipo_doc']; ?>">
+  <input type="hidden" name="tipo_doc" value="<?php echo htmlspecialchars($row_listatipodoc['tipo_doc'] ?? ''); ?>">
 </form>
 <p>&nbsp;</p>
   
 </body>
 </html>
 <?php
-mysqli_free_result($listatipodoc);
+if($listatipodoc) mysqli_free_result($listatipodoc);
 ?>
-

@@ -6,7 +6,7 @@ require_once('../Connections/conexao.php');
 // Define a ação do formulário para o próprio arquivo.
 $editFormAction = htmlspecialchars($_SERVER['PHP_SELF']);
 if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . $_SERVER['QUERY_STRING'];
+  $editFormAction .= "?" . htmlspecialchars($_SERVER['QUERY_STRING']);
 }
 
 // 2. LÓGICA DE ATUALIZAÇÃO DE DADOS
@@ -25,13 +25,11 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   $Result1 = mysqli_query($conexao, $updateSQL);
 
   if ($Result1) {
-    // CORREÇÃO APLICADA AQUI
-    $updateGoTo = "../numerador/acaookuser.php"; 
+    // *** AQUI ESTÁ A CORREÇÃO PRINCIPAL ***
+    // Agora passamos explicitamente a org_id para a página de sucesso.
+    $org_id_param = urlencode($_POST['org_id']);
+    $updateGoTo = "../numerador/acaookuser.php?org_id=" . $org_id_param; 
     
-    if (isset($_SERVER['QUERY_STRING'])) {
-      $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-      $updateGoTo .= $_SERVER['QUERY_STRING'];
-    }
     header(sprintf("Location: %s", $updateGoTo));
     exit();
   } else {
@@ -49,13 +47,15 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "senhanova")) {
   $Result1 = mysqli_query($conexao, $updateSQL);
 
   if ($Result1) {
-    // CORREÇÃO APLICADA AQUI
-    $updateGoTo = "../numerador/acaookuser.php";
+    // *** AQUI TAMBÉM PRECISAMOS DA org_id ***
+    // Precisamos buscar a org_id do usuário para redirecionar corretamente.
+    $query_org_id = sprintf("SELECT org_id FROM num_user WHERE rerg = %s", GetSQLValueString($conexao, $_POST['rerg2'], "text"));
+    $org_id_result = mysqli_query($conexao, $query_org_id);
+    $user_data = mysqli_fetch_assoc($org_id_result);
+    $org_id_param = urlencode($user_data['org_id'] ?? '');
+
+    $updateGoTo = "../numerador/acaookuser.php?org_id=" . $org_id_param;
     
-    if (isset($_SERVER['QUERY_STRING'])) {
-      $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-      $updateGoTo .= $_SERVER['QUERY_STRING'];
-    }
     header(sprintf("Location: %s", $updateGoTo));
     exit();
   } else {
@@ -64,7 +64,6 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "senhanova")) {
 }
 
 // 3. CONSULTAS PARA PREENCHER O FORMULÁRIO
-// (O restante do arquivo permanece o mesmo)
 // ==========================================
 $colname_user = "-1";
 if (isset($_GET['rerg'])) {
@@ -99,7 +98,7 @@ $nivel_result = mysqli_query($conexao, $query_nivel);
     </tr>
     <tr valign="baseline"> 
       <td nowrap align="right">RE:</td>
-      <td><?php echo htmlspecialchars($row_user['rerg']); ?><input type="hidden" name="rerg" value="<?php echo htmlspecialchars($row_user['rerg']); ?>"></td>
+      <td><?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?><input type="hidden" name="rerg" value="<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>"></td>
     </tr>
     <tr valign="baseline"> 
       <td nowrap align="right">Posto:</td>
@@ -108,8 +107,8 @@ $nivel_result = mysqli_query($conexao, $query_nivel);
           <option value="" <?php if (empty($row_user['postfunc'])) { echo "SELECTED"; } ?>>Selecionar...</option>
           <?php
           while($row_posto_loop = mysqli_fetch_assoc($posto_result)) {
-            $selected = ($row_posto_loop['Posto'] == $row_user['postfunc']) ? "SELECTED" : "";
-            echo "<option value=\"" . htmlspecialchars($row_posto_loop['Posto']) . "\" $selected>" . htmlspecialchars($row_posto_loop['Posto']) . "</option>";
+            $selected = (($row_posto_loop['posto'] ?? '') == ($row_user['postfunc'] ?? '')) ? "SELECTED" : "";
+            echo "<option value=\"" . htmlspecialchars($row_posto_loop['posto'] ?? '') . "\" $selected>" . htmlspecialchars($row_posto_loop['posto'] ?? '') . "</option>";
           }
           ?>
         </select>
@@ -117,7 +116,7 @@ $nivel_result = mysqli_query($conexao, $query_nivel);
     </tr>
     <tr valign="baseline"> 
       <td nowrap align="right">Guerra:</td>
-      <td><input type="text" name="guerra" value="<?php echo htmlspecialchars($row_user['guerra']); ?>" size="32"></td>
+      <td><input type="text" name="guerra" value="<?php echo htmlspecialchars($row_user['guerra'] ?? ''); ?>" size="32"></td>
     </tr>
     <tr valign="baseline"> 
       <td nowrap align="right">Seção:</td>
@@ -127,8 +126,8 @@ $nivel_result = mysqli_query($conexao, $query_nivel);
           <?php
           mysqli_data_seek($org_result, 0);
           while($row_org_loop = mysqli_fetch_assoc($org_result)) {
-            $selected = ($row_org_loop['org_id'] == $row_user['org_id']) ? "SELECTED" : "";
-            echo "<option value=\"" . $row_org_loop['org_id'] . "\" $selected>" . htmlspecialchars($row_org_loop['org_desc']) . "</option>";
+            $selected = (($row_org_loop['org_id'] ?? '') == ($row_user['org_id'] ?? '')) ? "SELECTED" : "";
+            echo "<option value=\"" . ($row_org_loop['org_id'] ?? '') . "\" $selected>" . htmlspecialchars($row_org_loop['org_desc'] ?? '') . "</option>";
           }
           ?>
         </select> 
@@ -142,8 +141,8 @@ $nivel_result = mysqli_query($conexao, $query_nivel);
           <?php
           mysqli_data_seek($nivel_result, 0);
           while($row_nivel_loop = mysqli_fetch_assoc($nivel_result)) {
-            $selected = ($row_nivel_loop['nivel_id'] == $row_user['nivel_id']) ? "SELECTED" : "";
-            echo "<option value=\"" . $row_nivel_loop['nivel_id'] . "\" $selected>" . htmlspecialchars($row_nivel_loop['desc_nivel']) . "</option>";
+            $selected = (($row_nivel_loop['nivel_id'] ?? '') == ($row_user['nivel_id'] ?? '')) ? "SELECTED" : "";
+            echo "<option value=\"" . ($row_nivel_loop['nivel_id'] ?? '') . "\" $selected>" . htmlspecialchars($row_nivel_loop['desc_nivel'] ?? '') . "</option>";
           }
           ?>
         </select> 
@@ -151,7 +150,7 @@ $nivel_result = mysqli_query($conexao, $query_nivel);
     </tr>
     <tr valign="baseline"> 
       <td nowrap align="right">Função:</td>
-      <td><input type="text" name="situacao" value="<?php echo htmlspecialchars($row_user['situacao']); ?>" size="32"></td>
+      <td><input type="text" name="situacao" value="<?php echo htmlspecialchars($row_user['situacao'] ?? ''); ?>" size="32"></td>
     </tr>
     <tr valign="baseline"> 
       <td colspan="2" align="center" nowrap bgcolor="#CCCCCC"> 
@@ -175,7 +174,7 @@ $nivel_result = mysqli_query($conexao, $query_nivel);
     </tr>
     <tr valign="baseline"> 
       <td colspan="2" align="center" nowrap bgcolor="#CCCCCC"> 
-        <input name="rerg2" type="hidden" id="rerg2" value="<?php echo htmlspecialchars($row_user['rerg']); ?>">
+        <input name="rerg2" type="hidden" id="rerg2" value="<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>">
         <input name="submit" type="submit" value="Trocar a Senha">
       </td>
     </tr>
@@ -188,8 +187,8 @@ $nivel_result = mysqli_query($conexao, $query_nivel);
 <?php
 // 4. LIBERAÇÃO DE MEMÓRIA
 // =======================
-mysqli_free_result($user_result);
-mysqli_free_result($posto_result);
-mysqli_free_result($org_result);
-mysqli_free_result($nivel_result);
+if($user_result) mysqli_free_result($user_result);
+if($posto_result) mysqli_free_result($posto_result);
+if($org_result) mysqli_free_result($org_result);
+if($nivel_result) mysqli_free_result($nivel_result);
 ?>

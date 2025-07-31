@@ -19,7 +19,7 @@ $colname_user = $_GET['re'];
 $query_user = sprintf("SELECT u.rerg, u.postfunc, u.guerra, u.senha, u.org_id, u.nivel_id, o.org_desc_unid, o.org_cod_secao, o.org_desc 
                        FROM num_user u 
                        INNER JOIN num_org o ON u.org_id = o.org_id 
-                       WHERE u.rerg = %s", GetSQLValueString($conexao, $colname_user, "text")); // Correção: Passando $conexao para a função.
+                       WHERE u.rerg = %s", GetSQLValueString($conexao, $colname_user, "text"));
 
 $user_result = mysqli_query($conexao, $query_user);
 
@@ -49,7 +49,7 @@ if ($user_level == 5) { // Nível 5 = CMT
         $query_opm = sprintf("SELECT o.org_id, o.org_unidade, opm.opm_prefixo, opm.opm_descricao, o.org_cod_secao, o.org_desc 
                               FROM num_org o
                               INNER JOIN num_opm opm ON o.org_unidade = opm.opm_codigo 
-                              WHERE o.org_unidade LIKE %s", GetSQLValueString($conexao, $colname_opm . '%', "text")); // Correção: Passando $conexao
+                              WHERE o.org_unidade LIKE %s", GetSQLValueString($conexao, $colname_opm . '%', "text"));
         $opm_result = mysqli_query($conexao, $query_opm);
         $row_opm = mysqli_fetch_assoc($opm_result);
         $totalRows_opm = mysqli_num_rows($opm_result);
@@ -77,10 +77,10 @@ body {
     <td width="100%"> 
       <div align="center">
         <font color="#CC6600">
-          <strong><font color="#330099" size="3"><?php echo htmlspecialchars($row_user['postfunc']); ?></font></strong> 
-          <font color="#330099" size="3"><strong><?php echo htmlspecialchars($row_user['guerra']); ?></strong></font>
-          <font size="3"><font color="#000099"><strong> seja bem vindo ao numerador do&nbsp;<?php echo htmlspecialchars($row_user['org_desc_unid']); ?> da seção&nbsp;</strong></font></font>
-          <font color="#330099" size="3"><strong><?php echo htmlspecialchars($row_user['org_desc']); ?></strong></font>
+          <strong><font color="#330099" size="3"><?php echo htmlspecialchars($row_user['postfunc'] ?? ''); ?></font></strong> 
+          <font color="#330099" size="3"><strong><?php echo htmlspecialchars($row_user['guerra'] ?? ''); ?></strong></font>
+          <font size="3"><font color="#000099"><strong> seja bem vindo ao numerador do&nbsp;<?php echo htmlspecialchars($row_user['org_desc_unid'] ?? ''); ?> da seção&nbsp;</strong></font></font>
+          <font color="#330099" size="3"><strong><?php echo htmlspecialchars($row_user['org_desc'] ?? ''); ?></strong></font>
         </font>
         <font color="#000099" size="4"><strong><br></strong></font>
       </div>
@@ -106,14 +106,12 @@ if ($user_level == 4): ?>
 elseif ($user_level == 1): ?>
 <table width="100%" border="0" align="center">
   <tr bgcolor="#FFFFFF"> 
-    
-    <td width="15%"><div align="center"><strong><a href="../numerador/org.php?org_id=<?php echo $row_user['org_id']; ?>" target="numerador">INFORMAÇÃO DA SEÇÃO</a></strong></div></td>
-
-    <td width="9%"> <div align="center"><strong><a href="../numerador/listauser.php?rerg=%&org_id=<?php echo $row_user['org_id']; ?>" target="numerador">USUÁRIOS</a></strong></div></td>
-    <td width="21%"><div align="center"><strong><a href="../numerador/listaudoctipo.php?cod_org=<?php echo $row_user['org_id']; ?>&re=<?php echo $row_user['rerg']; ?>" target="numerador">ABERTURA DE NOVO NUMERADOR</a></strong></div></td>
-    <td width="18%"><div align="center"><strong><a href="../numerador/listaudocgerar.php?cod_org=<?php echo $row_user['org_id']; ?>&re=<?php echo $row_user['rerg']; ?>" target="numerador">GERAR NOVO NÚMERO</a></strong></div></td>
-    <td width="18%"><div align="center"><strong><a href="../numerador/consultageraradm.php?cod_org=<?php echo $row_user['org_id']; ?>&re=<?php echo $row_user['rerg']; ?>" target="numerador">CONSULTAR / ATUALIZAR</a></strong></div></td>
-    <td width="10%"><div align="center"><strong><a href="../numerador/pagina.php?org_id=<?php echo $row_user['org_id']; ?>" target="numerador">PENDÊNCIAS</a></strong></div></td>
+    <td width="15%"><div align="center"><strong><a href="../numerador/org.php?org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" target="numerador">INFORMAÇÃO DA SEÇÃO</a></strong></div></td>
+    <td width="9%"> <div align="center"><strong><a href="../numerador/listauser.php?rerg=%&org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" target="numerador">USUÁRIOS</a></strong></div></td>
+    <td width="21%"><div align="center"><strong><a href="../numerador/listaudoctipo.php?cod_org=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>&re=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>" target="numerador">ABERTURA DE NOVO NUMERADOR</a></strong></div></td>
+    <td width="18%"><div align="center"><strong><a href="../numerador/listaudocgerar.php?cod_org=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>&re=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>" target="numerador">GERAR NOVO NÚMERO</a></strong></div></td>
+    <td width="18%"><div align="center"><strong><a href="../numerador/consultageraradm.php?cod_org=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>&re=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>" target="numerador">CONSULTAR / ATUALIZAR</a></strong></div></td>
+    <td width="10%"><div align="center"><strong><a href="../numerador/pagina.php?org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" target="numerador">PENDÊNCIAS</a></strong></div></td>
     <td width="9%"><div align="center"><strong><a href="../Sair.php">SAIR</a></strong></div></td>
   </tr>
 </table>
@@ -122,11 +120,11 @@ elseif ($user_level == 1): ?>
 elseif ($user_level == 2): ?>
 <table width="100%" border="0" align="center">
   <tr bgcolor="#FFFFFF"> 
-    <td width="14%"><div align="center"><strong><a href="../numerador/org.php?org_id=<?php echo $row_user['org_id']; ?>" target="numerador">INFORMAÇÃO DA SEÇÃO</a></strong></div></td>
-    <td width="9%"> <div align="center"><strong><a href="../numerador/atualizarseuuser.php?rerg=<?php echo $row_user['rerg']; ?>&org_id=<?php echo $row_user['org_id']; ?>" target="numerador">MEU USUÁRIO</a></strong></div></td>
-    <td width="33%"><div align="center"><strong><a href="../numerador/listaudocgerar.php?cod_org=<?php echo $row_user['org_id']; ?>&re=<?php echo $row_user['rerg']; ?>" target="numerador">GERAR NOVO NÚMERO</a></strong></div></td>
-    <td width="6%"> <div align="center"><strong><a href="../numerador/consultagerar.php?cod_org=<?php echo $row_user['org_id']; ?>&re=<?php echo $row_user['rerg']; ?>" target="numerador">CONSULTAR</a></strong></div></td>
-    <td width="7%"><div align="center"><strong><a href="../numerador/pagina.php?org_id=<?php echo $row_user['org_id']; ?>" target="numerador">PENDÊNCIAS</a></strong></div></td>
+    <td width="14%"><div align="center"><strong><a href="../numerador/org.php?org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" target="numerador">INFORMAÇÃO DA SEÇÃO</a></strong></div></td>
+    <td width="9%"> <div align="center"><strong><a href="../numerador/atualizarseuuser.php?rerg=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>&org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" target="numerador">MEU USUÁRIO</a></strong></div></td>
+    <td width="33%"><div align="center"><strong><a href="../numerador/listaudocgerar.php?cod_org=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>&re=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>" target="numerador">GERAR NOVO NÚMERO</a></strong></div></td>
+    <td width="6%"> <div align="center"><strong><a href="../numerador/consultagerar.php?cod_org=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>&re=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>" target="numerador">CONSULTAR</a></strong></div></td>
+    <td width="7%"><div align="center"><strong><a href="../numerador/pagina.php?org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" target="numerador">PENDÊNCIAS</a></strong></div></td>
     <td width="6%"><div align="center"><strong><a href="../Sair.php">SAIR</a></strong></div></td>
   </tr>
 </table>
@@ -134,10 +132,10 @@ elseif ($user_level == 2): ?>
 <?php // NÍVEL CMT (ID 5)
 elseif ($user_level == 5 && $totalRows_opm > 0): ?>
 <form name="form1" method="get" action="../numerador/consultagerar.php" target="numerador">
-  <input type="hidden" name="re" value="<?php echo htmlspecialchars($_GET['re']); ?>">
+  <input type="hidden" name="re" value="<?php echo htmlspecialchars($_GET['re'] ?? ''); ?>">
   <table width="100%" border="0" align="center">
     <tr bgcolor="#FFFFFF"> 
-      <td width="30%"><div align="center"><strong><a href="../numerador/atualizarseuuser.php?rerg=<?php echo $row_user['rerg']; ?>&org_id=<?php echo $row_user['org_id']; ?>" target="numerador">MEU USUÁRIO</a></strong></div></td>
+      <td width="30%"><div align="center"><strong><a href="../numerador/atualizarseuuser.php?rerg=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>&org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" target="numerador">MEU USUÁRIO</a></strong></div></td>
       <td width="51%"> 
         <div align="center"><strong>Selecione a seção 
           <select name="cod_org" id="cod_org">
@@ -145,9 +143,9 @@ elseif ($user_level == 5 && $totalRows_opm > 0): ?>
             <?php
             // O loop para popular o select de OPMs.
             mysqli_data_seek($opm_result, 0); // Garante que o ponteiro está no início.
-            while($row_opm = mysqli_fetch_assoc($opm_result)) {  
+            while($row_opm_loop = mysqli_fetch_assoc($opm_result)) {  
             ?>
-            <option value="<?php echo $row_opm['org_id']?>"><?php echo htmlspecialchars($row_opm['org_desc']); ?></option>
+            <option value="<?php echo $row_opm_loop['org_id']?>"><?php echo htmlspecialchars($row_opm_loop['org_desc'] ?? ''); ?></option>
             <?php
             }
             ?>
@@ -165,15 +163,15 @@ elseif ($user_level == 5 && $totalRows_opm > 0): ?>
 elseif ($user_level == 3): ?>
 <table width="100%" border="0" align="center">
   <tr bgcolor="#FFFFFF"> 
-    <td width="21%"><div align="center"><strong><a href="../numerador/org.php?org_id=<?php echo $row_user['org_id']; ?>" target="numerador">INFORMAÇÃO DA SEÇÃO</a></strong></div></td>
-    <td width="39%"><div align="center"><strong><a href="../numerador/atualzarsuserseu.php?rerg=<?php echo $row_user['rerg']; ?>&org_id=<?php echo $row_user['org_id']; ?>" target="numerador">MEU USUÁRIO</a></strong></div></td>
-    <td width="34%"><div align="center"><strong><a href="../numerador/consultagerar.php?cod_org=<?php echo $row_user['org_id']; ?>&re=<?php echo $row_user['rerg']; ?>" target="numerador">CONSULTAR</a></strong></div></td>
+    <td width="21%"><div align="center"><strong><a href="../numerador/org.php?org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" target="numerador">INFORMAÇÃO DA SEÇÃO</a></strong></div></td>
+    <td width="39%"><div align="center"><strong><a href="../numerador/atualzarsuserseu.php?rerg=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>&org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" target="numerador">MEU USUÁRIO</a></strong></div></td>
+    <td width="34%"><div align="center"><strong><a href="../numerador/consultagerar.php?cod_org=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>&re=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>" target="numerador">CONSULTAR</a></strong></div></td>
     <td width="6%"><div align="center"><strong><a href="../Sair.php">SAIR</a></strong></div></td>
   </tr>
 </table>
 <?php endif; ?>
 
-<iframe src="../numerador/pagina.php?org_id=<?php echo $row_user['org_id']; ?>" name="numerador" width="100%" height="480" scrolling="auto" frameborder="no" allowtransparency="true"></iframe>
+<iframe src="../numerador/pagina.php?org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" name="numerador" width="100%" height="480" scrolling="auto" frameborder="no" allowtransparency="true"></iframe>
 
 </body>
 </html>
@@ -182,5 +180,5 @@ elseif ($user_level == 3): ?>
 // ==========================
 // Libera os resultados das consultas da memória.
 mysqli_free_result($user_result);
-if (isset($opm_result)) { mysqli_free_result($opm_result); }
+if (isset($opm_result) && $opm_result) { mysqli_free_result($opm_result); }
 ?>

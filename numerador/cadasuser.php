@@ -95,7 +95,7 @@ $totalRows_nivel = mysqli_num_rows($nivel_result);
             mysqli_data_seek($posto_result, 0);
             while($row_posto_loop = mysqli_fetch_assoc($posto_result)) {
           ?>
-          <option value="<?php echo htmlspecialchars($row_posto_loop['Posto']); ?>"><?php echo htmlspecialchars($row_posto_loop['Posto']); ?></option>
+          <option value="<?php echo htmlspecialchars($row_posto_loop['posto']); ?>"><?php echo htmlspecialchars($row_posto_loop['posto']); ?></option>
           <?php
             }
           }

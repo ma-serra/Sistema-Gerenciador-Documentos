@@ -1,24 +1,32 @@
 <?php require_once('../Connections/conexao.php'); ?>
 <?php
 
-$editFormAction = $_SERVER['PHP_SELF'];
+// **BOA PRÁTICA:** Protegendo a ação do formulário contra XSS.
+$editFormAction = htmlspecialchars($_SERVER['PHP_SELF']);
 if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . $_SERVER['QUERY_STRING'];
+  $editFormAction .= "?" . htmlspecialchars($_SERVER['QUERY_STRING']);
 }
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
+  
+  // **CORREÇÃO:** Adicionado o argumento $conexao na chamada da função.
   $insertSQL = sprintf("INSERT INTO num_tipodoc (desc_tipo_doc) VALUES (%s)",
-                       GetSQLValueString($_POST['desc_tipo_doc'], "text"));
+                       GetSQLValueString($conexao, $_POST['desc_tipo_doc'], "text"));
 
-  mysqli_select_db($conexao, $database_conexao);
+  // A linha mysqli_select_db foi removida por ser redundante.
   $Result1 = mysqli_query($conexao, $insertSQL);
 
-  $insertGoTo = "acaookdoc.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-    $insertGoTo .= $_SERVER['QUERY_STRING'];
+  if ($Result1) {
+      $insertGoTo = "acaookdoc.php";
+      if (isset($_SERVER['QUERY_STRING'])) {
+        $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
+        $insertGoTo .= $_SERVER['QUERY_STRING'];
+      }
+      header(sprintf("Location: %s", $insertGoTo));
+      exit();
+  } else {
+      die("Erro ao inserir o tipo de documento: " . mysqli_error($conexao));
   }
-  header(sprintf("Location: %s", $insertGoTo));
 }
 ?>
 <html>
