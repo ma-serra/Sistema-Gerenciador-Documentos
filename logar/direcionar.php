@@ -96,7 +96,7 @@ if ($user_level == 4): ?>
     <td width="14%"><div align="center"><strong><a href="../admsist/listasecao.php" target="numerador">CADASTRO DE SEÇÃO</a></strong></div></td>
     <td><div align="center"><strong><a href="../admsist/listauser.php?rerg=%" target="numerador">CADASTRO USUÁRIOS</a></strong></div></td>
     <td width="17%"><div align="center"><strong><a href="../admsist/listdoc.php" target="numerador">CADASTRO TIPO DOC</a></strong></div></td>
-    <td width="8%"><div align="center"><strong><a href="../Sair.php">SAIR</a></strong></div></td>
+    <td width="8%"><div align="center"><strong><a href="sair.php">SAIR</a></strong></div></td>
   </tr>
 </table>
 
@@ -110,7 +110,7 @@ elseif ($user_level == 1): ?>
     <td width="18%"><div align="center"><strong><a href="../numerador/listaudocgerar.php?cod_org=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>&re=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>" target="numerador">GERAR NOVO NÚMERO</a></strong></div></td>
     <td width="18%"><div align="center"><strong><a href="../numerador/consultageraradm.php?cod_org=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>&re=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>" target="numerador">CONSULTAR / ATUALIZAR</a></strong></div></td>
     <td width="10%"><div align="center"><strong><a href="../numerador/pagina.php?org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" target="numerador">PENDÊNCIAS</a></strong></div></td>
-    <td width="9%"><div align="center"><strong><a href="../Sair.php">SAIR</a></strong></div></td>
+    <td width="9%"><div align="center"><strong><a href="sair.php">SAIR</a></strong></div></td>
   </tr>
 </table>
 
@@ -123,7 +123,7 @@ elseif ($user_level == 2): ?>
     <td width="33%"><div align="center"><strong><a href="../numerador/listaudocgerar.php?cod_org=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>&re=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>" target="numerador">GERAR NOVO NÚMERO</a></strong></div></td>
     <td width="6%"> <div align="center"><strong><a href="../numerador/consultagerar.php?cod_org=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>&re=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>" target="numerador">CONSULTAR</a></strong></div></td>
     <td width="7%"><div align="center"><strong><a href="../numerador/pagina.php?org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" target="numerador">PENDÊNCIAS</a></strong></div></td>
-    <td width="6%"><div align="center"><strong><a href="../Sair.php">SAIR</a></strong></div></td>
+    <td width="6%"><div align="center"><strong><a href="sair.php">SAIR</a></strong></div></td>
   </tr>
 </table>
 
@@ -152,7 +152,7 @@ elseif ($user_level == 5 && $totalRows_opm > 0): ?>
           <input type="submit" name="Submit" value="CONSULTAR">
         </strong></div>
       </td>
-      <td><div align="center"><strong><a href="../Sair.php">SAIR</a></strong></div></td>
+      <td><div align="center"><strong><a href="sair.php">SAIR</a></strong></div></td>
     </tr>
   </table>
 </form>
@@ -164,7 +164,7 @@ elseif ($user_level == 3): ?>
     <td width="21%"><div align="center"><strong><a href="../numerador/org.php?org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" target="numerador">INFORMAÇÃO DA SEÇÃO</a></strong></div></td>
     <td width="39%"><div align="center"><strong><a href="../numerador/atualizarseuuser.php?rerg=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>&org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" target="numerador">MEU USUÁRIO</a></strong></div></td>
     <td width="34%"><div align="center"><strong><a href="../numerador/consultagerar.php?cod_org=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>&re=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>" target="numerador">CONSULTAR</a></strong></div></td>
-    <td width="6%"><div align="center"><strong><a href="../Sair.php">SAIR</a></strong></div></td>
+    <td width="6%"><div align="center"><strong><a href="sair.php">SAIR</a></strong></div></td>
   </tr>
 </table>
 <?php endif; ?>

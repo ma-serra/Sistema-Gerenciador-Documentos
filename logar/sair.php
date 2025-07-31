@@ -9,14 +9,14 @@
   session_start();
   session_unset();
   session_destroy();
-  header("Location: logar/login.php");
+  header("Location: login.php");
 ?>
 <?
 setcookie("login","",time()-3600);
 setcookie("senha","",time()-3600);
 ?>
 <script language="JavaScript">
-           		location.href="logar/login.php"
+           		location.href="login.php"
 	   	 	    </script> 
 </body>
 </html>

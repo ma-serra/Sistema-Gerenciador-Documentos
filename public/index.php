@@ -26,7 +26,7 @@ titlemove()
 
 <frameset rows="11,*" cols="*" framespacing="0" frameborder="NO" border="0">
   <frame  src="topog.htm"name="topFrame" scrolling="NO" noresize >
-  <frame  src="../logar/login.php" name="webcpi2">
+  <frame  src="../logar/verificar.php" name="webcpi2">
 </frameset>
 <noframes><body>
 
