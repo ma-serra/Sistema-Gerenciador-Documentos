@@ -42,7 +42,8 @@ $totalRows_listadoc = mysqli_num_rows($listadoc_result);
 <html>
 <head>
 <title>Numerador - Consultar Documentos</title>
-<link href="../css/Geral.css" rel="stylesheet" type="text/css">
+<link rel="icon" href="/numerador/public/gifs/favicon.png" type="image/png">
+<link href="/numerador/public/css/Geral.css?v=1753940642" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
 
@@ -76,7 +77,7 @@ $totalRows_listadoc = mysqli_num_rows($listadoc_result);
       <?php endif; ?>
     </td>
     <td width="75%" height="200"> 
-      <iframe src="../paginalimpa.php" name="congeral" width="100%" height="450" scrolling="auto" frameborder="no" allowtransparency="true"></iframe>
+      <iframe src="../public/paginalimpa.php" name="congeral" width="100%" height="450" scrolling="auto" frameborder="no" allowtransparency="true"></iframe>
     </td>
   </tr>
 </table>

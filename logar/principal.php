@@ -27,11 +27,12 @@ mysqli_free_result($opm_result);
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Carregando...</title>
+<link rel="icon" href="/numerador/public/gifs/favicon.png" type="image/png">
 </head>
 <body>
 <div align="center">
   <p><font size="4">CARREGANDO</font><br />
-    <img src="../gifs/carregando.gif" width="400" height="125" align="absmiddle" /> 
+    <img src="/numerador/public/gifs/carregando.gif" width="400" height="125" align="absmiddle" /> 
   </p>
   <p>
     <script language="JavaScript" type="text/javascript">

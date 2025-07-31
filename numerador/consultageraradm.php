@@ -40,7 +40,8 @@ body { overflow:hidden }
 <html>
 <head>
 <title>Numerador</title>
-<link href="../css/Geralsemimagem.css" rel="stylesheet" type="text/css">
+<link rel="icon" href="/numerador/public/gifs/favicon.png" type="image/png">
+<link href="/numerador/public/css/Geralsemimagem.css?v=1753940646" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
 <body>
@@ -66,7 +67,7 @@ body { overflow:hidden }
       <?php endif; ?>
     </td>
     <td width="75%" height="144"> 
-      <iframe src="../paginalimpa.php" name="congeral" width="100%" height="400" scrolling="auto" frameborder="no" allowtransparency="true"></iframe>
+      <iframe src="../public/paginalimpa.php" name="congeral" width="100%" height="400" scrolling="auto" frameborder="no" allowtransparency="true"></iframe>
     </td>
   </tr>
 </table>

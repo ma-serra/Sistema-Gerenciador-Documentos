@@ -13,7 +13,8 @@ $totalRows_atualizar = mysqli_num_rows($atualizar);
 <html>
 <head>
 <title>Numerador</title>
-<link  href="../css/Geral.css" rel="stylesheet" type="text/css">
+<link rel="icon" href="/numerador/public/gifs/favicon.png" type="image/png">
+<link  href="/numerador/public/css/Geral.css?v=1753940642" rel="stylesheet" type="text/css">
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>

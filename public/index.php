@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>WEB CPI-2</title>
+<link rel="icon" href="gifs/favicon.png" type="image/png">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <script> var repeat=1 // 0 para rolar uma vez, 1 para rolar infinitamente
 var title=document.title
@@ -25,7 +26,7 @@ titlemove()
 
 <frameset rows="11,*" cols="*" framespacing="0" frameborder="NO" border="0">
   <frame  src="topog.htm"name="topFrame" scrolling="NO" noresize >
-  <frame  src="logar/login.php" name="webcpi2">
+  <frame  src="../logar/login.php" name="webcpi2">
 </frameset>
 <noframes><body>
 

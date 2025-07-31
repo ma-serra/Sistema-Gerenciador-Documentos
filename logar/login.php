@@ -4,6 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>WEB CPI-2</title>
+<link rel="icon" href="/numerador/public/gifs/favicon.png" type="image/png">
 <style type="text/css">
 
 .Style6 {font-size: 13px}
@@ -40,7 +41,7 @@ body {
 </style>
 </head>
 
-<body background="../gifs/fundo01.gif">
+<body background="/numerador/public/gifs/fundo01.gif">
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <form id="form1" name="form1" method="post" action="logar.php" onSubmit="return ValidaSemPreenchimento(this)">
@@ -79,7 +80,7 @@ titlemove()
           </font></strong></font></div></td>
     </tr>
     <tr> 
-      <td width="51%" rowspan="5"><div align="center"><img src="../gifs/carimbo.gif" width="114" height="117" /></div></td>
+      <td width="51%" rowspan="5"><div align="center"><img src="/numerador/public/gifs/carimbo.gif" width="114" height="117" /></div></td>
       <td width="10%" height="32"><span class="Style6"> 
         <label> </label>
         </span></td>

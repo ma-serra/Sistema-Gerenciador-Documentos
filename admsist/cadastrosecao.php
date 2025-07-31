@@ -38,7 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["MM_insert"]) && $_POS
 <html>
 <head>
 <title>Numerador - Cadastrar Seção</title>
-<link href="../css/Geral.css" rel="stylesheet" type="text/css">
+<link rel="icon" href="/numerador/public/gifs/favicon.png" type="image/png">
+<link href="/numerador/public/css/Geral.css?v=1753940642" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
 

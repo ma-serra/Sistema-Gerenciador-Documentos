@@ -56,8 +56,8 @@ if ($user_level == 5) { // Nível 5 = CMT
 <html>
 <head>
 <title>WEB CPI-2</title>
-<link rel="icon" href="../gifs/numerador.png" type="image/png">
-<link href="../css/Geral.css" rel="stylesheet" type="text/css">
+<link rel="icon" href="/numerador/public/gifs/favicon.png" type="image/png">
+<link href="/numerador/public/css/Geral.css?v=1753940642" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <style type="text/css">
 body, td, th {
@@ -162,7 +162,7 @@ elseif ($user_level == 3): ?>
 <table width="100%" border="0" align="center">
   <tr bgcolor="#FFFFFF"> 
     <td width="21%"><div align="center"><strong><a href="../numerador/org.php?org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" target="numerador">INFORMAÇÃO DA SEÇÃO</a></strong></div></td>
-    <td width="39%"><div align="center"><strong><a href="../numerador/atualzarsuserseu.php?rerg=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>&org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" target="numerador">MEU USUÁRIO</a></strong></div></td>
+    <td width="39%"><div align="center"><strong><a href="../numerador/atualizarseuuser.php?rerg=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>&org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" target="numerador">MEU USUÁRIO</a></strong></div></td>
     <td width="34%"><div align="center"><strong><a href="../numerador/consultagerar.php?cod_org=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>&re=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>" target="numerador">CONSULTAR</a></strong></div></td>
     <td width="6%"><div align="center"><strong><a href="../Sair.php">SAIR</a></strong></div></td>
   </tr>
