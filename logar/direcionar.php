@@ -93,9 +93,10 @@ body {
 if ($user_level == 4): ?>
 <table width="100%" border="0" align="center">
   <tr bgcolor="#FFFFFF"> 
-    <td width="14%"><div align="center"><strong><a href="../admsist/listasecao.php" target="numerador">CADASTRO DE SEÇÃO</a></strong></div></td>
-    <td><div align="center"><strong><a href="../admsist/listauser.php?rerg=%" target="numerador">CADASTRO USUÁRIOS</a></strong></div></td>
-    <td width="17%"><div align="center"><strong><a href="../admsist/listdoc.php" target="numerador">CADASTRO TIPO DOC</a></strong></div></td>
+    <td width="12%"><div align="center"><strong><a href="../admsist/listasecao.php" target="numerador">CADASTRO DE SEÇÃO</a></strong></div></td>
+    <td width="12%"><div align="center"><strong><a href="../admsist/listauser.php?rerg=%" target="numerador">CADASTRO USUÁRIOS</a></strong></div></td>
+    <td width="14%"><div align="center"><strong><a href="../admsist/listdoc.php" target="numerador">CADASTRO TIPO DOC</a></strong></div></td>
+    <td width="14%"><div align="center"><strong><a href="../numerador/legal_automation.php" target="numerador" style="color: #007bff;">⚖️ SISTEMA JURÍDICO</a></strong></div></td>
     <td width="8%"><div align="center"><strong><a href="sair.php">SAIR</a></strong></div></td>
   </tr>
 </table>
@@ -104,13 +105,14 @@ if ($user_level == 4): ?>
 elseif ($user_level == 1): ?>
 <table width="100%" border="0" align="center">
   <tr bgcolor="#FFFFFF"> 
-    <td width="15%"><div align="center"><strong><a href="../numerador/org.php?org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" target="numerador">INFORMAÇÃO DA SEÇÃO</a></strong></div></td>
-    <td width="9%"> <div align="center"><strong><a href="../numerador/listauser.php?rerg=%&org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" target="numerador">USUÁRIOS</a></strong></div></td>
-    <td width="21%"><div align="center"><strong><a href="../numerador/listaudoctipo.php?cod_org=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>&re=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>" target="numerador">ABERTURA DE NOVO NUMERADOR</a></strong></div></td>
-    <td width="18%"><div align="center"><strong><a href="../numerador/listaudocgerar.php?cod_org=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>&re=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>" target="numerador">GERAR NOVO NÚMERO</a></strong></div></td>
-    <td width="18%"><div align="center"><strong><a href="../numerador/consultageraradm.php?cod_org=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>&re=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>" target="numerador">CONSULTAR / ATUALIZAR</a></strong></div></td>
-    <td width="10%"><div align="center"><strong><a href="../numerador/pagina.php?org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" target="numerador">PENDÊNCIAS</a></strong></div></td>
-    <td width="9%"><div align="center"><strong><a href="sair.php">SAIR</a></strong></div></td>
+    <td width="13%"><div align="center"><strong><a href="../numerador/org.php?org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" target="numerador">INFORMAÇÃO DA SEÇÃO</a></strong></div></td>
+    <td width="8%"> <div align="center"><strong><a href="../numerador/listauser.php?rerg=%&org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" target="numerador">USUÁRIOS</a></strong></div></td>
+    <td width="18%"><div align="center"><strong><a href="../numerador/listaudoctipo.php?cod_org=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>&re=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>" target="numerador">ABERTURA DE NOVO NUMERADOR</a></strong></div></td>
+    <td width="15%"><div align="center"><strong><a href="../numerador/listaudocgerar.php?cod_org=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>&re=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>" target="numerador">GERAR NOVO NÚMERO</a></strong></div></td>
+    <td width="15%"><div align="center"><strong><a href="../numerador/consultageraradm.php?cod_org=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>&re=<?php echo htmlspecialchars($row_user['rerg'] ?? ''); ?>" target="numerador">CONSULTAR / ATUALIZAR</a></strong></div></td>
+    <td width="8%"><div align="center"><strong><a href="../numerador/pagina.php?org_id=<?php echo htmlspecialchars($row_user['org_id'] ?? ''); ?>" target="numerador">PENDÊNCIAS</a></strong></div></td>
+    <td width="12%"><div align="center"><strong><a href="../numerador/legal_automation.php" target="numerador" style="color: #007bff;">⚖️ JURÍDICO</a></strong></div></td>
+    <td width="8%"><div align="center"><strong><a href="sair.php">SAIR</a></strong></div></td>
   </tr>
 </table>
 
